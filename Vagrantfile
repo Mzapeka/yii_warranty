@@ -2,8 +2,8 @@ require 'yaml'
 require 'fileutils'
 
 domains = {
-  frontend: 'y2aa-frontend.dev',
-  backend:  'y2aa-backend.dev'
+  frontend: 'warranty.in.ua',
+  backend:  'admin.warranty.in.ua'
 }
 
 config = {
