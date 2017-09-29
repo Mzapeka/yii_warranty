@@ -18,16 +18,17 @@ return [
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-backend',
+            'cookieValidationKey' => $params['cookieValidationKey'],
         ],
         'user' => [
-            'identityClass' => 'common\auth\Identity',
+            'identityClass' => 'site\entities\User\User',
             'enableAutoLogin' => true,
             'identityCookie' => [
-                'name' => '_identity-backend',
+                'name' => '_identity',
                 'httpOnly' => true,
                 'domain' => $params['cookieDomain'],
             ],
-            'loginUrl' => ['auth/login'],
+            'loginUrl' => ['auth/auth/login'],
         ],
         'session' => [
             'name' => '_session',
