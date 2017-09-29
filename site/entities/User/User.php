@@ -1,9 +1,12 @@
 <?php
 namespace site\entities\User;
 
+use site\repositories\UserReadRepository;
 use Yii;
+use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\web\IdentityInterface;
 
 /**
  * User model
@@ -24,7 +27,7 @@ use yii\db\ActiveRecord;
  * @property integer $updated_at
 
  */
-class User extends ActiveRecord
+class User extends ActiveRecord implements IdentityInterface
 {
 
     const STATUS_WAIT = 0;
@@ -85,6 +88,56 @@ class User extends ActiveRecord
         $this->status = self::STATUS_ACTIVE;
         $this->email_confirm_token = null;
     }
+
+    // identity interface
+
+    public static function findIdentity($id)
+    {
+        $user = self::getRepository()->findActiveById($id);
+        return $user ? $user : null;
+    }
+
+    public static function findIdentityByAccessToken($token, $type = null)
+    {
+        /*        $data = self::getOauth()->getServer()->getResourceController()->getToken();
+                return !empty($data['user_id']) ? static::findIdentity($data['user_id']) : null;*/
+        throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function getAuthKey(): string
+    {
+        return $this->auth_key;
+    }
+
+    public function validateAuthKey($authKey): bool
+    {
+        return $this->getAuthKey() === $authKey;
+    }
+
+    public function checkUserCredentials($username, $password): bool
+    {
+        if (!$user = self::getRepository()->findActiveByUsername($username)) {
+            return false;
+        }
+        return $user->validatePassword($password);
+    }
+
+    public function getUserDetails($username): array
+    {
+        $user = self::getRepository()->findActiveByUsername($username);
+        return ['user_id' => $user->id];
+    }
+
+    private static function getRepository(): UserReadRepository
+    {
+        return \Yii::$container->get(UserReadRepository::class);
+    }
+
 
 /*    public static function signupByNetwork($network, $identity): self
     {

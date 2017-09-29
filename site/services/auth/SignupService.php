@@ -1,6 +1,6 @@
 <?php
 
-namespace shop\useCases\auth;
+namespace site\services\auth;
 
 /*use shop\access\Rbac;*/
 /*use shop\dispatchers\EventDispatcher;*/
