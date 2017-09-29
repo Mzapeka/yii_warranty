@@ -65,13 +65,14 @@ class User extends ActiveRecord implements IdentityInterface
         $this->updated_at = time();
     }*/
 
-    public static function requestSignup(string $username, string $email, string $password, string $company, string $adress): self
+    public static function requestSignup(string $username, string $email, string $password, string $company, string $adress, $phone): self
     {
         $user = new User();
         $user->username = $username;
         $user->email = $email;
         $user->company = $company;
         $user->adress = $adress;
+        $user->phone = $phone;
         $user->setPassword($password);
         $user->created_at = time();
         $user->status = self::STATUS_WAIT;

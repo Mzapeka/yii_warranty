@@ -44,6 +44,9 @@ class SignupController extends Controller
     public function actionRequest()
     {
         $form = new SignupForm();
+/*        var_dump(Yii::$app->request->post());
+        var_dump($form->validate());
+        die;*/
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
             try {
                 $this->service->signup($form);

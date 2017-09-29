@@ -12,9 +12,9 @@ return [
     'rules' => [
         '' => 'site/index',
         'contact' => 'contact/index',
-        'signup' => 'auth/signup/request',
-        'signup/<_a:[\w-]+>' => 'auth/signup/<_a>',
-        '<_a:login|logout>' => 'auth/auth/<_a>',
+        'site/signup' => 'auth/signup/request',
+        'site/signup/<_a:[\w-]+>' => 'auth/signup/<_a>',
+        'site/<_a:login|logout>' => 'auth/auth/<_a>',
 
         ['pattern' => 'yandex-market', 'route' => 'market/index', 'suffix' => '.xml'],
 

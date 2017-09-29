@@ -40,10 +40,10 @@ class SignupForm extends Model
             ['phone', 'integer'],
 
             ['company', 'required'],
-            ['company', 'string'],
+            ['company', 'string', 'min' => 4],
 
             ['adress', 'required'],
-            ['adress', 'string'],
+            ['adress', 'string', 'min' => 10],
         ];
     }
 }
