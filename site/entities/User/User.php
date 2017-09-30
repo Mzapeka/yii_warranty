@@ -25,6 +25,7 @@ use yii\web\IdentityInterface;
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
+ * @property string $group
 
  */
 class User extends ActiveRecord implements IdentityInterface
@@ -78,6 +79,7 @@ class User extends ActiveRecord implements IdentityInterface
         $user->status = self::STATUS_WAIT;
         $user->email_confirm_token = Yii::$app->security->generateRandomString();
         $user->generateAuthKey();
+        $user->group = 'guest';
         return $user;
     }
 

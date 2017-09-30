@@ -6,6 +6,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
+use yii\web\ForbiddenHttpException;
 
 /**
  * Site controller
@@ -60,7 +61,25 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        if (!\Yii::$app->user->can('indexAdmin')) {
+            $this->redirect('login');
+            //throw new ForbiddenHttpException('Access denied');
+        }
         return $this->render('index');
+    }
+
+    public function beforeAction($action)
+    {
+        //var_dump($action->id);
+        //die;
+        if (parent::beforeAction($action)) {
+            if (!\Yii::$app->user->can($action->id)) {
+                throw new ForbiddenHttpException('Access denied');
+            }
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

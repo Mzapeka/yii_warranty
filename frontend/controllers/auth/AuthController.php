@@ -8,6 +8,7 @@ use site\services\auth\AuthService;
 use Yii;
 use yii\web\Controller;
 use site\forms\auth\LoginForm;
+use yii\web\ForbiddenHttpException;
 
 class AuthController extends Controller
 {
@@ -55,5 +56,17 @@ class AuthController extends Controller
         Yii::$app->user->logout();
 
         return $this->goHome();
+    }
+
+    public function beforeAction($action)
+    {
+        if (parent::beforeAction($action)) {
+            if (!\Yii::$app->user->can($action->id)) {
+                throw new ForbiddenHttpException('Access denied');
+            }
+            return true;
+        } else {
+            return false;
+        }
     }
 }
