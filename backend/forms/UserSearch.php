@@ -89,6 +89,7 @@ class UserSearch extends Model
             ->andFilterWhere(['like', 'company', $this->company])
             ->andFilterWhere(['like', 'adress', $this->adress])
             ->andFilterWhere(['like', 'phone', $this->phone])
+            ->andFilterWhere(['=', 'group', $this->group])
             ->andFilterWhere(['>=', 'created_at', $this->date_from ? strtotime($this->date_from . ' 00:00:00') : null])
             ->andFilterWhere(['<=', 'created_at', $this->date_to ? strtotime($this->date_to . ' 23:59:59') : null]);
            // ->andFilterWhere(['like', 'group', $this->group]);

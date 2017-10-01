@@ -1,8 +1,10 @@
 <?php
 
 use kartik\date\DatePicker;
+use site\access\Rbac;
 use site\entities\User\User;
 use site\helpers\UserHelper;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
@@ -16,10 +18,10 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="user-index">
 
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php Pjax::begin();?> <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create User', ['create'], ['class' => 'btn btn-success']) ?>
+      <?= Html::a('Create User', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <div class="box">
         <div class="box-body">
@@ -53,7 +55,24 @@ $this->params['breadcrumbs'][] = $this->title;
                         'attribute' => 'group',
                         'filter' => $searchModel->rolesList(),
                         'value' => function(User $model){
-                           return \yii\bootstrap\Html::tag('span', $model->group, ['class'=>'label label-danger',]);
+                            $class = '';
+                            $roles = ArrayHelper::map(Yii::$app->authManager->getRoles(), 'name', 'description');
+                            switch ($model->group){
+                                case Rbac::ROLE_DEALER:
+                                   $class = 'label label-success';
+                                   break;
+                                case Rbac::ROLE_ADMIN:
+                                    $class = 'label label-danger';
+                                    break;
+                                case Rbac::ROLE_GUEST:
+                                    $class = 'label label-primary';
+                                    break;
+                                default:
+                                    $class = 'label label-default';
+                                    break;
+                            }
+                            $userRole = $roles[$model->group];
+                           return \yii\bootstrap\Html::tag('span', $userRole, ['class'=>$class,]);
                         },
                         'format' => 'raw',
 
@@ -88,4 +107,5 @@ $this->params['breadcrumbs'][] = $this->title;
             ]); ?>
         </div>
     </div>
+    <?php Pjax::end();?>
 </div>
