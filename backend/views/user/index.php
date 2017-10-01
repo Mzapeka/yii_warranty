@@ -55,24 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'attribute' => 'group',
                         'filter' => $searchModel->rolesList(),
                         'value' => function(User $model){
-                            $class = '';
-                            $roles = ArrayHelper::map(Yii::$app->authManager->getRoles(), 'name', 'description');
-                            switch ($model->group){
-                                case Rbac::ROLE_DEALER:
-                                   $class = 'label label-success';
-                                   break;
-                                case Rbac::ROLE_ADMIN:
-                                    $class = 'label label-danger';
-                                    break;
-                                case Rbac::ROLE_GUEST:
-                                    $class = 'label label-primary';
-                                    break;
-                                default:
-                                    $class = 'label label-default';
-                                    break;
-                            }
-                            $userRole = $roles[$model->group];
-                           return \yii\bootstrap\Html::tag('span', $userRole, ['class'=>$class,]);
+                           return UserHelper::groupLabel($model->group);
                         },
                         'format' => 'raw',
 

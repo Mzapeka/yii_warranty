@@ -2,7 +2,10 @@
 
 namespace site\helpers;
 
+use phpDocumentor\Reflection\Types\Self_;
+use site\access\Rbac;
 use site\entities\User\User;
+use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 
@@ -37,5 +40,31 @@ class UserHelper
         return Html::tag('span', ArrayHelper::getValue(self::statusList(), $status), [
             'class' => $class,
         ]);
+    }
+
+    public static function groupDescription($group):string
+    {
+        $roles = ArrayHelper::map(Yii::$app->authManager->getRoles(), 'name', 'description');
+        return $roles[$group];
+    }
+
+    public static function groupLabel($userGroup):string
+    {
+        switch ($userGroup){
+            case Rbac::ROLE_DEALER:
+                $class = 'label label-success';
+                break;
+            case Rbac::ROLE_ADMIN:
+                $class = 'label label-danger';
+                break;
+            case Rbac::ROLE_GUEST:
+                $class = 'label label-primary';
+                break;
+            default:
+                $class = 'label label-default';
+                break;
+        }
+
+        return \yii\bootstrap\Html::tag('span', self::groupDescription($userGroup), ['class'=>$class,]);
     }
 }
