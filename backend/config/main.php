@@ -1,4 +1,7 @@
 <?php
+
+use site\access\Rbac;
+
 $params = array_merge(
     require(__DIR__ . '/../../common/config/params.php'),
     require(__DIR__ . '/../../common/config/params-local.php'),
@@ -63,7 +66,7 @@ return [
         'rules' => [
             [
                 'allow' => true,
-                'roles' => ['admin'],
+                'roles' => [Rbac::ROLE_ADMIN],
             ],
         ],
     ],

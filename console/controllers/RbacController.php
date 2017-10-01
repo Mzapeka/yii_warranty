@@ -12,6 +12,7 @@ namespace console\controllers;
 
 
 use common\rbac\userGroupRule;
+use site\access\Rbac;
 use Yii;
 use yii\console\Controller;
 
@@ -22,9 +23,12 @@ class RbacController extends Controller
         $authManager = Yii::$app->authManager;
         $authManager->removeAll();
 
-        $guest  = $authManager->createRole('guest');
-        $dealer  = $authManager->createRole('dealer');
-        $admin  = $authManager->createRole('admin');
+        $guest  = $authManager->createRole(Rbac::ROLE_GUEST);
+        $guest->description = 'Гость';
+        $dealer  = $authManager->createRole(Rbac::ROLE_DEALER);
+        $dealer->description = 'Диллер';
+        $admin  = $authManager->createRole(Rbac::ROLE_ADMIN);
+        $admin->description = 'Администратор';
 
         // Create simple, based on action{$NAME} permissions
         $login  = $authManager->createPermission('login');
@@ -35,7 +39,7 @@ class RbacController extends Controller
         $view   = $authManager->createPermission('view');
         $update = $authManager->createPermission('update');
         $delete = $authManager->createPermission('delete');
-
+//админка
         $indexAdmin = $authManager->createPermission('indexAdmin');
         $gii = $authManager->createPermission('gii');
 

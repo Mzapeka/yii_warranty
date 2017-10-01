@@ -1,6 +1,7 @@
 <?php
 namespace site\entities\User;
 
+use site\access\Rbac;
 use site\repositories\UserReadRepository;
 use Yii;
 use yii\base\NotSupportedException;
@@ -34,7 +35,7 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_WAIT = 0;
     const STATUS_ACTIVE = 10;
 
-    public static function create(string $username, string $email, string $phone, string $password, string $company, string $adress): self
+    public static function create(string $username, string $email, string $phone, string $password, string $company, string $adress, string $group): self
     {
         $user = new User();
         $user->username = $username;
@@ -46,10 +47,11 @@ class User extends ActiveRecord implements IdentityInterface
         $user->created_at = time();
         $user->status = self::STATUS_ACTIVE;
         $user->auth_key = Yii::$app->security->generateRandomString();
+        $user->group = !empty($group) ? $group : Rbac::ROLE_DEALER;
         return $user;
     }
 
-    public function edit(string $username, string $email, string $phone, string $company, string $adress): void
+    public function edit(string $username, string $email, string $phone, string $company, string $adress, string $group): void
     {
         $this->username = $username;
         $this->email = $email;
@@ -57,6 +59,7 @@ class User extends ActiveRecord implements IdentityInterface
         $this->updated_at = time();
         $this->company = $company;
         $this->adress = $adress;
+        $this->group = $group;
     }
 
 /*    public function editProfile(string $email, string $phone): void

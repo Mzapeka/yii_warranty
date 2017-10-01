@@ -9,6 +9,7 @@
 namespace common\rbac;
 
 
+use site\access\Rbac;
 use yii\rbac\Item;
 use yii\rbac\Rule;
 
@@ -29,12 +30,12 @@ class userGroupRule extends Rule
 
          $group = (!\Yii::$app->user->isGuest) ? \Yii::$app->user->identity->group : 'guest';
 
-            if ($item->name === 'admin') {
-                return $group == 'admin';
-            } elseif ($item->name === 'dealer') {
-                return $group == 'admin' || $group == 'dealer';
-            } elseif ($item->name === 'guest') {
-                return $group == 'admin' || $group == 'dealer' || $group == 'guest';
+            if ($item->name === Rbac::ROLE_ADMIN) {
+                return $group == Rbac::ROLE_ADMIN;
+            } elseif ($item->name === Rbac::ROLE_DEALER) {
+                return $group == Rbac::ROLE_ADMIN || $group == Rbac::ROLE_DEALER;
+            } elseif ($item->name === Rbac::ROLE_GUEST) {
+                return $group == Rbac::ROLE_ADMIN || $group == Rbac::ROLE_DEALER || $group == Rbac::ROLE_GUEST;
             }
 
         return false;
