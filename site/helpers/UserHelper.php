@@ -67,4 +67,5 @@ class UserHelper
 
         return \yii\bootstrap\Html::tag('span', self::groupDescription($userGroup), ['class'=>$class,]);
     }
+
 }
