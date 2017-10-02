@@ -12,7 +12,7 @@ namespace site\entities\Customer;
  * Customer model
  *
  * @property integer $id
- * @property integer $id_dealer
+ * @property integer $dealer_id
  * @property string $email
  * @property string $customer_name
  * @property string $adress

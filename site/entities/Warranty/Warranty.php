@@ -11,14 +11,14 @@ namespace site\entities\Warranty;
  * Customer model
  *
  * @property integer $id
- * @property integer $id_customer
+ * @property integer $customer_id
  * @property string $device_name
  * @property string $part_number
  * @property string $serial_number
  * @property string $invoice_number
  * @property string $act_number
- * @property string $invoice_date
- * @property string $act_date
+ * @property integer $invoice_date
+ * @property integer $act_date
  * @property integer $created_at
  * @property integer $updated_at
  *
