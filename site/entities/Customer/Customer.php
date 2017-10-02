@@ -7,6 +7,8 @@
  */
 
 namespace site\entities\Customer;
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
 
 /**
  * Customer model
@@ -23,7 +25,17 @@ namespace site\entities\Customer;
 
  */
 
-class Customer
+class Customer extends ActiveRecord
 {
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+        ];
+    }
 
 }
