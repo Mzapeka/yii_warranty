@@ -29,7 +29,7 @@ class m171002_185651_create_customers_table extends Migration
         $this->createIndex('{{%idx-customers-dealer_id}}', '{{%customers}}', 'dealer_id');
         $this->createIndex('{{%idx-customers-customer_name}}', '{{%customers}}', 'customer_name');
 
-        $this->addForeignKey('{{%fk-customers-dealer_id}}', '{{%customers}}', 'customer_id', '{{%users}}', 'id');
+        $this->addForeignKey('{{%fk-customers-dealer_id}}', '{{%customers}}', 'dealer_id', '{{%users}}', 'id');
     }
 
     /**
