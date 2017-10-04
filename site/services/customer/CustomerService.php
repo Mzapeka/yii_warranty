@@ -10,6 +10,7 @@ namespace site\services\customer;
 
 
 use site\entities\Customer\Customer;
+use site\forms\customer\CustomerForm;
 use site\repositories\CustomerRepository;
 
 class CustomerService
