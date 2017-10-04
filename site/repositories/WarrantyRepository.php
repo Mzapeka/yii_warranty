@@ -19,11 +19,11 @@ class WarrantyRepository
         return $this->getBy(['id' => $id, 'status' => Warranty::STATUS_ACTIVE]);
     }
 
+
     public function findById($id): ?Warranty
     {
         return $this->getBy(['id' => $id]);
     }
-
 
 
     public function count(): int
