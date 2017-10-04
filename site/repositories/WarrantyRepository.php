@@ -9,6 +9,7 @@
 namespace site\repositories;
 
 
+use site\entities\Customer\Customer;
 use site\entities\Warranty\Warranty;
 
 class WarrantyRepository
@@ -35,6 +36,7 @@ class WarrantyRepository
     {
         return Warranty::find()->alias('w')->andWhere(['w.status' => Warranty::STATUS_ACTIVE])->orderBy(['id' => SORT_ASC])->limit($limit)->offset($offset)->all();
     }
+
 
     //todo: Дописать остальные методы
     //todo: Сделать сервис гарантии

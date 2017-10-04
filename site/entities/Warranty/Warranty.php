@@ -7,8 +7,11 @@
  */
 
 namespace site\entities\Warranty;
+use site\entities\User\User;
 use site\repositories\WarrantyRepository;
+use Yii;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
@@ -60,6 +63,7 @@ class Warranty extends ActiveRecord
         return $warranty;
     }
 
+
     public function edit(
         int $customerId,
         string $deviceName,
@@ -105,6 +109,17 @@ class Warranty extends ActiveRecord
             throw new \DomainException('Warranty is already active.');
         }
         $this->status = self::STATUS_WAIT;
+    }
+
+
+    public function getCustomers(): ActiveQuery
+    {
+        return $this->hasOne(Customer::class, ['id' => 'customer_id']);
+    }
+
+    public function getUsers():ActiveQuery
+    {
+        return $this->hasOne(User::class, ['id'=>'dealer_id'])->via('Customers');
     }
 
 

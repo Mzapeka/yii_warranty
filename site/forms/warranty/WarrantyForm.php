@@ -12,7 +12,7 @@ namespace site\forms\warranty;
 use site\entities\Warranty\Warranty;
 use yii\base\Model;
 
-class WarrantyCreateForm extends Model
+class WarrantyForm extends Model
 {
 
     public $device_name;
@@ -35,6 +35,5 @@ class WarrantyCreateForm extends Model
             [['customer_id', 'status'], 'integer'],
         ];
     }
-
 
 }
