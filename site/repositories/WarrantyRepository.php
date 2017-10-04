@@ -9,7 +9,6 @@
 namespace site\repositories;
 
 
-use site\entities\Customer\Customer;
 use site\entities\Warranty\Warranty;
 
 class WarrantyRepository
