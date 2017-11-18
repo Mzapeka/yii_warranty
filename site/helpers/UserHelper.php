@@ -11,6 +11,13 @@ use yii\helpers\Html;
 
 class UserHelper
 {
+
+    public static function getUserNameList():array
+    {
+        $userList = User::find()->select(['id', 'username'])->asArray()->all();
+        return ArrayHelper::map($userList, 'id', 'username');
+    }
+
     public static function statusList(): array
     {
         return [

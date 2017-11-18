@@ -1,5 +1,6 @@
 <?php
 
+use kartik\date\DatePicker;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
@@ -12,9 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="customer-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
     <?php Pjax::begin(); ?>
-    <?php  //echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
         <?= Html::a('Create Customer', ['create'], ['class' => 'btn btn-success']) ?>
@@ -26,12 +25,28 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'dealer_id',
+            'customer_name',
+            //'id',
+            //'dealer_id',
             'email:email',
-            'created_at',
-            'updated_at',
-            //'customer_name',
+            [
+                'attribute' => 'created_at',
+                'filter' => DatePicker::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'date_from',
+                    'attribute2' => 'date_to',
+                    'type' => DatePicker::TYPE_RANGE,
+                    'separator' => '-',
+                    'pluginOptions' => [
+                        'todayHighlight' => true,
+                        'autoclose'=>true,
+                        'format' => 'yyyy-mm-dd',
+                    ],
+                ]),
+                'format' => 'datetime',
+            ],
+            //'updated_at',
+
             //'adress',
             //'phone',
 

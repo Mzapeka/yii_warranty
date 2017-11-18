@@ -2,6 +2,10 @@
 
 namespace backend\controllers;
 
+use site\forms\customer\CustomerCreateForm;
+use site\forms\customer\CustomerEditForm;
+use site\forms\customer\CustomerEditFormForm;
+use site\services\customer\CustomerService;
 use Yii;
 use site\entities\Customer\Customer;
 use backend\forms\CustomerSearch;
@@ -14,6 +18,15 @@ use yii\filters\VerbFilter;
  */
 class CustomerController extends Controller
 {
+
+    private $service;
+
+    public function __construct($id, $module, CustomerService $service, array $config = [])
+    {
+        parent::__construct($id, $module, $config);
+        $this->service = $service;
+    }
+
     /**
      * @inheritdoc
      */
@@ -63,14 +76,20 @@ class CustomerController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Customer();
+        $form = new CustomerCreateForm();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
+            try{
+                $customer = $this->service->create($form);
+                return $this->redirect(['view', 'id' => $customer->id]);
+            } catch (\DomainException $e) {
+                Yii::$app->errorHandler->logException($e);
+                Yii::$app->session->setFlash('error', $e->getMessage());
+            }
         }
 
         return $this->render('create', [
-            'model' => $model,
+            'model' => $form,
         ]);
     }
 
@@ -82,14 +101,22 @@ class CustomerController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        $customer = $this->findModel($id);
+        $form = new CustomerEditForm($customer);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
+            try{
+                $this->service->edit($customer->id, $form);
+                return $this->redirect(['view', 'id' => $customer->id]);
+            }catch (\DomainException $e){
+                Yii::$app->errorHandler->logException($e);
+                Yii::$app->session->setFlash('error', $e->getMessage());
+            }
         }
 
         return $this->render('update', [
-            'model' => $model,
+            'model' => $form,
+            'customer' => $customer,
         ]);
     }
 

@@ -9,7 +9,10 @@
 namespace site\forms\customer;
 
 
-class CustomerForm
+use site\entities\Customer\Customer;
+use yii\base\Model;
+
+class CustomerEditForm extends Model
 {
 
     public $dealer_id;
@@ -17,6 +20,18 @@ class CustomerForm
     public $customer_name;
     public $adress;
     public $phone;
+
+    public $_customer;
+
+    public function __construct(Customer $customer, array $config = [])
+    {
+        $this->dealer_id = $customer->dealer_id;
+        $this->email = $customer->email;
+        $this->customer_name = $customer->customer_name;
+        $this->adress = $customer->adress;
+        $this->phone = $customer->phone;
+        parent::__construct($config);
+    }
 
     public function rules(): array
     {

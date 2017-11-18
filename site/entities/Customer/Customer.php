@@ -34,8 +34,8 @@ class Customer extends ActiveRecord
         int $dealer_id,
         string $email,
         string $customer_name,
-        string $adress,
-        string $phone
+        string $adress = null,
+        string $phone = null
     ):self
     {
         $customer = new Customer();

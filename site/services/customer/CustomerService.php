@@ -10,7 +10,8 @@ namespace site\services\customer;
 
 
 use site\entities\Customer\Customer;
-use site\forms\customer\CustomerForm;
+use site\forms\customer\CustomerCreateForm;
+use site\forms\customer\CustomerEditForm;
 use site\repositories\CustomerRepository;
 
 class CustomerService
@@ -25,7 +26,7 @@ class CustomerService
         $this->repository = $repository;
     }
 
-    public function create(CustomerForm $form): Customer
+    public function create(CustomerCreateForm $form): Customer
     {
         $customer = Customer::create(
             $form->dealer_id,
@@ -38,7 +39,7 @@ class CustomerService
         return $customer;
     }
 
-    public function edit($id, CustomerForm $form): void
+    public function edit($id, CustomerEditForm $form): void
     {
         $customer = $this->repository->findById($id);
         $customer->edit(

@@ -30,6 +30,12 @@
             [
                 'options' => ['class' => 'sidebar-menu'],
                 'items' => [
+                    ['label' => 'Management', 'options' => ['class' => 'header']],
+                    ['label' => 'Управление гарантиями', 'icon' => 'folder', 'items' => [
+                        ['label' => 'Пользователи', 'icon' => 'file-o', 'url' => ['/user'], 'active' => $this->context->id == 'user'],
+                        ['label' => 'Клиенты', 'icon' => 'file-o', 'url' => ['/customer'], 'active' => $this->context->id == 'customer'],
+
+                    ]],
                     ['label' => 'Menu Yii2', 'options' => ['class' => 'header']],
                     ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii']],
                     ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug']],
