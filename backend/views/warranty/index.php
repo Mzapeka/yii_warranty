@@ -1,5 +1,7 @@
 <?php
 
+use site\entities\Warranty\Warranty;
+use site\helpers\WarrantyHelper;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
@@ -26,18 +28,25 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
+            //'id',
             'customer_id',
             'device_name',
             'part_number',
             'serial_number',
-            //'invoice_number',
-            //'act_number',
-            //'invoice_date',
-            //'act_date',
-            //'created_at',
-            //'updated_at',
-            //'status',
+            'invoice_number',
+            'act_number',
+            'invoice_date:date',
+            'act_date:date',
+            'created_at:date',
+            //'updated_at:date',
+            [
+                'attribute' => 'status',
+                'filter' => WarrantyHelper::statusList(),
+                'value' => function (Warranty $model) {
+                    return WarrantyHelper::statusLabel($model->status);
+                },
+                'format' => 'raw',
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

@@ -64,12 +64,12 @@ class Customer extends ActiveRecord
     }
 
 
-    public function getUsers(): ActiveQuery
+    public function getUser(): ActiveQuery
     {
         return $this->hasOne(User::class, ['id' => 'dealer_id']);
     }
 
-    public function getWarranties():ActiveQuery
+    public function getWarranty():ActiveQuery
     {
         return $this->hasMany(Warranty::class, ['customer_id'=>'id']);
     }

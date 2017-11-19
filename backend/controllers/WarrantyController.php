@@ -2,6 +2,9 @@
 
 namespace backend\controllers;
 
+use site\forms\warranty\WarrantyCreateForm;
+use site\forms\warranty\WarrantyEditForm;
+use site\services\warranty\WarrantyService;
 use Yii;
 use site\entities\Warranty\Warranty;
 use backend\forms\WarrantySearch;
@@ -14,6 +17,14 @@ use yii\filters\VerbFilter;
  */
 class WarrantyController extends Controller
 {
+
+    private $service;
+
+    public function __construct($id, $module, WarrantyService $service, $config = [])
+    {
+        parent::__construct($id, $module, $config);
+        $this->service = $service;
+    }
     /**
      * @inheritdoc
      */
@@ -63,14 +74,20 @@ class WarrantyController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Warranty();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $form = new WarrantyCreateForm();
+        //var_dump(Yii::$app->request->post());
+        //exit;
+        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
+            try{
+                $user = $this->service->create($form);
+                return $this->redirect(['view', 'id' => $user->id]);
+            } catch (\DomainException $e) {
+                Yii::$app->errorHandler->logException($e);
+                Yii::$app->session->setFlash('error', $e->getMessage());
+            }
         }
-
         return $this->render('create', [
-            'model' => $model,
+            'model' => $form,
         ]);
     }
 
@@ -82,15 +99,24 @@ class WarrantyController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $warranty = $this->findModel($id);
+        $form = new WarrantyEditForm($warranty);
+
+        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
+            try{
+                $this->service->edit($warranty->id, $form);
+                return $this->redirect(['view', 'id' => $warranty->id]);
+            }catch (\DomainException $e){
+                Yii::$app->errorHandler->logException($e);
+                Yii::$app->session->setFlash('error', $e->getMessage());
+            }
         }
-
         return $this->render('update', [
-            'model' => $model,
+            'model' => $form,
+            'warranty' => $warranty,
         ]);
+
     }
 
     /**
@@ -101,8 +127,7 @@ class WarrantyController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        $this->service->remove($id);;
         return $this->redirect(['index']);
     }
 

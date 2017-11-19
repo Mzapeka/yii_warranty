@@ -2,10 +2,12 @@
 namespace site\entities\User;
 
 use site\access\Rbac;
+use site\entities\Customer\Customer;
 use site\repositories\UserReadRepository;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 
@@ -35,7 +37,14 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_WAIT = 0;
     const STATUS_ACTIVE = 10;
 
-    public static function create(string $username, string $email, string $phone, string $password, string $company, string $adress, string $group): self
+    public static function create(
+        string $username,
+        string $email,
+        string $phone,
+        string $password,
+        string $company,
+        string $adress,
+        string $group): self
     {
         $user = new User();
         $user->username = $username;
@@ -312,5 +321,10 @@ class User extends ActiveRecord implements IdentityInterface
     private function generateAuthKey()
     {
         $this->auth_key = Yii::$app->security->generateRandomString();
+    }
+
+    public function getCustomer():ActiveQuery
+    {
+        return $this->hasMany(Customer::class, ['dealer_id'=>'id']);
     }
 }

@@ -10,7 +10,8 @@ namespace site\services\warranty;
 
 
 use site\entities\Warranty\Warranty;
-use site\forms\warranty\WarrantyForm;
+use site\forms\warranty\WarrantyCreateForm;
+use site\forms\warranty\WarrantyEditForm;
 use site\repositories\WarrantyRepository;
 
 class WarrantyService
@@ -25,7 +26,7 @@ class WarrantyService
         $this->repository = $repository;
     }
 
-    public function create(WarrantyForm $form): Warranty
+    public function create(WarrantyCreateForm $form): Warranty
     {
         $warranty = Warranty::create(
             $form->customer_id,
@@ -35,13 +36,14 @@ class WarrantyService
             $form->invoice_number,
             $form->invoice_date,
             $form->act_number,
-            $form->act_date
+            $form->act_date,
+            $form->status
         );
         $this->repository->save($warranty);
         return $warranty;
     }
 
-    public function edit($id, WarrantyForm $form): void
+    public function edit($id, WarrantyEditForm $form): void
     {
         $warranty = $this->repository->findById($id);
         $warranty->edit(
@@ -52,7 +54,8 @@ class WarrantyService
             $form->invoice_number,
             $form->invoice_date,
             $form->act_number,
-            $form->act_date
+            $form->act_date,
+            $form->status
         );
         $this->repository->save($warranty);
     }

@@ -4,7 +4,6 @@ namespace backend\controllers;
 
 use site\forms\customer\CustomerCreateForm;
 use site\forms\customer\CustomerEditForm;
-use site\forms\customer\CustomerEditFormForm;
 use site\services\customer\CustomerService;
 use Yii;
 use site\entities\Customer\Customer;
@@ -128,8 +127,7 @@ class CustomerController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        $this->service->remove($id);;
         return $this->redirect(['index']);
     }
 

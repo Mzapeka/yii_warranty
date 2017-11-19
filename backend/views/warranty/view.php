@@ -1,5 +1,8 @@
 <?php
 
+use site\entities\Warranty\Warranty;
+use site\helpers\CustomerHelper;
+use site\helpers\WarrantyHelper;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -29,17 +32,30 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'customer_id',
+            [
+                'attribute' => 'customer_id',
+                'label' => 'Клиент',
+                'value' => function (Warranty $model) {
+                    return CustomerHelper::getCustomerNameByID($model->customer_id);
+                },
+            ],
             'device_name',
             'part_number',
             'serial_number',
             'invoice_number',
             'act_number',
-            'invoice_date',
-            'act_date',
-            'created_at',
-            'updated_at',
-            'status',
+            'invoice_date:date',
+            'act_date:date',
+            'created_at:datetime',
+            'updated_at:datetime',
+            [
+                'attribute' => 'status',
+                'filter' => WarrantyHelper::statusList(),
+                'value' => function (Warranty $model) {
+                    return WarrantyHelper::statusLabel($model->status);
+                },
+                'format' => 'raw',
+            ],
         ],
     ]) ?>
 

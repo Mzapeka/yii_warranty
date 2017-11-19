@@ -38,6 +38,7 @@ class Warranty extends ActiveRecord
     const STATUS_WAIT = 0;
     const STATUS_ACTIVE = 10;
 
+
     public static function create(
         int $customerId,
         string $deviceName,
@@ -46,7 +47,8 @@ class Warranty extends ActiveRecord
         string $invoiceNumber,
         int $invoiceDate,
         string $actNumber = null,
-        int $actDate = null
+        int $actDate = null,
+        int $status = self::STATUS_ACTIVE
     ):self
     {
         $warranty = new Warranty();
@@ -58,8 +60,7 @@ class Warranty extends ActiveRecord
         $warranty->invoice_date = $invoiceDate;
         $warranty->act_number = $actNumber;
         $warranty->act_date = $actDate;
-        $warranty->status = self::STATUS_ACTIVE;
-        //$warranty->created_at = time();
+        $warranty->status = $status;
         return $warranty;
     }
 
@@ -72,7 +73,8 @@ class Warranty extends ActiveRecord
         string $invoiceNumber,
         int $invoiceDate,
         string $actNumber = null,
-        int $actDate = null
+        int $actDate = null,
+        int $status = null
     ):void
     {
         $this->customer_id = $customerId;
@@ -83,6 +85,7 @@ class Warranty extends ActiveRecord
         $this->invoice_date = $invoiceDate;
         $this->act_number = $actNumber;
         $this->act_date = $actDate;
+        $this->status = $status;
     }
 
     public function isWait(): bool

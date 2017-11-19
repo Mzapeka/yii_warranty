@@ -34,6 +34,7 @@
                     ['label' => 'Управление гарантиями', 'icon' => 'folder', 'items' => [
                         ['label' => 'Пользователи', 'icon' => 'file-o', 'url' => ['/user'], 'active' => $this->context->id == 'user'],
                         ['label' => 'Клиенты', 'icon' => 'file-o', 'url' => ['/customer'], 'active' => $this->context->id == 'customer'],
+                        ['label' => 'Гарантии', 'icon' => 'file-o', 'url' => ['/warranty'], 'active' => $this->context->id == 'warranty'],
 
                     ]],
                     ['label' => 'Menu Yii2', 'options' => ['class' => 'header']],
