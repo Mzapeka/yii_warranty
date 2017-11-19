@@ -13,6 +13,7 @@ use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 
 /**
  * Customer model
@@ -38,6 +39,35 @@ class Warranty extends ActiveRecord
     const STATUS_WAIT = 0;
     const STATUS_ACTIVE = 10;
 
+    public function attributeLabels()
+    {
+        return self::labels();
+    }
+
+    public static function labels($name=null)
+    {
+        $labelsArray = array(
+            'id' => 'ID гарантии',
+            'customer_id' => 'Клиент',
+            'device_name' => 'Название изделия',
+            'part_number' => 'Артикул',
+            'serial_number' => 'Серийный №',
+            'invoice_number' => '№ инвойсв',
+            'act_number' => '№ акта ввода в экспл.',
+            'invoice_date' => 'Дата инвойса',
+            'act_date' => 'Дата ввода в экспл.',
+            'created_at' => 'Дата создания',
+            'updated_at' => 'Дата изменения',
+            'status' => 'Статус',
+        );
+        if(!is_null($name)){
+            if(ArrayHelper::keyExists($name, $labelsArray)){
+                return $labelsArray[$name];
+            }
+            return null;
+        }
+        return $labelsArray;
+    }
 
     public static function create(
         int $customerId,

@@ -1,5 +1,7 @@
 <?php
 return [
+    'language' => 'ru-RU',
+    'name' => 'Bosch Warranty',
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'components' => [
         'cache' => [

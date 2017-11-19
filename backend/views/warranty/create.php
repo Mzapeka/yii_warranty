@@ -2,6 +2,7 @@
 
 use kartik\widgets\ActiveForm;
 use kartik\widgets\DatePicker;
+use site\entities\Warranty\Warranty;
 use site\helpers\CustomerHelper;
 use site\helpers\WarrantyHelper;
 use yii\helpers\Html;
@@ -9,8 +10,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model site\entities\Warranty\Warranty */
 
-$this->title = 'Create Warranty';
-$this->params['breadcrumbs'][] = ['label' => 'Warranties', 'url' => ['index']];
+$this->title = 'Новая гарантия';
+$this->params['breadcrumbs'][] = ['label' => 'Гарантии', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
 /*
@@ -25,12 +26,12 @@ if(!empty($model->act_date)){
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'customer_id')->dropDownList(CustomerHelper::getCustomerNameList()) ?>
-    <?= $form->field($model, 'device_name')->textInput(['maxlength' => true]) ?>
-    <?= $form->field($model, 'part_number')->textInput(['maxlength' => true]) ?>
-    <?= $form->field($model, 'serial_number')->textInput(['maxlength' => true]) ?>
-    <?= $form->field($model, 'invoice_number')->textInput(['maxlength' => true]) ?>
-    <?= $form->field($model, 'act_number')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'customer_id')->dropDownList(CustomerHelper::getCustomerNameList())->label(Warranty::labels('customer_id')) ?>
+    <?= $form->field($model, 'device_name')->textInput(['maxlength' => true])->label(Warranty::labels('device_name')) ?>
+    <?= $form->field($model, 'part_number')->textInput(['maxlength' => true])->label(Warranty::labels('part_number')) ?>
+    <?= $form->field($model, 'serial_number')->textInput(['maxlength' => true])->label(Warranty::labels('serial_number')) ?>
+    <?= $form->field($model, 'invoice_number')->textInput(['maxlength' => true])->label(Warranty::labels('invoice_number')) ?>
+    <?= $form->field($model, 'act_number')->textInput(['maxlength' => true])->label(Warranty::labels('act_number')) ?>
     <?= $form->field($model, 'invoice_date')->widget(DatePicker::className(),[
         'type' => DatePicker::TYPE_COMPONENT_APPEND,
         'language' => 'ru',
@@ -40,7 +41,7 @@ if(!empty($model->act_date)){
             'autoclose'=>true,
             'format' => 'yyyy-mm-dd',
         ],
-    ])  ?>
+    ])->label(Warranty::labels('invoice_date'))  ?>
     <?= $form->field($model, 'act_date')->widget(DatePicker::className(),[
         'type' => DatePicker::TYPE_COMPONENT_APPEND,
         'language' => 'ru',
@@ -50,11 +51,11 @@ if(!empty($model->act_date)){
             'autoclose'=>true,
             'format' => 'yyyy-mm-dd',
         ],
-    ]) ?>
-    <?= $form->field($model, 'status')->dropDownList(WarrantyHelper::statusList()) ?>
+    ])->label(Warranty::labels('act_date')) ?>
+    <?= $form->field($model, 'status')->dropDownList(WarrantyHelper::statusList())->label(Warranty::labels('status')) ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

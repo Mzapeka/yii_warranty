@@ -24,6 +24,7 @@ class WarrantyEditForm extends Model
     public $invoice_date;
     public $act_date;
     public $status;
+    public $id;
 
     public $_warranty;
 
@@ -38,6 +39,7 @@ class WarrantyEditForm extends Model
         $this->invoice_date = $warranty->invoice_date;
         $this->act_date = $warranty->act_date;
         $this->status = $warranty->status;
+        $this->id = $warranty->id;
         parent::__construct($config);
     }
 

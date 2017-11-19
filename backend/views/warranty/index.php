@@ -9,17 +9,16 @@ use yii\widgets\Pjax;
 /* @var $searchModel backend\forms\WarrantySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Warranties';
+$this->title = 'Гарантии';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="warranty-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
     <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Warranty', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Зарегистрировать гарантию', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -27,7 +26,6 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
             //'id',
             'customer_id',
             'device_name',

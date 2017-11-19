@@ -9,13 +9,11 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model site\entities\Warranty\Warranty */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Warranties', 'url' => ['index']];
+$this->title = "Гарантия № ".$model->id;
+$this->params['breadcrumbs'][] = ['label' => 'Гарантии', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="warranty-view">
-
-    <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
