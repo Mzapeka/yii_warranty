@@ -13,6 +13,7 @@ return [
         'login' => 'auth/login',
         'site/<_a:login|logout>' => 'auth/<_a>',
         'auth/auth/<_a:login|logout>' => 'auth/<_a>',
+        'importdata' => 'importdata',
 
         '<_c:[\w\-]+>' => '<_c>/index',
         '<_c:[\w\-]+>/<id:\d+>' => '<_c>/view',

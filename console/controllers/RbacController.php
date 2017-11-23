@@ -42,6 +42,7 @@ class RbacController extends Controller
 //админка
         $indexAdmin = $authManager->createPermission('indexAdmin');
         $gii = $authManager->createPermission('gii');
+        $importData = $authManager->createPermission('importdata');
 
         // Add permissions in Yii::$app->authManager
         $authManager->add($login);
@@ -54,6 +55,7 @@ class RbacController extends Controller
         $authManager->add($delete);
         $authManager->add($indexAdmin);
         $authManager->add($gii);
+        $authManager->add($importData);
 
         // Add rule, based on UserExt->group === $user->group
         $userGroupRule = new UserGroupRule();
@@ -87,6 +89,7 @@ class RbacController extends Controller
         $authManager->addChild($admin, $dealer);
         $authManager->addChild($admin, $indexAdmin);
         $authManager->addChild($admin, $gii);
+        $authManager->addChild($admin, $importData);
 
     }
 

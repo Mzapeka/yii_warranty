@@ -17,7 +17,11 @@ return [
         'log',
         'common\bootstrap\SetUp',
     ],
-    'modules' => [],
+    'modules' => [
+        'importdata' => [
+            'class' => 'app\modules\importData\Module',
+        ],
+    ],
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-backend',

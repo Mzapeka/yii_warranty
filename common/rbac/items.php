@@ -30,6 +30,9 @@ return [
     'gii' => [
         'type' => 2,
     ],
+    'importdata' => [
+        'type' => 2,
+    ],
     'guest' => [
         'type' => 1,
         'description' => 'Гость',
@@ -61,6 +64,7 @@ return [
             'dealer',
             'indexAdmin',
             'gii',
+            'importdata',
         ],
     ],
 ];
