@@ -14,6 +14,8 @@ return [
         'site/<_a:login|logout>' => 'auth/<_a>',
         'auth/auth/<_a:login|logout>' => 'auth/<_a>',
         'importdata' => 'importdata',
+        'importdata/<_a:[\w]+>' => 'importdata/default/<_a>',
+
 
         '<_c:[\w\-]+>' => '<_c>/index',
         '<_c:[\w\-]+>/<id:\d+>' => '<_c>/view',

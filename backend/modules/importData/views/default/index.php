@@ -1,12 +1,28 @@
+<?php
+
+/* @var $this yii\web\View */
+
+use yii\bootstrap\ActiveForm;
+use yii\bootstrap\Html;
+use yii\helpers\Url;
+
+/* @var $form yii\bootstrap\ActiveForm */
+/* @var $model \app\modules\importData\forms\OldDbCredentialForm */
+
+$this->title = 'Импорт данных из старой базы';
+
+?>
+
 <div class="importData-default-index">
-    <h1><?= $this->context->action->uniqueId ?></h1>
-    <p>
-        This is the view content for action "<?= $this->context->action->id ?>".
-        The action belongs to the controller "<?= get_class($this->context) ?>"
-        in the "<?= $this->context->module->id ?>" module.
-    </p>
-    <p>
-        You may customize this page by editing the following file:<br>
-        <code><?= __FILE__ ?></code>
-    </p>
+
+    <?php $form = ActiveForm::begin(['action'=> Url::to(['test'])]); ?>
+    <?= $form->field($model,'path')->textInput()->label('Путь к базе')?>
+    <?= $form->field($model,'dbName')->textInput()->label('Имя базы')?>
+    <?= $form->field($model,'userName')->textInput()->label('Имя пользователя')?>
+    <?= $form->field($model,'pass')->passwordInput()->label('Пароль')?>
+    <div class="form-group">
+        <?= Html::submitButton('Загрузить', ['class' => 'btn btn-primary']) ?>
+    </div>
+    <?php ActiveForm::end(); ?>
+
 </div>

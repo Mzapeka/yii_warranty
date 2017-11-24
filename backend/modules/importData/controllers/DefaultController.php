@@ -2,6 +2,8 @@
 
 namespace app\modules\importData\controllers;
 
+use app\modules\importData\forms\OldDbCredentialForm;
+use console\models\MigrateOldDb;
 use yii\web\Controller;
 
 /**
@@ -15,6 +17,33 @@ class DefaultController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $model = new OldDbCredentialForm();
+        $model->loadFromParams();
+        return $this->render('index',[
+            'model' => $model,
+        ]);
     }
+
+    public function actionDbImport()
+    {
+//todo: сделать нормально исключения
+        $data = new MigrateOldDb($host,$dbName,$userName,$pass);
+        //$data->getTableData('users')
+        try{
+            //$data->getBtsNiknames();
+            //$data->getUsersNiknames();
+            //$data->importBts();
+            $data->importCustomer();
+        }catch (\RuntimeException $e){
+            echo $e->getMessage();
+        }
+        echo 'Process was finished success';
+    }
+
+    public function actionTest()
+    {
+        return $this->renderContent('HELLO');
+    }
+
+
 }

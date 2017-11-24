@@ -2,22 +2,22 @@
 
 namespace console\models;
 
-use Yii;
+use yii\db\ActiveRecord;
 
 /**
- * This is the model class for table "user_nikname".
+ * This is the model class for table "bts_nikname".
  *
  * @property int $id
- * @property string $userId
+ * @property string $btsId
  */
-class UserNikname extends \yii\db\ActiveRecord
+class BtsNikname extends ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'user_nikname';
+        return 'bts_nikname';
     }
 
     /**
@@ -27,7 +27,7 @@ class UserNikname extends \yii\db\ActiveRecord
     {
         return [
             [['id'], 'integer'],
-            [['userId'], 'string', 'max' => 255],
+            [['btsId'], 'string', 'max' => 255],
         ];
     }
 
@@ -38,7 +38,12 @@ class UserNikname extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'userId' => 'User ID',
+            'btsId' => 'Bts ID',
         ];
+    }
+
+    public static function getUserIdByNik(string $nik){
+        $entity = BtsNikname::findOne(['btsId'=> $nik]);
+        return $entity->id;
     }
 }

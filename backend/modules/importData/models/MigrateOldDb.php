@@ -9,6 +9,7 @@
 
 namespace console\models;
 
+use app\modules\importData\forms\OldDbCredentialForm;
 use site\entities\User\User;
 use site\forms\customer\CustomerCreateForm;
 use site\forms\User\UserCreateForm;
@@ -31,17 +32,21 @@ class MigrateOldDb
 {
     private $db;
 
-    public function __construct($host, $dbName, $username, $pass)
+    private $userService;
+    private $customerService;
+
+    public function __construct(UserManageService $userService, CustomerService $customerService)
     {
-        $this->connect($host, $dbName, $username, $pass);
+        $this->userService = $userService;
+        $this->customerService = $customerService;
     }
 
-    public function connect($host, $dbName, $username, $pass): void
+    public function connect(OldDbCredentialForm $credentialForm): void
     {
         $this->db = new Connection([
-            'dsn' => 'mysql:host='.$host.';dbname='.$dbName,
-            'username' => $username,
-            'password' => $pass,
+            'dsn' => 'mysql:host='.$credentialForm->path.';dbname='.$credentialForm->dbName,
+            'username' => $credentialForm->userName,
+            'password' => $credentialForm->pass,
             'charset' => 'utf8',
         ]);
     }
@@ -93,7 +98,6 @@ class MigrateOldDb
     {
         $bts = $this->getTableData('bts');
         if(is_array($bts)){
-            $userManager = new UserManageService((new UserRepository()));
             foreach ($bts as $btsReccord){
                 $userDataArray = array(
                        'username' => $btsReccord['name'],
@@ -108,7 +112,7 @@ class MigrateOldDb
                 $form = new UserCreateForm();
                 $form->attributes = $userDataArray;
 
-                $newUser = $userManager->create($form);
+                $newUser = $this->userService->create($form);
 
                 $nikname = new BtsNikname();
                 $nikname->id = $newUser->id;
@@ -123,7 +127,7 @@ class MigrateOldDb
     {
         $users = $this->getTableData('users');
         if(is_array($users)){
-            $customerService = new CustomerService((new CustomerRepository()));
+
             foreach ($users as $user){
                 //var_dump(BtsNikname::getUserIdByNik($user['btsId']));
                 //exit;
@@ -138,7 +142,7 @@ class MigrateOldDb
                 $form = new CustomerCreateForm();
                 $form->attributes = $userDataArray;
 
-                $customer = $customerService->create($form);
+                $customer = $this->customerService->create($form);
 
                 $nikname = new UserNikname();
                 $nikname->id = $customer->id;

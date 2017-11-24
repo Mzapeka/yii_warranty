@@ -37,6 +37,10 @@
                         ['label' => 'Гарантии', 'icon' => 'file-o', 'url' => ['/warranty'], 'active' => $this->context->id == 'warranty'],
 
                     ]],
+                    ['label' => 'Импорт данных', 'icon' => 'folder', 'items' => [
+                        ['label' => 'Импорт из старой базы', 'icon' => 'file-o', 'url' => ['/importdata'], 'active' => $this->context->id == 'default'],
+
+                    ]],
                     ['label' => 'Menu Yii2', 'options' => ['class' => 'header']],
                     ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii']],
                     ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug']],
@@ -72,5 +76,4 @@
         ) ?>
 
     </section>
-
 </aside>
