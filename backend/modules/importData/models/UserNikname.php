@@ -41,4 +41,14 @@ class UserNikname extends ActiveRecord
             'userId' => 'User ID',
         ];
     }
+
+    public static function isCustomerExist(string $customerNik)
+    {
+        return UserNikname::findOne(['userId'=>$customerNik]) ? true : false;
+    }
+
+    public static function getCustomerIdByNik(string $nik){
+        $entity = UserNikname::findOne(['userId'=> $nik]);
+        return $entity->id;
+    }
 }

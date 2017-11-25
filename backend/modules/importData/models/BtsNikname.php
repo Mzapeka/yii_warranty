@@ -42,6 +42,7 @@ class BtsNikname extends ActiveRecord
         ];
     }
 
+
     public static function getUserIdByNik(string $nik){
         $entity = BtsNikname::findOne(['btsId'=> $nik]);
         return $entity->id;

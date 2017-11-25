@@ -10,10 +10,13 @@
 namespace app\modules\importData\models;
 
 use app\modules\importData\forms\OldDbCredentialForm;
+use site\entities\Warranty\Warranty;
 use site\forms\customer\CustomerCreateForm;
 use site\forms\User\UserCreateForm;
+use site\forms\warranty\WarrantyCreateForm;
 use site\services\customer\CustomerService;
 use site\services\user\UserManageService;
+use site\services\warranty\WarrantyService;
 use Yii;
 use yii\db\Connection;
 use yii\db\Exception;
@@ -33,11 +36,17 @@ class MigrateOldDb
 
     private $userService;
     private $customerService;
+    private $warrantyService;
 
-    public function __construct(UserManageService $userService, CustomerService $customerService)
+    public function __construct(
+        UserManageService $userService,
+        CustomerService $customerService,
+        WarrantyService $warrantyService
+    )
     {
         $this->userService = $userService;
         $this->customerService = $customerService;
+        $this->warrantyService = $warrantyService;
     }
 
     public function connect(OldDbCredentialForm $credentialForm): void
@@ -51,6 +60,20 @@ class MigrateOldDb
 
         $this->db->open();
     }
+
+    public function importDataBase():array
+    {
+        $result =[];
+        try{
+            $result['user'] = $this->importUsers();
+            $result['customer'] = $this->importCustomer();
+            $result['warranty'] = $this->importWarranties();
+        }catch (Exception $e){
+            throw $e;
+        }
+        return $result;
+    }
+
 
     /**
      * @param $tableName
@@ -69,39 +92,8 @@ class MigrateOldDb
         return $data;
     }
 
-/*    public function getBtsNiknames()
-    {
-        Yii::$app->db->createCommand('TRUNCATE TABLE bts_nikname')->execute();
-        $bts = $this->getTableData('bts');
-        if(is_array($bts)){
-            foreach ($bts as $btsReccord){
-                $nikname = new BtsNikname();
-                $nikname->id = $btsReccord['id'];
-                $nikname->btsId = $btsReccord['btsId'];
-                $nikname->save();
-            }
-            return true;
-        }
-        return false;
-    }
 
-    public function getUsersNiknames()
-    {
-        Yii::$app->db->createCommand('TRUNCATE TABLE user_nikname')->execute();
-        $users = $this->getTableData('users');
-        if(is_array($users)){
-            foreach ($users as $btsReccord){
-                $nikname = new UserNikname();
-                $nikname->id = $btsReccord['id'];
-                $nikname->userId = $btsReccord['userId'];
-                $nikname->save();
-            }
-            return true;
-        }
-        return false;
-    }*/
-
-    public function importBts()
+    private function importUsers():array
     {
         try{
             $bts = $this->getTableData('bts');
@@ -111,20 +103,20 @@ class MigrateOldDb
 
         $countOfAddedUsers = 0;
 
-        foreach ($bts as $btsReccord){
+        foreach ($bts as $btsRecord){
             $userDataArray = array(
-                'username' => $btsReccord['name'],
-                'email'=> $btsReccord['email'],
-                'phone'=> $btsReccord['phone'],
-                'password' => $btsReccord['pass'],
-                'company' => $btsReccord['name'],
-                'adress' => $btsReccord['adress'],
+                'username' => $btsRecord['name'],
+                'email'=> $btsRecord['email'],
+                'phone'=> $btsRecord['phone'],
+                'password' => $btsRecord['pass'],
+                'company' => $btsRecord['name'],
+                'adress' => $btsRecord['adress'],
                 'group' => 'dealer'
             );
-            $form = new UserCreateForm();
-            $form->attributes = $userDataArray;
 
-            if($this->userService->isEmailExist($btsReccord['email'])){
+            if(!$this->userService->isEmailExist($btsRecord['email'])){
+                $form = new UserCreateForm();
+                $form->attributes = $userDataArray;
 
                 try{
                     $newUser = $this->userService->create($form);
@@ -135,7 +127,7 @@ class MigrateOldDb
 
                 $nikname = new BtsNikname();
                 $nikname->id = $newUser->id;
-                $nikname->btsId = $btsReccord['btsId'];
+                $nikname->btsId = $btsRecord['btsId'];
                 $nikname->save();
 
                 $countOfAddedUsers++;
@@ -143,15 +135,13 @@ class MigrateOldDb
         }
 
         return array(
-            'user' => [
                 'all' => count($bts),
-                'added' => $countOfAddedUsers,
-            ]
+                'added' => $countOfAddedUsers
         );
 
     }
 
-    public function importCustomer()
+    private function importCustomer():array
     {
         try{
             $users = $this->getTableData('users');
@@ -162,9 +152,7 @@ class MigrateOldDb
         $countOfAddedCustomers = 0;
 
         if(is_array($users)){
-
             foreach ($users as $user){
-
                 $userDataArray = array(
                     'customer_name' => $user['name'],
                     'email'=> $user['email'],
@@ -173,18 +161,77 @@ class MigrateOldDb
                     'dealer_id' => BtsNikname::getUserIdByNik($user['btsId']),
                 );
 
-                $form = new CustomerCreateForm();
-                $form->attributes = $userDataArray;
+                if(!UserNikname::isCustomerExist($user['userId'])){
+                    $form = new CustomerCreateForm();
+                    $form->attributes = $userDataArray;
 
-                $customer = $this->customerService->create($form);
+                    try{
+                        $customer = $this->customerService->create($form);
+                    }catch (Exception $e){
+                        Yii::$app->errorHandler->logException($e);
+                        continue;
+                    }
 
-                $nikname = new UserNikname();
-                $nikname->id = $customer->id;
-                $nikname->userId = $user['userId'];
-                $nikname->save();
+                    $nikname = new UserNikname();
+                    $nikname->id = $customer->id;
+                    $nikname->userId = $user['userId'];
+                    $nikname->save();
+
+                    $countOfAddedCustomers++;
+                }
             }
-            return true;
         }
+        return array(
+                'all' => count($users),
+                'added' => $countOfAddedCustomers
+        );
+    }
+
+    private function importWarranties():array
+    {
+        try{
+            $warranties = $this->getTableData('warBase');
+        }catch (Exception $e){
+            throw $e;
+        }
+        $countOfAddedWarranties = 0;
+        if(is_array($warranties)){
+            foreach ($warranties as $warranty){
+                $warrantyDataArray = array(
+                    'device_name' => $warranty['devName'],
+                    'part_number'=> $warranty['pn'],
+                    'serial_number'=> $warranty['serialN'],
+                    'invoice_number' => $warranty['invoiceN'],
+                    'act_number' => $warranty['actN'],
+                    'invoice_date' => strtotime($warranty['invoiceDate']),
+                    'act_date' => ($warranty['actDate'] == '0000-00-00') ? null : strtotime($warranty['actDate']),
+                    'customer_id' => UserNikname::getCustomerIdByNik($warranty['idUser']),
+                    'status' => Warranty::STATUS_ACTIVE,
+                );
+
+                if(!WarrantyRegister::findOne(['oldId' => $warranty['id']])){
+                    $form = new WarrantyCreateForm();
+                    $form->attributes = $warrantyDataArray;
+
+                    try{
+                        $this->warrantyService->create($form);
+                    }catch (Exception $e){
+                        Yii::$app->errorHandler->logException($e);
+                        continue;
+                    }
+
+                    $oldIdRecord = new WarrantyRegister();
+                    $oldIdRecord->oldId = $warranty['id'];
+                    $oldIdRecord->save();
+
+                    $countOfAddedWarranties++;
+                }
+            }
+        }
+        return array(
+                'all' => count($warranties),
+                'added' => $countOfAddedWarranties
+        );
     }
 
 }

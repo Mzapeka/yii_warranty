@@ -6,6 +6,7 @@ use app\modules\importData\forms\OldDbCredentialForm;
 use app\modules\importData\ImportDataBundle;
 use app\modules\importData\models\MigrateOldDb;
 use Yii;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 
 /**
@@ -13,12 +14,6 @@ use yii\web\Controller;
  */
 class DefaultController extends Controller
 {
-    //private $migrateModel;
-/*    public function __construct($id, $module, MigrateOldDb $migrateModel, array $config = [])
-    {
-        $this->migrateModel = $migrateModel;
-        parent::__construct($id, $module, $config);
-    }*/
 
     /**
      * Renders the index view for the module
@@ -63,43 +58,42 @@ class DefaultController extends Controller
 
     public function actionDbImport()
     {
-//todo: сделать нормально исключения
+        ImportDataBundle::register($this->view);
 
         $form = new OldDbCredentialForm();
         $migrateModel = Yii::$container->get(MigrateOldDb::class);
 
+        $result = [];
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
+
             try{
                 $migrateModel->connect($form);
-                //return $this->redirect(['view', 'id' => $user->id]);
+                $result = $migrateModel->importDataBase();
             } catch (\Exception $e) {
                 Yii::$app->errorHandler->logException($e);
-                Yii::$app->session->setFlash('error', $e->getMessage());
+                $result['error'] = $e->getMessage();
             }
         }
-        //return $this->renderContent('Succsess');
-                return $this->render('index', [
-            'model' => $form,
-        ]);
 
-
-
-        //$data->getTableData('users')
-/*        try{
-            //$data->getBtsNiknames();
-            //$data->getUsersNiknames();
-            //$data->importBts();
-            $data->importCustomer();
-        }catch (\RuntimeException $e){
-            echo $e->getMessage();
+        $notification = null;
+        $connectionStatus = false;
+        if(ArrayHelper::keyExists('error', $result)){
+            $notification = $result['error'];
         }
-        echo 'Process was finished success';*/
-    }
+        else {
+            $notification = $this->renderPartial('successNotification', [
+               'notification' => $result,
+            ]);
+            $connectionStatus = true;
+        }
 
-    public function actionTest()
-    {
-        return $this->renderContent('HELLO');
+        return $this->render('index', [
+            'model' => $form,
+            'notification' => $this->renderPartial('notification', [
+                'notification' => $notification,
+                'connectionStatus' => $connectionStatus,
+            ])
+        ]);
     }
-
 
 }
