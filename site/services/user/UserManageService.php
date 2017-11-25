@@ -55,4 +55,8 @@ class UserManageService
         $user = $this->repository->get($id);
         $this->repository->remove($user);
     }
+
+    public function isEmailExist(string $email){
+        return $this->repository::isEmailExist($email);
+    }
 }

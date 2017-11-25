@@ -40,6 +40,7 @@ use yii\di\Container;
 use yii\di\Instance;
 use yiidreamteam\upload\ImageUploadBehavior;
 use zhuravljov\yii\queue\Queue;*/
+use site\services\user\UserManageService;
 use yii\base\BootstrapInterface;
 use yii\base\ErrorHandler;
 use yii\mail\MailerInterface;
@@ -65,6 +66,7 @@ class SetUp implements BootstrapInterface
         $container->setSingleton(ManagerInterface::class, function () use ($app) {
             return $app->authManager;
         });
+
 
         /*        $container->setSingleton(Client::class, function () {
                     return ClientBuilder::create()->build();

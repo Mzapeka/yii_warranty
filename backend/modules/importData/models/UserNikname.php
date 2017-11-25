@@ -1,6 +1,6 @@
 <?php
 
-namespace console\models;
+namespace app\modules\importData\models;
 
 use yii\db\ActiveRecord;
 

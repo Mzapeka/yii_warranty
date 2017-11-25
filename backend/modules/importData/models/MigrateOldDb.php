@@ -7,18 +7,17 @@
 
  */
 
-namespace console\models;
+namespace app\modules\importData\models;
 
 use app\modules\importData\forms\OldDbCredentialForm;
-use site\entities\User\User;
 use site\forms\customer\CustomerCreateForm;
 use site\forms\User\UserCreateForm;
-use site\repositories\CustomerRepository;
-use site\repositories\UserRepository;
 use site\services\customer\CustomerService;
 use site\services\user\UserManageService;
 use Yii;
 use yii\db\Connection;
+use yii\db\Exception;
+use yii\helpers\ArrayHelper;
 
 
 /**
@@ -49,6 +48,8 @@ class MigrateOldDb
             'password' => $credentialForm->pass,
             'charset' => 'utf8',
         ]);
+
+        $this->db->open();
     }
 
     /**
@@ -57,12 +58,18 @@ class MigrateOldDb
      */
     public function getTableData($tableName): ?array
     {
+
         $query = 'SELECT * FROM '.$tableName;
-        $data = $this->db->createCommand($query)->queryAll();
+        try{
+            $data = $this->db->createCommand($query)->queryAll();
+        }catch(Exception $e){
+            throw $e;
+        }
+
         return $data;
     }
 
-    public function getBtsNiknames()
+/*    public function getBtsNiknames()
     {
         Yii::$app->db->createCommand('TRUNCATE TABLE bts_nikname')->execute();
         $bts = $this->getTableData('bts');
@@ -92,45 +99,72 @@ class MigrateOldDb
             return true;
         }
         return false;
-    }
+    }*/
 
     public function importBts()
     {
-        $bts = $this->getTableData('bts');
-        if(is_array($bts)){
-            foreach ($bts as $btsReccord){
-                $userDataArray = array(
-                       'username' => $btsReccord['name'],
-                        'email'=> $btsReccord['email'],
-                        'phone'=> $btsReccord['phone'],
-                        'password' => $btsReccord['pass'],
-                        'company' => $btsReccord['name'],
-                        'adress' => $btsReccord['adress'],
-                        'group' => 'dealer'
-                );
+        try{
+            $bts = $this->getTableData('bts');
+        }catch (Exception $e){
+            throw $e;
+        }
 
-                $form = new UserCreateForm();
-                $form->attributes = $userDataArray;
+        $countOfAddedUsers = 0;
 
-                $newUser = $this->userService->create($form);
+        foreach ($bts as $btsReccord){
+            $userDataArray = array(
+                'username' => $btsReccord['name'],
+                'email'=> $btsReccord['email'],
+                'phone'=> $btsReccord['phone'],
+                'password' => $btsReccord['pass'],
+                'company' => $btsReccord['name'],
+                'adress' => $btsReccord['adress'],
+                'group' => 'dealer'
+            );
+            $form = new UserCreateForm();
+            $form->attributes = $userDataArray;
+
+            if($this->userService->isEmailExist($btsReccord['email'])){
+
+                try{
+                    $newUser = $this->userService->create($form);
+                }catch (Exception $e){
+                    Yii::$app->errorHandler->logException($e);
+                    continue;
+                }
 
                 $nikname = new BtsNikname();
                 $nikname->id = $newUser->id;
                 $nikname->btsId = $btsReccord['btsId'];
                 $nikname->save();
+
+                $countOfAddedUsers++;
             }
-            return true;
         }
+
+        return array(
+            'user' => [
+                'all' => count($bts),
+                'added' => $countOfAddedUsers,
+            ]
+        );
+
     }
 
     public function importCustomer()
     {
-        $users = $this->getTableData('users');
+        try{
+            $users = $this->getTableData('users');
+        }catch (Exception $e){
+            throw $e;
+        }
+
+        $countOfAddedCustomers = 0;
+
         if(is_array($users)){
 
             foreach ($users as $user){
-                //var_dump(BtsNikname::getUserIdByNik($user['btsId']));
-                //exit;
+
                 $userDataArray = array(
                     'customer_name' => $user['name'],
                     'email'=> $user['email'],

@@ -86,4 +86,12 @@ class UserRepository
         }
         return $user;
     }
+
+    public static function isEmailExist(string $email):bool
+    {
+        if(User::findOne(['email'=>$email])){
+            return true;
+        }
+        return false;
+    }
 }
