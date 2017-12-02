@@ -7,9 +7,9 @@
  */
 
 namespace site\entities\Warranty;
+
+use site\entities\Customer\Customer;
 use site\entities\User\User;
-use site\repositories\WarrantyRepository;
-use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -156,6 +156,7 @@ class Warranty extends ActiveRecord
     }
 
 
+
     /**
      * @inheritdoc
      */
@@ -173,4 +174,5 @@ class Warranty extends ActiveRecord
             TimestampBehavior::className(),
         ];
     }
+
 }

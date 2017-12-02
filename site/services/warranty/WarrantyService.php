@@ -8,11 +8,12 @@
 
 namespace site\services\warranty;
 
-
+use DateTime;
 use site\entities\Warranty\Warranty;
 use site\forms\warranty\WarrantyCreateForm;
 use site\forms\warranty\WarrantyEditForm;
 use site\repositories\WarrantyRepository;
+use Yii;
 
 class WarrantyService
 {
@@ -66,4 +67,25 @@ class WarrantyService
         $warranty = $this->repository->findById($id);
         $this->repository->remove($warranty);
     }
+
+    public function warrantyValidUntilBySerialNumber(int $serialNumber):DateTime
+    {
+        $warranty = $this->repository->findBySerialNumber($serialNumber);
+        return $this->warrantyValidUntil($warranty);
+
+    }
+
+    private function warrantyValidUntil(Warranty $warranty): DateTime
+    {
+        $warrantyTerm = Yii::$app->params['extendedWarrantyTime']+Yii::$app->params['standardWarrantyTime'];
+        $unixDate = max($warranty->invoice_date, $warranty->act_date);
+        $interval = \DateInterval::createFromDateString($warrantyTerm.' month');
+        $date = new DateTime();
+        $date->setTimestamp($unixDate);
+        $date->add($interval);
+
+        return $date;
+    }
+
+
 }

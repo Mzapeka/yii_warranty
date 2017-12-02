@@ -21,14 +21,54 @@ body {
     padding-top: 20px;
 }
 
-.jumbotron {
+.site-index .jumbotron {
     text-align: center;
+    background-image: url("/img/picture_bosch.jpg");
     background-color: transparent;
+    color: white;
+    background-repeat: no-repeat;
+        background-size: cover;
+    background-position: center top;
+    width: 100%;
+    height: 500px;
+    opacity: 1;
+    visibility: inherit;
+    z-index: 20;
+    padding-left: 0px;
+    padding-right: 0px;
+
 }
 
-.jumbotron .btn {
-    font-size: 21px;
-    padding: 14px 24px;
+.navbar {
+    /*background-image: url('/img/bosch_supergraphic.jpg');*/
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-size: 3000px auto;
+    height: 16px;
+    margin-top: 25px;
+    background-color: whitesmoke;
+}
+
+.navbar-collapse{
+    background-color: whitesmoke;
+}
+
+.navbar-header button.navbar-toggle {
+    border-color: rgb(51, 122, 183);
+}
+
+.wrap #supergraphic {
+    background-image: url('/img/bosch_supergraphic.jpg');
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-size: 3000px auto;
+    height: 25px;
+    z-index: 100;
+}
+
+
+.jumbotron p{
+    color: white;
 }
 
 .not-set {
@@ -117,4 +157,17 @@ a.desc:after {
 
 .nav > li > form > button.logout:focus {
     outline: none;
+}
+
+.nav > li > a:focus, .nav > li > a:hover{
+    background-color: transparent;
+}
+
+#check-form {
+    margin-top: 20px;
+}
+
+.check-warranty-input {
+    margin-bottom: 5px;
+    max-width: 200px;
 }
