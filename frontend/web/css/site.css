@@ -21,6 +21,10 @@ body {
     padding-top: 20px;
 }
 
+.site-index {
+    padding-top: 30px;
+}
+
 .site-index .jumbotron {
     text-align: center;
     background-image: url("/img/picture_bosch.jpg");
@@ -36,8 +40,9 @@ body {
     z-index: 20;
     padding-left: 0px;
     padding-right: 0px;
-
 }
+
+
 
 .navbar {
     /*background-image: url('/img/bosch_supergraphic.jpg');*/
