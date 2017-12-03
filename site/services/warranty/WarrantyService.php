@@ -68,24 +68,12 @@ class WarrantyService
         $this->repository->remove($warranty);
     }
 
-    public function warrantyValidUntilBySerialNumber(int $serialNumber):DateTime
+    public function getWarrantyBySerialNumber(string $serialNumber):Warranty
     {
-        $warranty = $this->repository->findBySerialNumber($serialNumber);
-        return $this->warrantyValidUntil($warranty);
-
+        return $this->repository->findOneBySerialNumber($serialNumber);
     }
 
-    private function warrantyValidUntil(Warranty $warranty): DateTime
-    {
-        $warrantyTerm = Yii::$app->params['extendedWarrantyTime']+Yii::$app->params['standardWarrantyTime'];
-        $unixDate = max($warranty->invoice_date, $warranty->act_date);
-        $interval = \DateInterval::createFromDateString($warrantyTerm.' month');
-        $date = new DateTime();
-        $date->setTimestamp($unixDate);
-        $date->add($interval);
 
-        return $date;
-    }
 
 
 }

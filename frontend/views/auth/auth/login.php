@@ -8,7 +8,7 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Url;
 
-$this->title = 'Login';
+$this->title = 'Страница входа';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -16,23 +16,23 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="col-sm-6">
         <div class="well">
-            <h2>Log in</h2>
-            <p><strong>I am a returning customer</strong></p>
+            <h2>Вход в систему</h2>
+            <p><strong>Я зарегистрированный пользователь</strong></p>
 
             <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
 
-            <?= $form->field($model, 'username')->textInput() ?>
+            <?= $form->field($model, 'username')->textInput()->label('E-mail') ?>
 
-            <?= $form->field($model, 'password')->passwordInput() ?>
+            <?= $form->field($model, 'password')->passwordInput()->label('Пароль') ?>
 
-            <?= $form->field($model, 'rememberMe')->checkbox() ?>
+            <?= $form->field($model, 'rememberMe')->checkbox()->label('Запомнить меня') ?>
 
             <div style="color:#999;margin:1em 0">
-                If you forgot your password you can <?= Html::a('reset it', ['auth/reset/request']) ?>.
+                Если вы забыли пароль, вы можете его <?= Html::a('сбросить', ['auth/reset/request']) ?>.
             </div>
 
             <div>
-                <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+                <?= Html::submitButton('Войти', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
             </div>
 
             <?php ActiveForm::end(); ?>

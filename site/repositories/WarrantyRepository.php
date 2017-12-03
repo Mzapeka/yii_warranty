@@ -65,7 +65,7 @@ class WarrantyRepository
         return $warranty;
     }
 
-    public function findBySerialNumber(int $serialNumber): ?Warranty
+    public function findOneBySerialNumber(string $serialNumber): ?Warranty
     {
         if (!$warranty = Warranty::findOne(['serial_number' => $serialNumber])){
             throw new NotFoundException('Гарантия не найдена');

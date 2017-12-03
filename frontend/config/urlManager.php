@@ -12,6 +12,9 @@ return [
     'rules' => [
         '' => 'site/index',
         'contact' => 'contact/index',
+        'warranty-check' => 'site/warranty-check',
+        'warranty-check-action' => 'site/warranty-check-action',
+        'policy' => 'site/policy',
         'site/signup' => 'auth/signup/request',
         'site/signup/<_a:[\w-]+>' => 'auth/signup/<_a>',
         'site/<_a:login|logout>' => 'auth/auth/<_a>',

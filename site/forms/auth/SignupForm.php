@@ -1,6 +1,7 @@
 <?php
 namespace site\forms\auth;
 
+use himiklab\yii2\recaptcha\ReCaptchaValidator;
 use yii\base\Model;
 use site\entities\User\User;
 
@@ -16,6 +17,9 @@ class SignupForm extends Model
     public $company;
     public $adress;
 
+    public $password_repeat;
+    public $reCaptcha;
+    public $policy;
     /**
      * @inheritdoc
      */
@@ -33,8 +37,9 @@ class SignupForm extends Model
             ['email', 'string', 'max' => 255],
             ['email', 'unique', 'targetClass' => User::class, 'message' => 'This email address has already been taken.'],
 
-            ['password', 'required'],
+            [['password', 'password_repeat'], 'required'],
             ['password', 'string', 'min' => 6],
+            ['password_repeat', 'compare', 'compareAttribute' => 'password', 'message' => 'Введенные пароли должны совпадать.'],
 
             ['phone', 'required'],
             ['phone', 'integer'],
@@ -44,6 +49,13 @@ class SignupForm extends Model
 
             ['adress', 'required'],
             ['adress', 'string', 'min' => 10],
+
+            ['policy', 'in', 'range' => [1], 'message' => 'Для регистрации Вам нужно принять политику безопасности'],
+
+            [['reCaptcha'], ReCaptchaValidator::className(),
+                'secret' => \Yii::$app->params['reCaptchaSecretKey'],
+                'uncheckedMessage' => 'Пожалуйста, подтвердите что вы не бот'
+            ],
         ];
     }
 }

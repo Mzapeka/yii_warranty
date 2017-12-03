@@ -2,6 +2,9 @@
 
 /* @var $this yii\web\View */
 
+use yii\bootstrap\Html;
+use yii\helpers\Url;
+
 //$this->title = 'My Yii Application';
 ?>
 <div class="site-index">
@@ -11,8 +14,7 @@
             <h1>Bosch Warranty</h1>
 
             <p class="lead">Сервис для регистрации гарантии на диагностическое оборудование Bosch</p>
-
-            <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Проверить гарантию</a></p>
+            <p><?= Html::a('Проверить гарантию', Url::to('warranty-check'),['class'=>'tn btn-lg btn-success'])?></p>
 
     </div>
 

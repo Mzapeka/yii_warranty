@@ -2,6 +2,7 @@
 namespace frontend\controllers;
 
 
+use DateTime;
 use site\forms\warranty\WarrantyCheck;
 use site\services\warranty\WarrantyService;
 use Yii;
@@ -58,15 +59,21 @@ class SiteController extends Controller
         );
     }
 
-    /**@date DateTime */
+    public function actionPolicy()
+    {
+        return $this->render('policy');
+    }
+
     public function actionWarrantyCheckAction()
     {
+        /**@var $date DateTime */
+        /**@var $warrantyService WarrantyService */
         $form = new WarrantyCheck();
 
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
             try{
                 $warrantyService = Yii::$container->get(WarrantyService::class);
-                $date = $warrantyService->warrantyValidUntilBySerialNumber($form->warrantyNumber);
+                $date = $warrantyService->getWarrantyBySerialNumber($form->warrantyNumber)->getWarrantyValidUntil();
                 Yii::$app->session->setFlash('success',
                     'Гарантия действительна до '.Yii::$app->formatter->format($date->format('Y-m-d'),'date'));
             } catch (\DomainException $e) {

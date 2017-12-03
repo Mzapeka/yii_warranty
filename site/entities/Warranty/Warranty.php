@@ -8,8 +8,11 @@
 
 namespace site\entities\Warranty;
 
+use DateInterval;
+use DateTime;
 use site\entities\Customer\Customer;
 use site\entities\User\User;
+use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -153,6 +156,18 @@ class Warranty extends ActiveRecord
     public function getUsers():ActiveQuery
     {
         return $this->hasOne(User::class, ['id'=>'dealer_id'])->via('Customers');
+    }
+
+    public function getWarrantyValidUntil(): DateTime
+    {
+        $fullWarranty = Yii::$app->params['extendedWarrantyTime']+Yii::$app->params['standardWarrantyTime'];
+        $unixDate = max($this->invoice_date, $this->act_date);
+        $interval = DateInterval::createFromDateString($fullWarranty.' month');
+        $date = new DateTime();
+        $date->setTimestamp($unixDate);
+        $date->add($interval);
+
+        return $date;
     }
 
 

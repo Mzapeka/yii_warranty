@@ -3,7 +3,9 @@
 namespace site\repositories;
 
 //use shop\dispatchers\EventDispatcher;
+use Exception;
 use site\entities\User\User;
+use Yii;
 
 class UserRepository
 {
@@ -64,7 +66,13 @@ class UserRepository
 
     public function save(User $user): void
     {
-        if (!$user->save()) {
+        try{
+            $user->save();
+        }catch (Exception $e){
+            Yii::$app->errorHandler->logException($e);
+            if (!YII_ENV_TEST){
+                throw $e;
+            }
             throw new \RuntimeException('Saving error.');
         }
         return;
