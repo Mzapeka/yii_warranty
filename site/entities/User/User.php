@@ -3,6 +3,7 @@ namespace site\entities\User;
 
 use site\access\Rbac;
 use site\entities\Customer\Customer;
+use site\entities\Warranty\Warranty;
 use site\repositories\UserReadRepository;
 use Yii;
 use yii\base\NotSupportedException;
@@ -327,4 +328,11 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return $this->hasMany(Customer::class, ['dealer_id'=>'id']);
     }
+
+    public function getWarranties()
+    {
+        return $this->hasMany(Warranty::className(), ['customer_id' => 'id'])
+            ->viaTable('customers', ['dealer_id' => 'id']);
+    }
+
 }

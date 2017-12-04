@@ -40,7 +40,7 @@ class SiteController extends Controller
         if(Yii::$app->getUser()->isGuest){
             return $this->render('index');
         }
-        return $this->redirect(Url::to('manager'));
+        return $this->redirect(Url::to('customers'));
     }
 
     public function actionAbout()
