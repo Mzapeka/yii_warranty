@@ -21,9 +21,23 @@ body {
     padding-top: 20px;
 }
 
-.site-index {
+.site-index{
     padding-top: 20px;
 }
+
+table.maintab{
+    font-size: 12px;
+}
+
+table.maintab td{
+    white-space: normal;
+}
+
+.warranty-index{
+    font: 10px;
+}
+
+
 
 .site-index .jumbotron {
     text-align: center;
@@ -41,8 +55,6 @@ body {
     padding-left: 0px;
     padding-right: 0px;
 }
-
-
 
 .navbar {
     /*background-image: url('/img/bosch_supergraphic.jpg');*/

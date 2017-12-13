@@ -1,53 +1,171 @@
 <?php
 
+use kartik\grid\GridView;
 use site\entities\Warranty\Warranty;
+use site\helpers\CustomerHelper;
 use site\helpers\WarrantyHelper;
 use yii\helpers\Html;
-use yii\grid\GridView;
 use yii\widgets\Pjax;
 /* @var $this yii\web\View */
 /* @var $searchModel backend\forms\WarrantySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Гарантии';
-$this->params['breadcrumbs'][] = $this->title;
+
+$columnSettings = array(
+    [
+        'class' => '\kartik\grid\SerialColumn',
+        'contentOptions' => ['class' => 'kartik-sheet-style'],
+        'width' => '25px',
+        'headerOptions' => ['class' => 'kartik-sheet-style']
+    ],
+    [
+    'class' => 'kartik\grid\ExpandRowColumn',
+    'width' => '30px',
+    'value' => function ($model, $key, $index, $column) {
+        return GridView::ROW_COLLAPSED;
+    },
+    'detail' => function ($model, $key, $index, $column) {
+        return Yii::$app->controller->renderPartial('expand-row-details', ['model' => $model]);
+    },
+    'headerOptions' => ['class' => 'kartik-sheet-style'],
+    'expandOneOnly' => true
+    ],
+    //'id',
+    [
+        'attribute' => 'customer_id',
+        'vAlign' => 'middle',
+        'width' => '140px',
+        'filter' => CustomerHelper::getCustomerListBelongToUser(),
+        'value' => function (Warranty $model) {
+            return CustomerHelper::getCustomerNameByID($model->customer_id);
+        },
+    ],
+    [
+        'attribute' => 'device_name',
+        'vAlign' => 'middle',
+        'width' => '120px',
+    ],
+    [
+        'attribute' => 'part_number',
+        'vAlign' => 'middle',
+        'width' => '90px',
+    ],
+    [
+        'attribute' => 'serial_number',
+        'vAlign' => 'middle',
+        'width' => '90px',
+    ],
+//    [
+//        'attribute' => 'invoice_number',
+//        'vAlign' => 'middle',
+//        'width' => '90px',
+//    ],
+//    [
+//        'attribute' => 'act_number',
+//        'vAlign' => 'middle',
+//        'width' => '60px',
+//    ],
+    [
+        'attribute' => 'invoice_date',
+        'vAlign' => 'middle',
+        'width' => '70px',
+        'format' => ['date', 'php:Y-m-d'],
+        'xlFormat' => "mmm-dd-yyyy",
+        'headerOptions' => ['class' => 'kv-sticky-column'],
+        'contentOptions' => ['class' => 'kv-sticky-column'],
+    ],
+    [
+        'attribute' => 'act_date',
+        'vAlign' => 'middle',
+        'width' => '70px',
+        'format' => ['date', 'php:Y-m-d'],
+        'xlFormat' => "mmm\\-dd\\, \\-yyyy",
+        'headerOptions' => ['class' => 'kv-sticky-column'],
+        'contentOptions' => ['class' => 'kv-sticky-column'],
+    ],
+    [
+        'attribute' => 'created_at',
+        'vAlign' => 'middle',
+        'width' => '70px',
+        'format' => ['date', 'php:Y-m-d'],
+        'headerOptions' => ['class' => 'kv-sticky-column'],
+        'contentOptions' => ['class' => 'kv-sticky-column'],
+    ],
+    [
+        'attribute' => 'status',
+        'vAlign' => 'middle',
+        'width' => '50px',
+        'filter' => WarrantyHelper::statusList(),
+        'value' => function (Warranty $model) {
+            return WarrantyHelper::statusLabel($model->status);
+        },
+        'format' => 'raw',
+    ],
+
+    [
+        'class' => 'kartik\grid\ActionColumn',
+        'dropdown' => false,
+        'dropdownOptions' => ['class' => 'pull-right'],
+        'urlCreator' => function($action, $model, $key, $index) { return '#'; },
+        'viewOptions' => ['title' => 'This will launch the book details page. Disabled for this demo!', 'data-toggle' => 'tooltip'],
+        'updateOptions' => ['title' => 'This will launch the book update page. Disabled for this demo!', 'data-toggle' => 'tooltip'],
+        'deleteOptions' => ['title' => 'This will launch the book delete action. Disabled for this demo!', 'data-toggle' => 'tooltip'],
+        'headerOptions' => ['class' => 'kartik-sheet-style'],
+    ],
+    [
+        'class' => 'kartik\grid\CheckboxColumn',
+        'headerOptions' => ['class' => 'kartik-sheet-style'],
+    ],
+);
+
 ?>
 <div class="warranty-index">
 
-    <?php Pjax::begin(); ?>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <p>
-        <?= Html::a('Зарегистрировать гарантию', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+<?php
+    try{
+       echo GridView::widget([
+            'dataProvider' => $dataProvider,
+            'filterModel' => $searchModel,
+            /*        'tableOptions'=>[
+                            'style'=>'white-space: normal;',
+                            'class' => 'table table-striped table-bordered table-hover table-responsive maintab'
+                        ],*/
+           'tableOptions' => ['class'=>'maintab' ],
+           'bordered' => true,
+           'striped' => true,
+           'condensed' => true,
+           'responsive' => true,
+           'responsiveWrap' => false,
+           'hover' => true,
+            'perfectScrollbar' => false,
+            'headerRowOptions' => ['class' => 'kartik-sheet-style'],
+            'filterRowOptions' => ['class' => 'kartik-sheet-style'],
+            'pjax' => true, // pjax is set to always true for this demo
+            // set your toolbar
+            'toolbar' =>  [
+                ['content' =>
+                    Html::a('<i class="glyphicon glyphicon-plus"></i>', ['create'], ['data-pjax' => 0, 'class' => 'btn btn-success', 'title' => 'Добавить гарантию']) . ' '.
+                    Html::a('<i class="glyphicon glyphicon-repeat"></i>', ['grid-demo'], ['data-pjax' => 0, 'class' => 'btn btn-default', 'title' => 'Сбросить'])
 
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-            //'id',
-            'customer_id',
-            'device_name',
-            'part_number',
-            'serial_number',
-            'invoice_number',
-            'act_number',
-            'invoice_date:date',
-            'act_date:date',
-            'created_at:date',
-            //'updated_at:date',
-            [
-                'attribute' => 'status',
-                'filter' => WarrantyHelper::statusList(),
-                'value' => function (Warranty $model) {
-                    return WarrantyHelper::statusLabel($model->status);
-                },
-                'format' => 'raw',
+                ],
+                '{export}',
+                '{toggleData}',
             ],
+            'panel' => [
+                'type' => GridView::TYPE_PRIMARY,
+                'heading' => '',
+            ],
+            'persistResize' => false,
+            'toggleDataOptions' => ['minCount' => 10],
+            // set export properties
+            'export' => [
+                'fontAwesome' => true
+            ],
+            'columns' => $columnSettings,
+        ]);
+    } catch (Exception $e){
+        echo 'Ошибка вывода информации: '.$e->getMessage();
+    } ?>
 
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
-    <?php Pjax::end(); ?>
 </div>

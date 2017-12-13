@@ -11,11 +11,12 @@ namespace site\helpers;
 
 use site\entities\Customer\Customer;
 use site\entities\User\User;
+use Yii;
 use yii\helpers\ArrayHelper;
 
 class CustomerHelper
 {
-    public static function getCustomerNameList():array
+    public static function getCustomerNameList($userId = null):array
     {
         // пакетная выборка с жадной загрузкой
         $customerList = [];
@@ -32,6 +33,16 @@ class CustomerHelper
         }
 
         return $customerList;
+    }
+
+    public static function getCustomerListBelongToUser(): ?array
+    {
+        /**@var $customers array*/
+        $customers = User::findOne(Yii::$app->getUser()->id)->getCustomer()->select(['id', 'customer_name'])->asArray()->all();
+        if($customers){
+            return ArrayHelper::map($customers, 'id', 'customer_name');
+        }
+        return null;
     }
 
     public static function getCustomerNameByID($id): ? string

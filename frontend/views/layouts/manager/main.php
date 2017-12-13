@@ -20,10 +20,10 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/views/layouts/m
 <?php $this->beginContent('@app/views/layouts/main.php'); ?>
 
 
-<div class="container">
+
     <div class="row row-offcanvas row-offcanvas-right site-index">
 
-        <div class="col-xs-12 col-sm-9">
+        <div class="col-xs-12 col-sm-10">
             <p class="pull-right visible-xs">
                 <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
             </p>
@@ -39,7 +39,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/views/layouts/m
 
 
     </div><!--/row-->
-</div>
+
 
 
 <?php $this->endContent(); ?>
