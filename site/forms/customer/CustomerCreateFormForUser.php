@@ -12,7 +12,7 @@ namespace site\forms\customer;
 use yii\base\Model;
 use yii\helpers\ArrayHelper;
 
-class NewCustomerForm extends Model
+class CustomerCreateFormForUser extends Model
 {
 
     public $dealer_id;

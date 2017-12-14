@@ -1,11 +1,12 @@
 <?php
 
 use kartik\grid\GridView;
+use kartik\widgets\DatePicker;
 use site\entities\Warranty\Warranty;
 use site\helpers\CustomerHelper;
 use site\helpers\WarrantyHelper;
 use yii\helpers\Html;
-use yii\widgets\Pjax;
+
 /* @var $this yii\web\View */
 /* @var $searchModel backend\forms\WarrantySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -19,16 +20,16 @@ $columnSettings = array(
         'headerOptions' => ['class' => 'kartik-sheet-style']
     ],
     [
-    'class' => 'kartik\grid\ExpandRowColumn',
-    'width' => '30px',
-    'value' => function ($model, $key, $index, $column) {
-        return GridView::ROW_COLLAPSED;
-    },
-    'detail' => function ($model, $key, $index, $column) {
-        return Yii::$app->controller->renderPartial('expand-row-details', ['model' => $model]);
-    },
-    'headerOptions' => ['class' => 'kartik-sheet-style'],
-    'expandOneOnly' => true
+        'class' => 'kartik\grid\ExpandRowColumn',
+        'width' => '30px',
+        'value' => function ($model, $key, $index, $column) {
+            return GridView::ROW_COLLAPSED;
+        },
+        'detail' => function ($model, $key, $index, $column) {
+            return Yii::$app->controller->renderPartial('expand-row-details', ['model' => $model]);
+        },
+        'headerOptions' => ['class' => 'kartik-sheet-style'],
+        'expandOneOnly' => true
     ],
     //'id',
     [
@@ -77,9 +78,17 @@ $columnSettings = array(
     [
         'attribute' => 'act_date',
         'vAlign' => 'middle',
-        'width' => '70px',
+        'width' => '90px',
         'format' => ['date', 'php:Y-m-d'],
         'xlFormat' => "mmm\\-dd\\, \\-yyyy",
+        'filterType' => GridView::FILTER_DATE,
+        'filterWidgetOptions' => [
+            'type' => DatePicker::TYPE_INPUT,
+            'pluginOptions' => [
+                'autoclose'=>true,
+                'format' => 'yyyy-mm-dd'
+            ]
+        ],
         'headerOptions' => ['class' => 'kv-sticky-column'],
         'contentOptions' => ['class' => 'kv-sticky-column'],
     ],
@@ -104,7 +113,7 @@ $columnSettings = array(
 
     [
         'class' => 'kartik\grid\ActionColumn',
-        'dropdown' => false,
+        'dropdown' => true,
         'dropdownOptions' => ['class' => 'pull-right'],
         'urlCreator' => function($action, $model, $key, $index) { return '#'; },
         'viewOptions' => ['title' => 'This will launch the book details page. Disabled for this demo!', 'data-toggle' => 'tooltip'],
@@ -138,7 +147,7 @@ $columnSettings = array(
            'responsive' => true,
            'responsiveWrap' => false,
            'hover' => true,
-            'perfectScrollbar' => false,
+            'perfectScrollbar' => true,
             'headerRowOptions' => ['class' => 'kartik-sheet-style'],
             'filterRowOptions' => ['class' => 'kartik-sheet-style'],
             'pjax' => true, // pjax is set to always true for this demo
@@ -146,7 +155,7 @@ $columnSettings = array(
             'toolbar' =>  [
                 ['content' =>
                     Html::a('<i class="glyphicon glyphicon-plus"></i>', ['create'], ['data-pjax' => 0, 'class' => 'btn btn-success', 'title' => 'Добавить гарантию']) . ' '.
-                    Html::a('<i class="glyphicon glyphicon-repeat"></i>', ['grid-demo'], ['data-pjax' => 0, 'class' => 'btn btn-default', 'title' => 'Сбросить'])
+                    Html::a('<i class="glyphicon glyphicon-repeat"></i>', [''], ['data-pjax' => 0, 'class' => 'btn btn-default', 'title' => 'Сбросить'])
 
                 ],
                 '{export}',
@@ -154,7 +163,7 @@ $columnSettings = array(
             ],
             'panel' => [
                 'type' => GridView::TYPE_PRIMARY,
-                'heading' => '',
+                'heading' => '<i class="glyphicon glyphicon-dashboard"></i>  Гарантии',
             ],
             'persistResize' => false,
             'toggleDataOptions' => ['minCount' => 10],
@@ -165,7 +174,8 @@ $columnSettings = array(
             'columns' => $columnSettings,
         ]);
     } catch (Exception $e){
-        echo 'Ошибка вывода информации: '.$e->getMessage();
+        Yii::$app->errorHandler->logException($e);
+        echo 'Ошибка вывода информации: ';
     } ?>
 
 </div>

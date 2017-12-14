@@ -326,7 +326,7 @@ class User extends ActiveRecord implements IdentityInterface
 
     public function getCustomer():ActiveQuery
     {
-        return $this->hasMany(Customer::class, ['dealer_id'=>'id']);
+        return $this->hasMany(Customer::className(), ['dealer_id'=>'id']);
     }
 
     public function getWarranties()

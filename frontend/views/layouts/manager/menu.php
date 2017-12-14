@@ -16,19 +16,19 @@ use yii\helpers\Url;
      echo SideNav::widget([
           'items' => [
               [
-                  'url' => Url::to('customers'),
+                  'url' => Url::to('/customers'),
                   'label' => 'Клиенты',
-                  'icon' => 'home',
+                  'icon' => 'briefcase',
                   'active' => $this->context->id == 'customers',
               ],          [
-                  'url' => Url::to('warranties'),
+                  'url' => Url::to('/warranties'),
                   'label' => 'Гарантии',
-                  'icon' => 'home',
+                  'icon' => 'dashboard',
                   'active' => $this->context->id == 'warranties',
               ],          [
-                  'url' => Url::to('manuals'),
+                  'url' => Url::to('/manuals'),
                   'label' => 'Инструкции',
-                  'icon' => 'home',
+                  'icon' => 'book',
                   'active' => $this->context->id == 'manuals',
               ],
               [

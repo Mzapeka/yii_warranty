@@ -19,8 +19,9 @@ class WarrantySearch extends Warranty
     public function rules()
     {
         return [
-            [['id', 'customer_id', 'invoice_date', 'act_date', 'created_at', 'updated_at', 'status'], 'integer'],
+            [['id', 'customer_id', 'status'], 'integer'],
             [['device_name', 'part_number', 'serial_number', 'invoice_number', 'act_number'], 'safe'],
+            [['invoice_date', 'act_date', 'created_at', 'updated_at'], 'date', 'format' => 'php:Y-m-d']
         ];
     }
 
@@ -42,6 +43,8 @@ class WarrantySearch extends Warranty
      */
     public function search($params)
     {
+        //var_dump($this->act_date);
+        //exit;
         $query = User::findOne(Yii::$app->getUser()->id)->getWarranties();
 
         // add conditions that should always apply here
@@ -58,12 +61,12 @@ class WarrantySearch extends Warranty
             return $dataProvider;
         }
 
+
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
             'customer_id' => $this->customer_id,
             'invoice_date' => $this->invoice_date,
-            'act_date' => $this->act_date,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'status' => $this->status,
@@ -73,7 +76,10 @@ class WarrantySearch extends Warranty
             ->andFilterWhere(['like', 'part_number', $this->part_number])
             ->andFilterWhere(['like', 'serial_number', $this->serial_number])
             ->andFilterWhere(['like', 'invoice_number', $this->invoice_number])
-            ->andFilterWhere(['like', 'act_number', $this->act_number]);
+            ->andFilterWhere(['like', 'act_number', $this->act_number])
+            ->andFilterWhere(['>=', 'act_date', $this->act_date ? strtotime($this->act_date . ' 00:00:00') : null])
+            ->andFilterWhere(['<=', 'act_date', $this->act_date ? strtotime($this->act_date . ' 23:59:59') : null]);
+
 
         return $dataProvider;
     }

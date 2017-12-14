@@ -33,6 +33,18 @@ table.maintab td{
     white-space: normal;
 }
 
+table.maintab td input,
+table.maintab td select,
+table.maintab td button,
+table.maintab td .date span{
+    font-size: 12px;
+    height: 26px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
 .warranty-index{
     font: 10px;
 }
