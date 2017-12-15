@@ -34,7 +34,7 @@ $columnsSettings = [
         'contentOptions' => ['class' => 'kv-sticky-column'],
     ],
 
-    [
+/*    [
         'attribute' => 'created_at',
         'vAlign' => 'middle',
         'width' => '90px',
@@ -53,7 +53,7 @@ $columnsSettings = [
         'format' => ['date', 'php:Y-m-d'],
         'headerOptions' => ['class' => 'kv-sticky-column'],
         'contentOptions' => ['class' => 'kv-sticky-column'],
-    ],
+    ],*/
 
     [
         'attribute' => 'adress',
@@ -71,12 +71,15 @@ $columnsSettings = [
     ],
     [
         'class' => 'kartik\grid\ActionColumn',
-        'dropdown' => true,
+        'width' => '30px',
+        'dropdown' => false,
         'dropdownOptions' => ['class' => 'pull-right'],
         //'urlCreator' => function($action, $model, $key, $index) { return '#'; },
         'viewOptions' => ['title' => 'Детали', 'data-toggle' => 'tooltip'],
-        'updateOptions' => ['title' => 'This will launch the book update page. Disabled for this demo!', 'data-toggle' => 'tooltip'],
-        'deleteOptions' => ['title' => 'This will launch the book delete action. Disabled for this demo!', 'data-toggle' => 'tooltip'],
+        'visibleButtons' => [
+                'update'=> false,
+                'delete'=> false
+            ],
         'headerOptions' => ['class' => 'kartik-sheet-style'],
     ],
     [

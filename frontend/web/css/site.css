@@ -45,6 +45,11 @@ table.maintab td .date span{
     padding-bottom: 3px;
 }
 
+table.maintab td .input-daterange:hover{
+    width: 180px;
+    background-color: #cc5555;
+}
+
 .warranty-index{
     font: 10px;
 }

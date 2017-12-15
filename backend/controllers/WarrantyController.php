@@ -75,8 +75,7 @@ class WarrantyController extends Controller
     public function actionCreate()
     {
         $form = new WarrantyCreateForm();
-        //var_dump(Yii::$app->request->post());
-        //exit;
+
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
             try{
                 $user = $this->service->create($form);

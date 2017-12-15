@@ -62,6 +62,8 @@ class Warranty extends ActiveRecord
             'created_at' => 'Дата создания',
             'updated_at' => 'Дата изменения',
             'status' => 'Статус',
+
+            'warrantyValidUntil' => 'Дата окончания гарантии',
         );
         if(!is_null($name)){
             if(ArrayHelper::keyExists($name, $labelsArray)){
@@ -158,7 +160,7 @@ class Warranty extends ActiveRecord
         return $this->hasOne(User::class, ['id'=>'dealer_id'])->via('Customers');
     }
 
-    public function getWarrantyValidUntil(): DateTime
+    public function getWarrantyValidUntil(): int
     {
         $fullWarranty = Yii::$app->params['extendedWarrantyTime']+Yii::$app->params['standardWarrantyTime'];
         $unixDate = max($this->invoice_date, $this->act_date);
@@ -167,7 +169,7 @@ class Warranty extends ActiveRecord
         $date->setTimestamp($unixDate);
         $date->add($interval);
 
-        return $date;
+        return $date->getTimestamp();
     }
 
 

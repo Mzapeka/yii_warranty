@@ -14,6 +14,7 @@ use site\forms\warranty\WarrantyCreateForm;
 use site\forms\warranty\WarrantyEditForm;
 use site\repositories\WarrantyRepository;
 use Yii;
+use yii\base\Model;
 
 class WarrantyService
 {
@@ -27,7 +28,7 @@ class WarrantyService
         $this->repository = $repository;
     }
 
-    public function create(WarrantyCreateForm $form): Warranty
+    public function create(Model $form): Warranty
     {
         $warranty = Warranty::create(
             $form->customer_id,

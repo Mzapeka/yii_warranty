@@ -73,13 +73,13 @@ class SiteController extends Controller
         /**@var $date DateTime */
         /**@var $warrantyService WarrantyService */
         $form = new WarrantyCheck();
-
+//todo: проверить работает ли функция проверки гарантии. Был изменен форматы вывода даты с объекта на UNIX
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
             try{
                 $warrantyService = Yii::$container->get(WarrantyService::class);
                 $date = $warrantyService->getWarrantyBySerialNumber($form->warrantyNumber)->getWarrantyValidUntil();
                 Yii::$app->session->setFlash('success',
-                    'Гарантия действительна до '.Yii::$app->formatter->format($date->format('Y-m-d'),'date'));
+                    'Гарантия действительна до '.Yii::$app->formatter->format($date,'date'));
             } catch (\DomainException $e) {
                 Yii::$app->errorHandler->logException($e);
                 Yii::$app->session->setFlash('error', $e->getMessage());

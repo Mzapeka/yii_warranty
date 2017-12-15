@@ -30,9 +30,9 @@ class CustomersSearch extends Model
     public function rules()
     {
         return [
-            [['id', 'dealer_id', 'created_at', 'updated_at'], 'integer'],
+            [['id', 'dealer_id', 'updated_at'], 'integer'],
             [['email', 'customer_name', 'adress', 'phone'], 'safe'],
-            [['date_from', 'date_to'], 'date', 'format' => 'php:Y-m-d'],
+            [['date_from', 'date_to', 'created_at'], 'date', 'format' => 'php:Y-m-d'],
         ];
     }
 
@@ -46,6 +46,9 @@ class CustomersSearch extends Model
      */
     public function search($params)
     {
+
+
+
         $query = Customer::find()->where(['dealer_id' => Yii::$app->getUser()->id]);
 
         // add conditions that should always apply here
@@ -72,7 +75,7 @@ class CustomersSearch extends Model
             ->andFilterWhere(['like', 'customer_name', $this->customer_name])
             ->andFilterWhere(['like', 'adress', $this->adress])
             ->andFilterWhere(['like', 'phone', $this->phone])
-            ->andFilterWhere(['>=', 'created_at', $this->date_from ? strtotime($this->date_from . ' 00:00:00') : null])
+            ->andFilterWhere(['>=', 'created_at', $this->created_at ? strtotime($this->created_at . ' 00:00:00') : null])
             ->andFilterWhere(['<=', 'created_at', $this->date_to ? strtotime($this->date_to . ' 23:59:59') : null]);
 
         return $dataProvider;

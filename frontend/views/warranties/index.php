@@ -72,6 +72,17 @@ $columnSettings = array(
         'width' => '70px',
         'format' => ['date', 'php:Y-m-d'],
         'xlFormat' => "mmm-dd-yyyy",
+        'filterType' => GridView::FILTER_DATE,
+        'filterWidgetOptions' => [
+            'type' => DatePicker::TYPE_RANGE,
+            'attribute2' => 'invoice_date_to',
+            'separator' => '-',
+            'pluginOptions' => [
+                'todayHighlight' => true,
+                'autoclose'=>true,
+                'format' => 'yyyy-mm-dd'
+            ]
+        ],
         'headerOptions' => ['class' => 'kv-sticky-column'],
         'contentOptions' => ['class' => 'kv-sticky-column'],
     ],
@@ -83,8 +94,11 @@ $columnSettings = array(
         'xlFormat' => "mmm\\-dd\\, \\-yyyy",
         'filterType' => GridView::FILTER_DATE,
         'filterWidgetOptions' => [
-            'type' => DatePicker::TYPE_INPUT,
+            'type' => DatePicker::TYPE_RANGE,
+            'attribute2' => 'act_date_to',
+            'separator' => '-',
             'pluginOptions' => [
+                'todayHighlight' => true,
                 'autoclose'=>true,
                 'format' => 'yyyy-mm-dd'
             ]
@@ -92,14 +106,15 @@ $columnSettings = array(
         'headerOptions' => ['class' => 'kv-sticky-column'],
         'contentOptions' => ['class' => 'kv-sticky-column'],
     ],
-    [
+
+/*    [
         'attribute' => 'created_at',
         'vAlign' => 'middle',
         'width' => '70px',
         'format' => ['date', 'php:Y-m-d'],
         'headerOptions' => ['class' => 'kv-sticky-column'],
         'contentOptions' => ['class' => 'kv-sticky-column'],
-    ],
+    ],*/
     [
         'attribute' => 'status',
         'vAlign' => 'middle',
@@ -110,13 +125,22 @@ $columnSettings = array(
         },
         'format' => 'raw',
     ],
+    [
+            'attribute' => 'warrantyValidUntil',
+            'vAlign' => 'middle',
+            'width' => '70px',
+            'mergeHeader' => true,
+            'filter' => '',
+            'format' => ['date', 'php:Y-m-d'],
+            'headerOptions' => ['class' => 'kv-sticky-column'],
+            'contentOptions' => ['class' => 'kv-sticky-column'],
+        ],
 
     [
         'class' => 'kartik\grid\ActionColumn',
         'dropdown' => true,
         'dropdownOptions' => ['class' => 'pull-right'],
-        'urlCreator' => function($action, $model, $key, $index) { return '#'; },
-        'viewOptions' => ['title' => 'This will launch the book details page. Disabled for this demo!', 'data-toggle' => 'tooltip'],
+        'viewOptions' => ['title' => 'Детали', 'data-toggle' => 'tooltip'],
         'updateOptions' => ['title' => 'This will launch the book update page. Disabled for this demo!', 'data-toggle' => 'tooltip'],
         'deleteOptions' => ['title' => 'This will launch the book delete action. Disabled for this demo!', 'data-toggle' => 'tooltip'],
         'headerOptions' => ['class' => 'kartik-sheet-style'],
@@ -175,7 +199,7 @@ $columnSettings = array(
         ]);
     } catch (Exception $e){
         Yii::$app->errorHandler->logException($e);
-        echo 'Ошибка вывода информации: ';
+        echo 'Ошибка вывода информации: '.$e->getMessage();
     } ?>
 
 </div>
