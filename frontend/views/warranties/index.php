@@ -6,6 +6,7 @@ use site\entities\Warranty\Warranty;
 use site\helpers\CustomerHelper;
 use site\helpers\WarrantyHelper;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\forms\WarrantySearch */
@@ -179,12 +180,23 @@ $columnSettings = array(
 
     [
         'class' => 'kartik\grid\ActionColumn',
-        'dropdown' => true,
+        'dropdown' => false,
         'dropdownOptions' => ['class' => 'pull-right'],
         'viewOptions' => ['title' => 'Детали', 'data-toggle' => 'tooltip'],
-        'updateOptions' => ['title' => 'This will launch the book update page. Disabled for this demo!', 'data-toggle' => 'tooltip'],
-        'deleteOptions' => ['title' => 'This will launch the book delete action. Disabled for this demo!', 'data-toggle' => 'tooltip'],
         'headerOptions' => ['class' => 'kartik-sheet-style'],
+        'template' => '{view} &nbsp; {print-warranty}',
+        'buttons' => [
+            'print-warranty' =>     function ($url, $model) {
+            return Html::a('<span class="glyphicon glyphicon-print">', Url::to($url), [
+                'title' => 'Гарантийный лист',
+                'data-toggle' => 'tooltip',
+            ]);
+        }],
+        'visibleButtons' => [
+            'update'=> false,
+            'delete'=> false,
+            'print-warranty' => true,
+        ],
     ],
     [
         'class' => 'kartik\grid\CheckboxColumn',
