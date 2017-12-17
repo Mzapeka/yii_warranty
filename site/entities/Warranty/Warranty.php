@@ -157,19 +157,24 @@ class Warranty extends ActiveRecord
 
     public function getUsers():ActiveQuery
     {
-        return $this->hasOne(User::class, ['id'=>'dealer_id'])->via('Customers');
+        return $this->hasOne(User::class, ['id'=>'dealer_id'])->via('customers');
     }
 
     public function getWarrantyValidUntil(): int
     {
-        $fullWarranty = Yii::$app->params['extendedWarrantyTime']+Yii::$app->params['standardWarrantyTime'];
+
         $unixDate = max($this->invoice_date, $this->act_date);
-        $interval = DateInterval::createFromDateString($fullWarranty.' month');
+        $interval = DateInterval::createFromDateString($this->getWarrantyLengthInMonth().' month');
         $date = new DateTime();
         $date->setTimestamp($unixDate);
         $date->add($interval);
 
         return $date->getTimestamp();
+    }
+
+    public function getWarrantyLengthInMonth()
+    {
+        return Yii::$app->params['extendedWarrantyTime']+Yii::$app->params['standardWarrantyTime'];
     }
 
 

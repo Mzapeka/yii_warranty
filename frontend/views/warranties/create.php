@@ -1,10 +1,11 @@
 <?php
 
-use kartik\widgets\ActiveForm;
+
 use kartik\widgets\DatePicker;
 use site\entities\Warranty\Warranty;
 use site\helpers\CustomerHelper;
 use site\helpers\WarrantyHelper;
+use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
@@ -24,7 +25,12 @@ if(!empty($model->act_date)){
 ?>
 <div class="warranty-create">
 
-    <?php $form = ActiveForm::begin(); ?>
+
+    <?php $form = ActiveForm::begin([
+        'id' => 'warranty-create-form',
+        'enableAjaxValidation' => true,
+        'enableClientValidation' => false,
+    ]); ?>
 
     <?= $form->field($model, 'customer_id')->dropDownList(CustomerHelper::getCustomerListBelongToUser())->label(Warranty::labels('customer_id')) ?>
     <?= $form->field($model, 'device_name')->textInput(['maxlength' => true])->label(Warranty::labels('device_name')) ?>
@@ -52,7 +58,6 @@ if(!empty($model->act_date)){
             'format' => 'yyyy-mm-dd',
         ],
     ])->label(Warranty::labels('act_date')) ?>
-    <?= $form->field($model, 'status')->dropDownList(WarrantyHelper::statusList())->label(Warranty::labels('status')) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>

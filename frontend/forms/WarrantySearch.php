@@ -15,8 +15,7 @@ class WarrantySearch extends Warranty
 {
 
     public $warrantyValidUntil;
-    public $act_date_to;
-    public $invoice_date_to;
+
     /**
      * @inheritdoc
      */
@@ -26,24 +25,22 @@ class WarrantySearch extends Warranty
             [['id', 'customer_id', 'status'], 'integer'],
             [
                 [
-                'device_name',
-                'part_number',
-                'serial_number',
-                'invoice_number',
-                'act_number',
+                    'device_name',
+                    'part_number',
+                    'serial_number',
+                    'invoice_number',
+                    'act_number',
+                    'act_date',
+                    'invoice_date',
                 ], 'string'
             ],
             [
                 [
                     'warrantyValidUntil',
-                    'act_date_to',
-                    'invoice_date_to'
                 ],'safe'
             ],
             [
                 [
-                    'invoice_date',
-                    'act_date',
                     'created_at',
                     'updated_at'
                 ], 'date', 'format' => 'php:Y-m-d'
@@ -87,6 +84,10 @@ class WarrantySearch extends Warranty
             return $dataProvider;
         }
 
+        $actDateRange = self::getDateRange($this->act_date);
+        $invoiceDateRange = self::getDateRange($this->invoice_date);
+/*        var_dump($actDateRange);
+        exit;*/
 
         // grid filtering conditions
         $query->andFilterWhere([
@@ -102,12 +103,20 @@ class WarrantySearch extends Warranty
             ->andFilterWhere(['like', 'serial_number', $this->serial_number])
             ->andFilterWhere(['like', 'invoice_number', $this->invoice_number])
             ->andFilterWhere(['like', 'act_number', $this->act_number])
-            ->andFilterWhere(['>=', 'act_date', $this->act_date ? strtotime($this->act_date . ' 00:00:00') : null])
-            ->andFilterWhere(['<=', 'act_date', $this->act_date_to ? strtotime($this->act_date_to . ' 23:59:59') : null])
-            ->andFilterWhere(['>=', 'invoice_date', $this->invoice_date ? strtotime($this->invoice_date . ' 00:00:00') : null])
-            ->andFilterWhere(['<=', 'invoice_date', $this->invoice_date_to ? strtotime($this->invoice_date_to . ' 23:59:59') : null]);
+            ->andFilterWhere(['>=', 'act_date', $actDateRange[0] ? strtotime($actDateRange[0] . ' 00:00:00') : null])
+            ->andFilterWhere(['<=', 'act_date', $actDateRange[1] ? strtotime($actDateRange[1] . ' 23:59:59') : null])
+            ->andFilterWhere(['>=', 'invoice_date', $invoiceDateRange[0] ? strtotime($invoiceDateRange[0] . ' 00:00:00') : null])
+            ->andFilterWhere(['<=', 'invoice_date', $invoiceDateRange[1] ? strtotime($invoiceDateRange[1] . ' 23:59:59') : null]);
 
 
         return $dataProvider;
+    }
+
+    private static function getDateRange($dateRange){
+        $dateRangeArray = explode(' - ', $dateRange);
+        if(count($dateRangeArray) == 2){
+            return $dateRangeArray;
+        }
+        return array('', '');
     }
 }

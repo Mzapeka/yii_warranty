@@ -9,6 +9,7 @@
 namespace site\forms\warranty;
 
 
+use site\helpers\WarrantyHelper;
 use yii\base\Model;
 
 class WarrantyCreateFormByUser extends Model
@@ -27,6 +28,7 @@ class WarrantyCreateFormByUser extends Model
     public function rules(): array
     {
         return [
+
             [['device_name', 'customer_id', 'part_number', 'serial_number', 'invoice_number', 'invoice_date', 'status'], 'required'],
             [['device_name', 'part_number', 'serial_number', 'invoice_number'], 'string', 'max' => 255],
             [['act_number', 'act_date'], 'default', 'value' => null],
@@ -40,6 +42,61 @@ class WarrantyCreateFormByUser extends Model
                     return $value;
                 }
             }],
+
+           // ['invoice_date', 'date', 'timestampAttribute'=>'invoice_date'],
+            //['act_date', 'date', 'timestampAttribute'=>'act_date'],
+
+            //если был введен номер акта - нужно заполнить дату и наоборот
+            ['act_date', 'required',
+                'when' => function($form) {
+                    return $form->act_number != '';
+                },
+                'message' => 'Заполните дату акта ввода в эксплуатацию.'
+            ],
+            [['act_number'], 'required',
+                'when' => function($model) {
+                    return $model->act_date != '';
+                },
+                'message' => 'Заполните номер акта ввода в эксплуатацию.'
+            ],
+
+            ['invoice_date', 'compare',
+                'compareValue'=> time(),
+                'operator' => '<',
+                'type' => 'number',
+                'message' => 'Дата инвойса не может быть больше сегоднешнего дня',
+            ],
+
+            ['invoice_date', 'compare',
+                'compareValue'=> WarrantyHelper::getMinTimeInvoiceReg(),
+                'operator' => '>=',
+                'type' => 'number',
+                'message' => 'Дата инвойса должна быть не раньше чем '.date('Y-m-d', WarrantyHelper::getMinTimeInvoiceReg()),
+            ],
+
+            ['act_date', 'compare',
+                'compareValue'=> time(),
+                'operator' => '<',
+                'type' => 'number',
+                'message' => 'Дата акта не может быть больше сегоднешнего дня',
+            ],
+
+            ['act_date', 'compare',
+                'compareAttribute' => 'invoice_date',
+                'operator' => '>=',
+                'type' => 'number',
+                'message' => 'Дата акта не может быть меньше даты инвойса',
+            ],
+
+            ['act_date', function ($attribute) {
+
+                if ($this->$attribute > WarrantyHelper::getMaxTimeActReg($this->invoice_date)) {
+                    $this->addError($attribute, 'Дата акта ввода в эксплуатацию должна быть не позже чем '.date('Y-m-d', WarrantyHelper::getMaxTimeActReg($this->invoice_date)));
+                }
+            }],
+
+
+
         ];
     }
 

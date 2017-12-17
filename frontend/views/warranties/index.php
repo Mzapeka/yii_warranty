@@ -66,7 +66,7 @@ $columnSettings = array(
 //        'vAlign' => 'middle',
 //        'width' => '60px',
 //    ],
-    [
+/*    [
         'attribute' => 'invoice_date',
         'vAlign' => 'middle',
         'width' => '70px',
@@ -85,8 +85,8 @@ $columnSettings = array(
         ],
         'headerOptions' => ['class' => 'kv-sticky-column'],
         'contentOptions' => ['class' => 'kv-sticky-column'],
-    ],
-    [
+    ],*/
+/*    [
         'attribute' => 'act_date',
         'vAlign' => 'middle',
         'width' => '90px',
@@ -105,6 +105,47 @@ $columnSettings = array(
         ],
         'headerOptions' => ['class' => 'kv-sticky-column'],
         'contentOptions' => ['class' => 'kv-sticky-column'],
+    ],*/
+    [
+        'attribute' => 'invoice_date',
+        'vAlign' => 'middle',
+        'width' => '90px',
+        'format' => ['date', 'php:Y-m-d'],
+        'xlFormat' => "mmm\\-dd\\, \\-yyyy",
+        'filterType' => 'kartik\daterange\DateRangePicker',
+
+        'filterWidgetOptions' => [
+            'name'=>'act_date',
+            'hideInput' => false,
+            'useWithAddon'=>false,
+            'convertFormat'=>true,
+            'presetDropdown' => false,
+            'autoUpdateOnInit' => false,
+            'pluginOptions'=>[
+                'locale'=>['format' => 'Y-m-d'],
+            ]
+        ],
+    ],
+    [
+        'attribute' => 'act_date',
+        'vAlign' => 'middle',
+        'width' => '90px',
+        'format' => ['date', 'php:Y-m-d'],
+        'xlFormat' => "mmm\\-dd\\, \\-yyyy",
+        'filterType' => 'kartik\daterange\DateRangePicker',
+
+        'filterWidgetOptions' => [
+            'name'=>'act_date',
+            'value' => '2018-10-04 - 2018-11-14',
+            'hideInput' => false,
+            'useWithAddon'=>false,
+            'convertFormat'=>true,
+            'presetDropdown' => false,
+            'autoUpdateOnInit' => false,
+            'pluginOptions'=>[
+                'locale'=>['format' => 'Y-m-d'],
+            ]
+        ],
     ],
 
 /*    [
@@ -174,8 +215,8 @@ $columnSettings = array(
             'perfectScrollbar' => true,
             'headerRowOptions' => ['class' => 'kartik-sheet-style'],
             'filterRowOptions' => ['class' => 'kartik-sheet-style'],
-            'pjax' => true, // pjax is set to always true for this demo
-            // set your toolbar
+            'pjax' => true,
+
             'toolbar' =>  [
                 ['content' =>
                     Html::a('<i class="glyphicon glyphicon-plus"></i>', ['create'], ['data-pjax' => 0, 'class' => 'btn btn-success', 'title' => 'Добавить гарантию']) . ' '.

@@ -30,6 +30,7 @@ class WarrantyService
 
     public function create(Model $form): Warranty
     {
+
         $warranty = Warranty::create(
             $form->customer_id,
             $form->device_name,

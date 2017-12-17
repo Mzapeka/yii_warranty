@@ -9,8 +9,11 @@
 namespace site\helpers;
 
 
+use DateInterval;
 use site\entities\Warranty\Warranty;
+use Yii;
 use yii\bootstrap\Html;
+use yii\db\Exception;
 use yii\helpers\ArrayHelper;
 
 class WarrantyHelper
@@ -53,6 +56,34 @@ class WarrantyHelper
     public static function statusName($status): string
     {
         return ArrayHelper::getValue(self::statusList(), $status);
+    }
+
+    public static function isWarrantyBelongToUser(int $warrantyId): bool
+    {
+            $warranty = Warranty::findOne($warrantyId);
+            if($warranty){
+                return $warranty->getUsers()->one()->id == Yii::$app->getUser()->id;
+            }
+            return false;
+    }
+
+    public static function getMinTimeInvoiceReg(): int
+    {
+        $date = new \DateTime();
+        $interval = DateInterval::createFromDateString('-'.Yii::$app->params['minTimeInvoiceReg'].' month');
+        $date->add($interval);
+        return $date->getTimestamp();
+    }
+
+    public static function getMaxTimeActReg(int $invoiceTime = null): int
+    {
+        $date = new \DateTime();
+        if($invoiceTime){
+            $date->setTimestamp($invoiceTime);
+        }
+        $interval = DateInterval::createFromDateString(Yii::$app->params['maxTimeActReg'].' month');
+        $date->add($interval);
+        return $date->getTimestamp();
     }
 
 }

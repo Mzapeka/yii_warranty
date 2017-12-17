@@ -50,4 +50,13 @@ class CustomerHelper
         return Customer::findOne($id)->customer_name;
     }
 
+    public static function isCustomerBelongToUser(int $customerId): bool
+    {
+        $customer = Customer::findOne($customerId);
+        if($customer){
+            return $customer->getUser()->one()->id == Yii::$app->getUser()->id;
+        }
+        return false;
+    }
+
 }

@@ -45,6 +45,18 @@ table.maintab td .date span{
     padding-bottom: 3px;
 }
 
+table.maintab td .input-daterange{
+    -webkit-transition-duration: 0.5s;
+    -webkit-transition-property: width;
+
+    -moz-transition-duration: 0.5s;
+    -moz-transition-property: width;
+
+    transition-duration: 0.5s;
+    transition-property: width;
+
+}
+
 table.maintab td .input-daterange:hover{
     width: 180px;
     background-color: #cc5555;
