@@ -23,7 +23,8 @@
         "dmstr/yii2-adminlte-asset": "^2.4",
         "himiklab/yii2-recaptcha-widget": "*",
         "kartik-v/yii2-grid": "@dev",
-        "kartik-v/yii2-date-range": "^1.6@dev"
+        "kartik-v/yii2-date-range": "^1.6@dev",
+        "glitchit/ds-yii2-tcpdf": "dev-master"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
