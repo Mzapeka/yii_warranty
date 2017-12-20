@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\modules\PdfWarranty;
 use frontend\forms\WarrantySearch;
 use site\entities\User\User;
 use site\entities\Warranty\Warranty;
@@ -110,6 +111,19 @@ class WarrantiesController extends Controller
             return $this->renderContent($e->getMessage());
         }
 
+    }
+
+    public function actionPrintWarranty($id)
+    {
+        try{
+            $warranty = $this->findModel($id);
+
+            PdfWarranty::instance()->setWarranty($warranty);
+            PdfWarranty::instance()->createWarrSheet();
+
+        }catch (NotFoundHttpException $e){
+            return $this->renderContent($e->getMessage());
+        }
     }
 
 

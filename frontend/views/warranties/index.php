@@ -190,6 +190,7 @@ $columnSettings = array(
             return Html::a('<span class="glyphicon glyphicon-print">', Url::to($url), [
                 'title' => 'Гарантийный лист',
                 'data-toggle' => 'tooltip',
+                'data-pjax'=>0,
             ]);
         }],
         'visibleButtons' => [
