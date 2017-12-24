@@ -6,7 +6,7 @@
  * Time: 21:31
  */
 
-namespace common\modules;
+namespace common\modules\pdfPrint;
 
 
 use Yii;
@@ -56,7 +56,7 @@ class PdfPageContent
 
 
     public function getWarranty_main_condition_text(){
-        return file_get_contents(Yii::getAlias('@common/modules/conditions.txt'));
+        return file_get_contents(Yii::getAlias('@common/modules/pdfPrint/conditions.txt'));
     }
 
     public function getWarrantyTimeAfterSales(){

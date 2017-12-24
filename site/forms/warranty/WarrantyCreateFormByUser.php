@@ -43,20 +43,19 @@ class WarrantyCreateFormByUser extends Model
                 }
             }],
 
-           // ['invoice_date', 'date', 'timestampAttribute'=>'invoice_date'],
-            //['act_date', 'date', 'timestampAttribute'=>'act_date'],
-
             //если был введен номер акта - нужно заполнить дату и наоборот
             ['act_date', 'required',
                 'when' => function($form) {
                     return $form->act_number != '';
                 },
+                'skipOnError' => false,
                 'message' => 'Заполните дату акта ввода в эксплуатацию.'
             ],
             [['act_number'], 'required',
                 'when' => function($model) {
-                    return $model->act_date != '';
+                    return $model->act_date != null;
                 },
+                'skipOnError' => false,
                 'message' => 'Заполните номер акта ввода в эксплуатацию.'
             ],
 

@@ -2,7 +2,7 @@
 
 namespace frontend\controllers;
 
-use common\modules\PdfWarranty;
+use common\modules\pdfPrint\PdfWarranty;
 use frontend\forms\WarrantySearch;
 use site\entities\User\User;
 use site\entities\Warranty\Warranty;

@@ -6,7 +6,7 @@
  * Time: 21:07
  */
 
-namespace common\modules;
+namespace common\modules\pdfPrint;
 
 use site\entities\Warranty\Warranty;
 use TCPDF_BASE;
@@ -210,7 +210,7 @@ class PdfWarranty extends TCPDF_BASE
 
 // ---------------------------------------------------------
 //Close and output PDF document
-        self::instance()->Output($this->warranty->id.'_'.$this->content->output_file_name, 'I');
+        self::instance()->Output($this->warranty->id.'_'.$this->content->output_file_name, 'D');
     }
 
     public function setWarranty(Warranty $warranty): void
