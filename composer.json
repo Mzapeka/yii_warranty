@@ -24,7 +24,8 @@
         "himiklab/yii2-recaptcha-widget": "*",
         "kartik-v/yii2-grid": "@dev",
         "kartik-v/yii2-date-range": "^1.6@dev",
-        "glitchit/ds-yii2-tcpdf": "dev-master"
+        "glitchit/ds-yii2-tcpdf": "dev-master",
+        "kartik-v/yii2-tree-manager": "@dev"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

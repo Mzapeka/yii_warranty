@@ -53,22 +53,12 @@ class SiteController extends Controller
         return $this->render('contact');
     }
 
-    public function actionWarrantyCheck()
-    {
-        $model = new WarrantyCheck();
-        return $this->render('warranty_check',
-            [
-                'model' => $model,
-            ]
-        );
-    }
-
     public function actionPolicy()
     {
         return $this->render('policy');
     }
 
-    public function actionWarrantyCheckAction()
+    public function actionWarrantyCheck()
     {
         /**@var $date DateTime */
         /**@var $warrantyService WarrantyService */
@@ -88,7 +78,6 @@ class SiteController extends Controller
         return $this->render('warranty_check', [
             'model' => $form,
         ]);
-
     }
 
 

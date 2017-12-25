@@ -21,6 +21,9 @@ return [
         'importdata' => [
             'class' => 'app\modules\importData\Module',
         ],
+        'treemanager' =>  [
+            'class' => '\kartik\tree\Module',
+        ]
     ],
     'components' => [
         'request' => [

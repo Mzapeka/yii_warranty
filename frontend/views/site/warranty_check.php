@@ -18,7 +18,7 @@ use yii\helpers\Url;
 
 $this->title = 'Проверка гарантии';
 
-$form = ActiveForm::begin(['id' => 'check-form', 'action' => Url::to('warranty-check-action')]);
+$form = ActiveForm::begin(['id' => 'check-form']);
 
 echo $form->field($model, 'warrantyNumber')->textInput(['class'=>'check-warranty-input form-control'])->label('Серийный номер оборудования');
 echo $form->field($model, 'reCaptcha')->widget(

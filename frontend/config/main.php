@@ -22,7 +22,10 @@ return [
             // message source
             // 'downloadAction' => 'gridview/export/download',
             // 'i18n' => []
-        ]
+        ],
+        'manualParser' => [
+            'class' => 'app\modules\manualParser\Module',
+        ],
     ],
     'controllerNamespace' => 'frontend\controllers',
     'components' => [

@@ -37,6 +37,10 @@
                         ['label' => 'Гарантии', 'icon' => 'file-o', 'url' => ['/warranty'], 'active' => $this->context->id == 'warranty'],
 
                     ]],
+                    ['label' => 'Каталог', 'icon' => 'folder', 'items' => [
+                        ['label' => 'Категории', 'icon' => 'file-o', 'url' => ['/catalog'], 'active' => $this->context->id == 'catalog'],
+
+                    ]],
                     ['label' => 'Импорт данных', 'icon' => 'folder', 'items' => [
                         ['label' => 'Импорт из старой базы', 'icon' => 'file-o', 'url' => ['/importdata'], 'active' => $this->context->id == 'default'],
 
