@@ -10,8 +10,6 @@ namespace app\modules\catalogManager\models;
 
 
 use kartik\tree\models\Tree;
-use site\access\Rbac;
-use Yii;
 
 class TreeBuilder extends Tree
 {
@@ -30,16 +28,4 @@ class TreeBuilder extends Tree
         return $rules;
     }
 
-    /**
-     * Override isDisabled method if you need as shown in the
-     * example below. You can override similarly other methods
-     * like isActive, isMovable etc.
-     */
-/*    public function isDisabled()
-    {
-        if (Yii::$app->getUser()->group !== Rbac::ROLE_ADMIN) {
-            return true;
-        }
-        return parent::isDisabled();
-    }*/
 }

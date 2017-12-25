@@ -27,6 +27,8 @@ class m171225_133929_create_catalog_items_table extends Migration
             'category_id' => $this->integer()->notNull(),
             'disabled' => $this->boolean()->notNull()->defaultValue(false),
             'description' => $this->string()->Null()->defaultValue(null),
+            'created_at' => $this->integer()->unsigned()->notNull(),
+            'updated_at' => $this->integer()->unsigned()->notNull(),
         ], $tableOptions);
     }
 

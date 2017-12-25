@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     ]
                 ],
                 'nodeAddlViews' => [
-                    Module::VIEW_PART_2 => '@backend/views/catalog/_tree_part2'
+                    Module::VIEW_PART_2 => '@backend/views/category/_tree_part2'
                 ],
                 'softDelete' => true,
                 'cacheSettings' => ['enableCache' => true]

@@ -38,7 +38,8 @@
 
                     ]],
                     ['label' => 'Каталог', 'icon' => 'folder', 'items' => [
-                        ['label' => 'Категории', 'icon' => 'file-o', 'url' => ['/catalog'], 'active' => $this->context->id == 'catalog'],
+                        ['label' => 'Категории', 'icon' => 'file-o', 'url' => ['/category'], 'active' => $this->context->id == 'category'],
+                        ['label' => 'Документы', 'icon' => 'file-o', 'url' => ['/item'], 'active' => $this->context->id == 'item'],
 
                     ]],
                     ['label' => 'Импорт данных', 'icon' => 'folder', 'items' => [
