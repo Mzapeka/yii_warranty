@@ -5,6 +5,7 @@ use kartik\tree\Module;
 use kartik\tree\TreeView;
 use app\modules\catalogManager\models\TreeBuilder;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\Pjax;
 /* @var $this yii\web\View */
 /* @var $searchModel backend\forms\UserSearch */
@@ -46,7 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 
     <p>
-        <?= Html::a('Импортировать категории', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Импортировать категории', Url::to('category/catalog-import'), ['class' => 'btn btn-success']) ?>
     </p>
 
 </div>

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "f4fc0dc7869b31415b6d1daf8af5d1ce",
+    "content-hash": "ec0b4381f78b15566f2a092c733e7d4a",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -511,6 +511,46 @@
                 "yii2"
             ],
             "time": "2017-10-12T06:10:53+00:00"
+        },
+        {
+            "name": "electrolinux/phpquery",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/electrolinux/phpquery.git",
+                "reference": "196aa28b33c17ff31016cb5aed3c229c49dc743c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/electrolinux/phpquery/zipball/196aa28b33c17ff31016cb5aed3c229c49dc743c",
+                "reference": "196aa28b33c17ff31016cb5aed3c229c49dc743c",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "phpQuery/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tobiasz Cudnik",
+                    "email": "tobiasz.cudnik@gmail.com",
+                    "homepage": "https://github.com/TobiaszCudnik",
+                    "role": "Developer"
+                },
+                {
+                    "name": "didier Belot",
+                    "role": "Packager"
+                }
+            ],
+            "description": "phpQuery is a server-side, chainable, CSS3 selector driven Document Object Model (DOM) API based on jQuery JavaScript Library",
+            "homepage": "http://code.google.com/p/phpquery/",
+            "time": "2016-03-24T10:32:29+00:00"
         },
         {
             "name": "ezyang/htmlpurifier",
@@ -2534,6 +2574,53 @@
                 "yii2"
             ],
             "time": "2017-08-01T14:22:25+00:00"
+        },
+        {
+            "name": "yiisoft/yii2-httpclient",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yiisoft/yii2-httpclient.git",
+                "reference": "37fe544e37e3c4ae99d3b8405c21bec2d1c8731b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yiisoft/yii2-httpclient/zipball/37fe544e37e3c4ae99d3b8405c21bec2d1c8731b",
+                "reference": "37fe544e37e3c4ae99d3b8405c21bec2d1c8731b",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "~2.0.13"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "yii\\httpclient\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Paul Klimov",
+                    "email": "klimov.paul@gmail.com"
+                }
+            ],
+            "description": "HTTP client extension for the Yii framework",
+            "keywords": [
+                "curl",
+                "http",
+                "httpclient",
+                "yii2"
+            ],
+            "time": "2017-11-03T11:22:41+00:00"
         },
         {
             "name": "yiisoft/yii2-swiftmailer",
@@ -5227,7 +5314,8 @@
         "kartik-v/yii2-grid": 20,
         "kartik-v/yii2-date-range": 20,
         "glitchit/ds-yii2-tcpdf": 20,
-        "kartik-v/yii2-tree-manager": 20
+        "kartik-v/yii2-tree-manager": 20,
+        "electrolinux/phpquery": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
