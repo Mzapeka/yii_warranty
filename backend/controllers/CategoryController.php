@@ -33,7 +33,7 @@ class CategoryController extends Controller
         );
         $importModel->login('index_old.php');
         //sleep(5);
-        $content = $importModel->getContent();
+        $content = $importModel->importCategories();
 
         Yii::$app->session->setFlash('success', 'Категории импортированы');
 

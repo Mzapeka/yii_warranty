@@ -74,7 +74,7 @@ class ImportCatalog
         return true;
     }
 
-    public function getContent()
+    public function importCategories()
     {
         phpQuery::newDocumentHTML($this->responseLogin->content, "windows-1251");
 
