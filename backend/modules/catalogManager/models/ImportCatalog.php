@@ -10,6 +10,7 @@ namespace backend\modules\catalogManager\models;
 
 
 use phpQuery;
+use site\entities\Catalog\Category;
 use yii\httpclient\Client;
 use yii\httpclient\Response;
 use yii\web\CookieCollection;
@@ -77,46 +78,47 @@ class ImportCatalog
     {
         phpQuery::newDocumentHTML($this->responseLogin->content, "windows-1251");
 
-        $parent_category = array(1=>0);
+        $root = Category::find()->roots()->one();
+
+        if(!$root){
+            $root = new Category([
+                'name'=>'Все категории',
+                'local_source' => 0,
+                'description' => '',
+            ]);
+            $root->makeRoot();
+        }
+
+        $parent_category = array(
+            1=>$root
+        );
+
         $lastLevel = 1;
-        $lastOldId = null;
-        $resultArray = array();
+        $lastNode = null;
 
         foreach (pq('div.open_menu') as $select){
-
+                
                 //var_dump(iconv("windows-1251", "utf-8", pq($select)->htmlOuter()));
                 preg_match('/open_(\d+)/', pq($select)->htmlOuter(), $level);
                 preg_match('/.*?SID=(\d+$)/', pq($select)->next()->children()->attr('href'), $old_id);
 
                 if($level[1] > $lastLevel){
-                    $parent_category[$level[1]] = $lastOldId;
+                    $parent_category[$level[1]] = $lastNode;
                 }
 
-                $resultArray[] = [
-                    'catName' => pq($select)->next()->children()->text(),
-                    'old_id' => $old_id[1],
-                    'parent_category' => $parent_category[$level[1]]
-                ];
+                $node = Category::find()->andWhere(['old_id'=>$old_id[1]])->one();
 
-                $lastOldId = $old_id[1];
+                if(!$node){
+                    $node = new Category([
+                        'name'=>pq($select)->next()->children()->text(),
+                        'old_id' => $old_id[1],
+                        'local_source' => 0,
+                        'description' => '',
+                    ]);
+                    $node->appendTo($parent_category[$level[1]]);
+                }
+                $lastNode = $node;
                 $lastLevel = $level[1];
-
-
-/*                var_dump($old_id);
-                var_dump($level);
-                echo "<hr/>";*/
         }
-        echo "<pre>";
-        var_dump($resultArray);
-        echo "<pre/>";
-        //var_dump(iconv("windows-1251", "utf-8", pq('.al-dl-sect-list li.lvl1:first')));
-        exit;
-
-
-/*        $dom = HtmlDomParser::str_get_html($this->responseLogin->content);
-        $elems = $dom->find('.al-dl-sect-list>ul>li.lvl1');
-        var_dump($elems->innerHtml());
-        exit;
-        return iconv("windows-1251", "utf-8", 'ds');*/
     }
 }

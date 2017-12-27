@@ -10,14 +10,19 @@ namespace backend\controllers;
 
 
 use backend\modules\catalogManager\models\ImportCatalog;
+use site\entities\Catalog\Category;
 use Yii;
+use yii\helpers\Url;
 use yii\web\Controller;
 
 class CategoryController extends Controller
 {
     public function actionIndex()
     {
-        return $this->render('index');
+        $category = Category::find()->addOrderBy('root, lft');
+        return $this->render('index',[
+            'query' => $category,
+        ]);
     }
 
     public function actionCatalogImport(){
@@ -29,7 +34,11 @@ class CategoryController extends Controller
         $importModel->login('index_old.php');
         //sleep(5);
         $content = $importModel->getContent();
-        echo $content;
+
+        Yii::$app->session->setFlash('success', 'Категории импортированы');
+
+        $this->redirect(Url::to('/category'));
+
     }
 
 }

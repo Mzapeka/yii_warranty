@@ -23,6 +23,12 @@ return [
         ],
         'treemanager' =>  [
             'class' => '\kartik\tree\Module',
+            'treeStructure' =>     [
+                'treeAttribute' => false,
+                'leftAttribute' => 'lft',
+                'rightAttribute' => 'rgt',
+                'depthAttribute' => 'lvl',
+            ]
         ]
     ],
     'components' => [
