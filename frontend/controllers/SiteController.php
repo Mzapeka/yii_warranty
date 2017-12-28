@@ -63,7 +63,6 @@ class SiteController extends Controller
         /**@var $date DateTime */
         /**@var $warrantyService WarrantyService */
         $form = new WarrantyCheck();
-//todo: проверить работает ли функция проверки гарантии. Был изменен форматы вывода даты с объекта на UNIX
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
             try{
                 $warrantyService = Yii::$container->get(WarrantyService::class);

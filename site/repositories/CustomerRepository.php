@@ -32,9 +32,6 @@ class CustomerRepository
 
 
     //todo: Дописать остальные методы
-    //todo: Сделать сервис гарантии
-
-
 
     public function save(Customer $customer): void
     {

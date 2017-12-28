@@ -57,11 +57,8 @@ class WarrantiesController extends Controller
 
     public function actionCreate()
     {
+        //todo: добавить проверку на существование клиентов, если ни одного нет - предложить зарегистрировать
         $form = new WarrantyCreateFormByUser();
-        //var_dump(Yii::$app->request->post());
-        //exit;
-        //var_dump($_POST);
-        //exit;
 
         if (Yii::$app->request->isAjax && $form->load(Yii::$app->request->post())) {
             Yii::$app->response->format = Response::FORMAT_JSON;
