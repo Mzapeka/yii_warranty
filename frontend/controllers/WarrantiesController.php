@@ -12,6 +12,8 @@ use site\services\warranty\WarrantyService;
 use Yii;
 use yii\bootstrap\ActiveForm;
 use yii\filters\VerbFilter;
+use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -57,7 +59,6 @@ class WarrantiesController extends Controller
 
     public function actionCreate()
     {
-        //todo: добавить проверку на существование клиентов, если ни одного нет - предложить зарегистрировать
         $form = new WarrantyCreateFormByUser();
 
         if (Yii::$app->request->isAjax && $form->load(Yii::$app->request->post())) {
@@ -92,9 +93,17 @@ class WarrantiesController extends Controller
             }
         }
 
-        return $this->render('create', [
-            'model' => $form,
-        ]);
+        if(User::findOne(Yii::$app->user->identity->getId())->hasCustomers()){
+            return $this->render('create', [
+                'model' => $form,
+            ]);
+        }
+
+        Yii::$app->session->setFlash('error',
+            'У вас не зарегистрировано ни одного клиента. '.Html::a('Зарегистрируйте клиента.', Url::to('/customers/create'))
+        );
+        $this->goBack();
+
     }
 
 

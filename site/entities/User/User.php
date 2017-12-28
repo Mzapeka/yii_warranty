@@ -335,4 +335,8 @@ class User extends ActiveRecord implements IdentityInterface
             ->viaTable('customers', ['dealer_id' => 'id']);
     }
 
+    public function hasCustomers(){
+        return (bool) $this->getCustomer()->one();
+    }
+
 }
