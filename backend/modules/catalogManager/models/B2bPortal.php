@@ -40,6 +40,7 @@ class B2bPortal
     private $responseLogin;
 
     private const MARK_COOKIE = 'BITRIX_SM_LOGIN';
+    private const URL_CATALOG = 'index_old.php';
 
     public function __construct(string $url, string $login, string $pass)
     {
@@ -102,25 +103,23 @@ class B2bPortal
         return $page->content;
     }
 
-    public function getCategories(string $catalogUrl = ''): array
+    public function getCategories(string $catalogUrl = self::URL_CATALOG): B2bPortalCategory
     {
         $content = $this->getPageContent($catalogUrl);
         phpQuery::newDocumentHTML($content, "windows-1251");
 
-        $categoriesArray = array();
+        $category = new B2bPortalCategory();
 
         foreach (pq('div.open_menu') as $select){
                 
              preg_match('/open_(\d+)/', pq($select)->htmlOuter(), $level);
             preg_match('/.*?SID=(\d+$)/', pq($select)->next()->children()->attr('href'), $old_id);
 
-            $category = new B2bPortalCategory();
-            $category->level = $level[1];
-            $category->id = $old_id[1];
-            $category->name = pq($select)->next()->children()->text();
-            $categoriesArray[] = $category;
-
+            $category->setLevel($level[1]);
+            $category->setId($old_id[1]);
+            $category->setName(pq($select)->next()->children()->text());
+            $category->add();
         }
-        return $categoriesArray;
+        return $category;
     }
 }

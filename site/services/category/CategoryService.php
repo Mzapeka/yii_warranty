@@ -17,14 +17,10 @@ class CategoryService
 {
     /**
      * Array of modules\catalogManager\models\B2bPortalCategory
-     * @param array $categoriesArray
+     * @param B2bPortalCategory $categories
      */
-    public function importCategories(array $categoriesArray): CategoryImportResult
+    public function importCategories(B2bPortalCategory $categories): CategoryImportResult
     {
-        if(!$categoriesArray || !array_walk($categoriesArray, function($val){return $val instanceof B2bPortalCategory;})){
-            throw new \RuntimeException('Ошибка импорта категорий');
-        }
-
         $root = Category::find()->roots()->one();
 
         if(!$root){
@@ -44,11 +40,11 @@ class CategoryService
         $lastNode = null;
 
         $importResult = new CategoryImportResult();
-        $importResult->setTotalCategoriesOnPortal(count($categoriesArray));
+        $importResult->setTotalCategoriesOnPortal(count($categories));
         /**
         * @var B2bPortalCategory $b2bPortalCategory
          */
-        foreach ($categoriesArray as $b2bPortalCategory){
+        foreach ($categories as $b2bPortalCategory){
             if($b2bPortalCategory->level > $lastLevel){
                 $parent_category[$b2bPortalCategory->level] = $lastNode;
             }
