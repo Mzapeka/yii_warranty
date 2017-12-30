@@ -9,15 +9,26 @@ use Yii;
 use yii\helpers\Url;
 use yii\web\Controller;
 
+/**
+* @property B2bPortal $b2bPortal
+* @property CategoryService $service
+ */
 
 class ImportCatalogController extends Controller
 {
     private $service;
+    private $b2bPortal;
 
     public function __construct($id, $module, CategoryService $categoryService, array $config = [])
     {
         parent::__construct($id, $module, $config);
         $this->service = $categoryService;
+
+        $this->b2bPortal = new B2bPortal(
+            Yii::$app->params['b2bHost'],
+            Yii::$app->params['b2bUser'],
+            Yii::$app->params['b2bPass']
+        );
     }
     /**
      * Renders the index view for the module
@@ -29,8 +40,8 @@ class ImportCatalogController extends Controller
     }
 
     public function actionImportCategory(){
-        $b2bPortal = self::getB2bPortal();
-        $categories = $b2bPortal->getCategories('index_old.php');
+
+        $categories = $this->b2bPortal->getCategories('index_old.php');
         $result = $this->service->importCategories($categories);
 
         Yii::$app->session->setFlash('success', $this->renderPartial('importResult', [
@@ -42,18 +53,8 @@ class ImportCatalogController extends Controller
 
     public function actionImportDocuments()
     {
-        $b2bPortal = self::getB2bPortal();
-        $documents = $b2bPortal->getDocuments();
+        $documents = $this->b2bPortal->getDocuments();
         var_dump($documents);
-    }
-
-    protected static function getB2bPortal():B2bPortal
-    {
-        return new B2bPortal(
-            Yii::$app->params['b2bHost'],
-            Yii::$app->params['b2bUser'],
-            Yii::$app->params['b2bPass']
-        );
     }
 
 }
