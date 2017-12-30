@@ -8,13 +8,10 @@
 
 namespace backend\modules\importData\models\catalogManager;
 
-
-
 use phpQuery;
 use RuntimeException;
 use Yii;
 use yii\httpclient\Client;
-use yii\httpclient\Response;
 use yii\web\CookieCollection;
 
 /**
@@ -24,7 +21,8 @@ use yii\web\CookieCollection;
 * @property string $pass
 * @property CookieCollection $cookies
 * @property Client $client
-* @property Response $responseLogin
+* @property B2bPortalCategory $categories
+* @property B2bPortalDocument $documents
 
 *
 
@@ -38,6 +36,9 @@ class B2bPortal
 
     private $cookies;
     private $client;
+
+    private $categories;
+    private $documents;
 
     private const MARK_COOKIE = 'BITRIX_SM_LOGIN';
     private const URL_CATALOG = 'index_old.php';
@@ -53,6 +54,7 @@ class B2bPortal
             'baseUrl'=> $this->baseUrl,
             'transport' => 'yii\httpclient\CurlTransport'
         ]);
+
     }
 
 
@@ -99,26 +101,31 @@ class B2bPortal
         return $this->cookies;
     }
 
-    private function getPageContent(string $url = ''){
-        $page = $this->client->createRequest()
+    private function getPageContent(string $url = '', array $params = array()){
+        $request = $this->client->createRequest()
             ->setMethod('post')
             ->setUrl($url)
             ->addHeaders(['user-agent' => 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.84 Safari/537.36 OPR/38.0.2220.31'])
             ->setCookies($this->getCookies())
-            ->send();
+            ->prepare();
+
+        if($params){
+            $request->setData($params);
+        }
+
+        $page = $request->send();
         return $page->content;
     }
 
     public function getCategories(string $catalogUrl = self::URL_CATALOG): B2bPortalCategory
     {
-        $content = $this->getPageContent($catalogUrl);
-        phpQuery::newDocumentHTML($content, "windows-1251");
+        phpQuery::newDocumentHTML($this->getPageContent($catalogUrl), "windows-1251");
 
         $category = new B2bPortalCategory();
 
         foreach (pq('div.open_menu') as $select){
                 
-             preg_match('/open_(\d+)/', pq($select)->htmlOuter(), $level);
+            preg_match('/open_(\d+)/', pq($select)->htmlOuter(), $level);
             preg_match('/.*?SID=(\d+$)/', pq($select)->next()->children()->attr('href'), $old_id);
 
             $category->setLevel($level[1]);
@@ -126,6 +133,48 @@ class B2bPortal
             $category->setName(pq($select)->next()->children()->text());
             $category->add();
         }
+        $this->categories = $category;
         return $category;
+    }
+
+    protected function getDocumentsByCategoryId(int $id):void
+    {
+
+        $requestParams = [
+            'SID' => $id,
+            'SHOWALL_1' => 1,
+        ];
+
+        phpQuery::newDocumentHTML($this->getPageContent(self::URL_CATALOG, $requestParams), "windows-1251");
+
+        $documentList = pq('div.al-dl-docs-item');
+        if($documentList->count() > 0){
+            foreach ($documentList as $document){
+                preg_match('/EID=(\d+)/', pq($document)->find('div.al-dl-doc-name a')->attr('href'), $docId);
+                $this->documents->setId($docId[1]);
+                $this->documents->setName(pq($document)->find('div.al-dl-doc-name a')->text());
+
+                $infoSize = pq($document)->find('div.al-dl-info-size')->text();
+
+                preg_match('#^\(([\w]{3,4}),#', $infoSize, $type);
+                $this->documents->setFileType(isset($type[1])?$type[1]:'');
+
+                preg_match('#^\([\w]{3,4},\s(.+)\)$#is', $infoSize, $size);
+                $this->documents->setFileSize(isset($size[1])?$size[1]:'');
+
+                $this->documents->setCategoryId($id);
+                $this->documents->add();
+            }
+        }
+    }
+
+    public function getDocuments():B2bPortalDocument
+    {
+        $this->getCategories();
+        $this->documents = new B2bPortalDocument();
+        foreach ($this->categories as $category){
+            $this->getDocumentsByCategoryId($category->id);
+        }
+        return $this->documents;
     }
 }
