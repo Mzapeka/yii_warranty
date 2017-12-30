@@ -6,12 +6,12 @@
  * Time: 21:33
  */
 
-namespace backend\modules\catalogManager\models;
+namespace backend\modules\importData\models\catalogManager;
 use Countable;
-use \Iterator;
+use Iterator;
 
 /**
-*Структура для хранения категории из b2b порталла
+*Класс для хранения категории из b2b порталла
  * @property integer $id - идентификатор категории
  * @property string $name - имя
  * @property integer $level - уровень меню

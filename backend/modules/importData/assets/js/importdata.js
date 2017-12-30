@@ -3,7 +3,7 @@ $(document).ready(function () {
    $('#db-check-button').on('click', function () {
        var formData = $('#connection-form').serializeArray();
        $.post(
-           "importdata/db-connection-check",
+           "importdata/import-db/db-connection-check",
            formData,
            onAjaxSuccess
        );

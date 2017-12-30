@@ -6,12 +6,13 @@
  * Time: 19:09
  */
 
-namespace backend\modules\catalogManager\models;
+namespace backend\modules\importData\models\catalogManager;
 
 
 
 use phpQuery;
 use RuntimeException;
+use Yii;
 use yii\httpclient\Client;
 use yii\httpclient\Response;
 use yii\web\CookieCollection;
@@ -37,10 +38,10 @@ class B2bPortal
 
     private $cookies;
     private $client;
-    private $responseLogin;
 
     private const MARK_COOKIE = 'BITRIX_SM_LOGIN';
     private const URL_CATALOG = 'index_old.php';
+    private const COOKIES_CACHE_TIME = 60*60*12; //в секундах
 
     public function __construct(string $url, string $login, string $pass)
     {
@@ -78,11 +79,16 @@ class B2bPortal
     }
 
     private function setCookies(CookieCollection $cookies){
+        if($cookies->get(self::MARK_COOKIE)){
+            Yii::$app->cache->add('b2b_cookies',serialize($cookies), self::COOKIES_CACHE_TIME);
+        }
         $this->cookies = $cookies;
     }
 
     private function getCookies(): CookieCollection
     {
+        $this->cookies = unserialize(Yii::$app->cache->get('b2b_cookies'));
+
         if (!$this->cookies || !$this->cookies->get(self::MARK_COOKIE)){
             try{
                 $this->login();

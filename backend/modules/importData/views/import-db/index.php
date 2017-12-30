@@ -17,7 +17,7 @@ $this->title = 'Импорт данных из старой базы';
 
 <div class="importData-default-index">
     <?php Pjax::begin(); ?>
-    <?php $form = ActiveForm::begin(['action'=> Url::to(['db-import']), 'id'=>'connection-form']); ?>
+    <?php $form = ActiveForm::begin(['action'=> Url::toRoute(['import-db/db-import']), 'id'=>'connection-form']); ?>
     <?= $form->field($model,'path')->textInput()->label('Путь к базе')?>
     <?= $form->field($model,'dbName')->textInput()->label('Имя базы')?>
     <?= $form->field($model,'userName')->textInput()->label('Имя пользователя')?>

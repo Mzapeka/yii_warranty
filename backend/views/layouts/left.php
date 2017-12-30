@@ -25,7 +25,7 @@
             </div>
         </form>
         <!-- /.search form -->
-
+<p><?=$this->context->id?></p>
         <?= dmstr\widgets\Menu::widget(
             [
                 'options' => ['class' => 'sidebar-menu', 'data-widget' => 'tree'],
@@ -43,7 +43,8 @@
 
                     ]],
                     ['label' => 'Импорт данных', 'icon' => 'folder', 'items' => [
-                        ['label' => 'Импорт из старой базы', 'icon' => 'file-o', 'url' => ['/importdata'], 'active' => $this->context->id == 'default'],
+                        ['label' => 'Импорт базы данных', 'icon' => 'file-o', 'url' => ['/importdata/import-db'], 'active' => $this->context->id == 'import-db'],
+                        ['label' => 'Импорт каталога', 'icon' => 'xing', 'url' => ['/importdata/import-catalog'], 'active' => $this->context->id == 'import-catalog'],
 
                     ]],
                     ['label' => 'Menu Yii2', 'options' => ['class' => 'header']],

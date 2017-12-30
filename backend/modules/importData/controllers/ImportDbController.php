@@ -12,7 +12,7 @@ use yii\web\Controller;
 /**
  * Default controller for the `importData` module
  */
-class DefaultController extends Controller
+class ImportDbController extends Controller
 {
 
     /**

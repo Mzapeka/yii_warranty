@@ -9,7 +9,8 @@
 namespace site\services\category;
 
 
-use backend\modules\catalogManager\models\B2bPortalCategory;
+
+use backend\modules\importData\models\catalogManager\B2bPortalCategory;
 use site\entities\Catalog\Category;
 
 

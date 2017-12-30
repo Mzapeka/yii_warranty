@@ -1,6 +1,9 @@
 <?php
 
 use site\services\category\CategoryImportResult;
+use yii\bootstrap\Html;
+use yii\helpers\Url;
+
 /**
  * Created by PhpStorm.
  * User: mzapeka
@@ -16,3 +19,5 @@ use site\services\category\CategoryImportResult;
 <p>Всего найдено: <?=$result->getTotalCategoriesOnPortal()?></p>
 <p>Всего импортировано: <?=$result->getTotalCategoriesImported()?></p>
 <p>Были импортированы ранее: <?=$result->getTotalCategoriesNotImported()?></p>
+<hr/>
+<p>Перейти на <?= Html::a('страницу категорий.', Url::toRoute('/category'))?></p>
