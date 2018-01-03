@@ -24,7 +24,7 @@ trait IteratorTreit
         $data = (array)$this;
         foreach ($data as $key => $val){
             if(!preg_match('/\*/',$key)){
-                $this->container[$this->cursor][$key] = $val;
+                $this->container[$this->cursor][trim($key)] = $val;
             }
         }
         $this->next();

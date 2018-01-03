@@ -35,6 +35,17 @@ class ItemRepository
         return;
     }
 
+    public function saveFromPortal(Item $item): void
+    {
+        try{
+            $this->getBy(['old_id'=>$item->old_id]);
+        }catch (NotFoundException $e){
+            $this->save($item);
+            return;
+        }
+            throw new \RuntimeException('This document already added.');
+    }
+
     public function remove(Item $item): void
     {
         if (!$item->delete()) {

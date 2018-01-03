@@ -9,10 +9,13 @@
 namespace site\services\item;
 
 
+use backend\modules\importData\models\catalogManager\B2bPortalDocument;
 use site\entities\Catalog\Item;
 use site\forms\item\ItemCreateForm;
 use site\forms\item\ItemEditForm;
+use site\helpers\CategoryHelper;
 use site\repositories\ItemRepository;
+use Yii;
 
 class ItemService
 {
@@ -60,5 +63,40 @@ class ItemService
     {
         $item = $this->repository->findById($id);
         $this->repository->remove($item);
+    }
+
+    public function importDocuments(B2bPortalDocument $documents)
+    {
+        /**
+         * @var B2bPortalDocument $document
+         */
+        $result['all'] = $documents->count();
+        $result['notImported'] = 0;
+        $result['imported'] = 0;
+
+        foreach ($documents as $document){
+            $categoryId = CategoryHelper::getIdByOldId($document->category_id);
+            if(!$categoryId){
+                ++$result['notImported'];
+                continue;
+            }
+            $document = Item::create(
+                $document->name,
+                $categoryId,
+                $document->file_type,
+                $document->file_size,
+                '',
+                0,
+                $document->id
+            );
+            try {
+                $this->repository->saveFromPortal($document);
+            }catch (\RuntimeException $e){
+                ++$result['notImported'];
+                Yii::$app->errorHandler->logException($e);
+            }
+        }
+        $result['imported'] = $result['all'] - $result['notImported'];
+        return $result;
     }
 }

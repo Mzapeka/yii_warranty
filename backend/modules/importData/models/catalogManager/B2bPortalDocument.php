@@ -25,11 +25,11 @@ class B2bPortalDocument implements Iterator, Countable
 {
     use IteratorTreit;
 
-    private $id;
-    private $name;
-    private $file_type;
-    private $file_size;
-    private $category_id;
+    public $id;
+    public $name;
+    public $file_type;
+    public $file_size;
+    public $category_id;
 
 
     /**

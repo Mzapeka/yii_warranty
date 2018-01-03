@@ -5,24 +5,28 @@ namespace app\modules\importData\controllers;
 
 use backend\modules\importData\models\catalogManager\B2bPortal;
 use site\services\category\CategoryService;
+use site\services\item\ItemService;
 use Yii;
 use yii\helpers\Url;
 use yii\web\Controller;
 
 /**
 * @property B2bPortal $b2bPortal
-* @property CategoryService $service
+* @property CategoryService $categoryService
+* @property ItemService $itemService
  */
 
 class ImportCatalogController extends Controller
 {
-    private $service;
+    private $categoryService;
+    private $itemService;
     private $b2bPortal;
 
-    public function __construct($id, $module, CategoryService $categoryService, array $config = [])
+    public function __construct($id, $module, CategoryService $categoryService, ItemService $itemService, array $config = [])
     {
         parent::__construct($id, $module, $config);
-        $this->service = $categoryService;
+        $this->categoryService = $categoryService;
+        $this->itemService = $itemService;
 
         $this->b2bPortal = new B2bPortal(
             Yii::$app->params['b2bHost'],
@@ -41,8 +45,8 @@ class ImportCatalogController extends Controller
 
     public function actionImportCategory(){
 
-        $categories = $this->b2bPortal->getCategories('index_old.php');
-        $result = $this->service->importCategories($categories);
+        $categories = $this->b2bPortal->getCategories();
+        $result = $this->categoryService->importCategories($categories);
 
         Yii::$app->session->setFlash('success', $this->renderPartial('importResult', [
             'result' => $result
@@ -54,7 +58,8 @@ class ImportCatalogController extends Controller
     public function actionImportDocuments()
     {
         $documents = $this->b2bPortal->getDocuments();
-        var_dump($documents);
+        $result = $this->itemService->importDocuments($documents);
+        var_dump($result);
     }
 
 }
