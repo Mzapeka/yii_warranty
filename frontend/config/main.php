@@ -26,6 +26,15 @@ return [
         'manualParser' => [
             'class' => 'app\modules\manualParser\Module',
         ],
+        'treemanager' =>  [
+            'class' => '\kartik\tree\Module',
+            'treeStructure' =>     [
+                'treeAttribute' => false,
+                'leftAttribute' => 'lft',
+                'rightAttribute' => 'rgt',
+                'depthAttribute' => 'lvl',
+            ]
+        ]
     ],
     'controllerNamespace' => 'frontend\controllers',
     'components' => [

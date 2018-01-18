@@ -31,6 +31,7 @@ use yii\helpers\ArrayHelper;
  * @property int $old_id
  * @property int $local_source
  * @property string $description
+ *
  */
 class Category extends Tree
 {

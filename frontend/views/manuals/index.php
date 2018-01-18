@@ -1,9 +1,23 @@
 <?php
 /* @var $this yii\web\View */
-?>
-<h1>manuals/index</h1>
 
-<p>
-    You may change the content of this page by modifying
-    the file <code><?= __FILE__; ?></code>.
-</p>
+/* @var $this yii\web\View */
+/* @var $dataProvider yii\data\DataProviderInterface */
+/* @var $category \site\entities\Catalog\Category */
+
+use yii\helpers\Html;
+
+$this->title = 'Документы';
+$this->params['breadcrumbs'][] = $this->title;
+?>
+
+<h1><?= Html::encode($this->title) ?></h1>
+
+<?= $this->render('_subcategories', [
+    'category' => $category
+]) ?>
+
+<?= $this->render('_list', [
+    'dataProvider' => $dataProvider
+]) ?>
+

@@ -8,6 +8,7 @@
 
 namespace site\entities\Catalog;
 use app\modules\catalogManager\models\TreeBuilder;
+use site\entities\Catalog\queries\ItemQuery;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -124,6 +125,11 @@ class Item extends ActiveRecord
         return [
             TimestampBehavior::className(),
         ];
+    }
+
+    public static function find(): ItemQuery
+    {
+        return new ItemQuery(static::class);
     }
 
 }

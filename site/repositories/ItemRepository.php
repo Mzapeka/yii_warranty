@@ -9,7 +9,12 @@
 namespace site\repositories;
 
 
+use site\entities\Catalog\Category;
 use site\entities\Catalog\Item;
+use yii\data\ActiveDataProvider;
+use yii\data\DataProviderInterface;
+use yii\db\ActiveQuery;
+use yii\helpers\ArrayHelper;
 
 
 class ItemRepository
@@ -59,5 +64,51 @@ class ItemRepository
             throw new NotFoundException('Item not found.');
         }
         return $item;
+    }
+
+    public function getAll(): DataProviderInterface
+    {
+        $query = Item::find()->alias('i')->active('i');
+        return $this->getProvider($query);
+    }
+
+    private function getProvider(ActiveQuery $query): ActiveDataProvider
+    {
+        return new ActiveDataProvider([
+            'query' => $query,
+            'sort' => [
+                'defaultOrder' => ['id' => SORT_DESC],
+                'attributes' => [
+                    'id' => [
+                        'asc' => ['i.id' => SORT_ASC],
+                        'desc' => ['i.id' => SORT_DESC],
+                    ],
+                    'name' => [
+                        'asc' => ['i.name' => SORT_ASC],
+                        'desc' => ['i.name' => SORT_DESC],
+                    ],
+                    'price' => [
+                        'asc' => ['i.file_type' => SORT_ASC],
+                        'desc' => ['i.file_type' => SORT_DESC],
+                    ],
+                    'rating' => [
+                        'asc' => ['i.file_size' => SORT_ASC],
+                        'desc' => ['i.file_size' => SORT_DESC],
+                    ],
+                ],
+            ],
+            'pagination' => [
+                'pageSizeLimit' => [10, 50],
+            ]
+        ]);
+    }
+
+    public function getAllByCategory(Category $category): DataProviderInterface
+    {
+        $query = Item::find()->alias('i')->active('i');
+        $ids = ArrayHelper::merge([$category->id], $category->children()->select('id')->column());
+        $query->andWhere(['i.category_id' => $ids]);
+        $query->groupBy('i.id');
+        return $this->getProvider($query);
     }
 }
