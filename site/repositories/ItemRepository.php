@@ -111,4 +111,5 @@ class ItemRepository
         $query->groupBy('i.id');
         return $this->getProvider($query);
     }
+
 }

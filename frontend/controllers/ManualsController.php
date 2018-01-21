@@ -36,7 +36,6 @@ class ManualsController extends Controller
             'category' => $category,
             'dataProvider' => $dataProvider,
         ]);
-
     }
 
     /**

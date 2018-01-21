@@ -11,6 +11,7 @@ namespace site\repositories;
 
 use site\entities\Catalog\Category;
 
+
 class CategoryRepository
 {
     public function getRoot(): Category
@@ -30,5 +31,6 @@ class CategoryRepository
     {
         return Category::find()->andWhere(['id' => $id])->andWhere(['>', 'lvl', 0])->one();
     }
+
 
 }

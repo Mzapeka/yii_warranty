@@ -15,16 +15,22 @@ use yii\helpers\Url;
 ?>
 
 <?php
-    $categoryChildren = $category->children()->all();
+    $categoryChildren = $category->children(1)->all();
     if ($categoryChildren): ?>
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <?php foreach ($categoryChildren as $child): ?>
-                <?php //var_dump($child)?>
-                    <a href="<?= Html::encode(Url::to(['/manuals/category', 'id' => $child->id])) ?>"><?= Html::encode($child->name) ?></a> &nbsp;
-                <?php endforeach; ?>
-            </div>
-        </div>
+        <ul class="nav bs-docs-sidenav">
+            <?php foreach ($categoryChildren as $child): ?>
+                <?php
+                    $spacer = '';
+/*                    for($i = 1; $i < $child->lvl; $i++){
+                        $spacer .= "&#8212;&#8212;";
+                    }*/
+
+                ?>
+            <li>
+                <a href="<?= Html::encode(Url::to(['/manuals/category', 'id' => $child->id])) ?>"><?= $spacer.Html::encode($child->name) ?></a> &nbsp;
+            </li>
+            <?php endforeach; ?>
+        </ul>
 <?php endif;
 ?>
 
