@@ -63,7 +63,7 @@ table.maintab td .input-daterange:hover{
 }
 
 .warranty-index{
-    font: 10px;
+    font-size: 10px;
 }
 
 
@@ -216,6 +216,65 @@ a.desc:after {
 .check-warranty-input {
     margin-bottom: 5px;
     max-width: 200px;
+}
+
+.docs-item{
+    width: auto;
+    padding: 15px 100px 18px 76px;
+    margin: 0px;
+    font-size: 12px;
+    background: #ffffff;
+    border-bottom: 1px solid #e9e9e9;
+    text-align: left;
+}
+
+.doc-icon {
+    float: left;
+    position: relative;
+    z-index: 1;
+    padding-top: 1px;
+    margin-left: -57px;
+}
+
+.doc-info {
+    float: right;
+    padding-top: 2px;
+    position: relative;
+    text-align: center;
+    margin-right: -83px;
+    width: 92px;
+}
+
+.load-link {
+    padding: 0;
+    width: 82px;
+    margin: 0 auto 5px auto;
+}
+
+.doc-name {
+    padding: 0;
+    margin: 0 0 3px 0;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.clear {
+    padding: 0;
+    margin: 0;
+    clear: both;
+    height: 1px;
+    overflow: hidden;
+}
+
+.load-link a{
+    padding: 7px 0 10px 0;
+    margin: 0;
+    display: block;
+    width: 82px;
+    text-shadow: 1px 1px 0 #fff;
+    color: #404040;
+    text-decoration: none;
+    text-align: center;
 }
 
 /*

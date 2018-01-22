@@ -10,22 +10,26 @@ namespace app\widgets\catalogMenu;
 
 
 use kartik\sidenav\SideNav;
+use site\entities\Catalog\Category;
 use site\repositories\CategoryRepository;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
 /**
  * @property CategoryRepository $categoryRepository
+ * @property Category $activeCategory
 */
 
 class CatalogMenu extends SideNav
 {
     private $categoryRepository;
+    public $activeCategory = false;
 
     public function init()
     {
         $this->categoryRepository = new CategoryRepository();
         $this->items = $this->getMenuData();
+        $this->setActiveParents($this->items);
         parent::init();
     }
 
@@ -48,7 +52,8 @@ class CatalogMenu extends SideNav
                 'label' => $category->name,
                 'icon' => $category->icon,
                 'url' => Html::encode(Url::to(['/manuals/category', 'id' => $category->id])),
-                'active' => false,
+                'active' => (bool)$this->activeCategory && ($this->activeCategory->id == $category->id),
+                'visible' => true,
             ];
             if($items = $this->getMenuData($category->id)){
                 $array['items'] = $items;
@@ -56,6 +61,25 @@ class CatalogMenu extends SideNav
             $categoriesInMenuFormat[] = $array;
         }
         return $categoriesInMenuFormat;
+    }
+
+    private function setActiveParents(array &$menuArray){
+        if(!$menuArray){
+            return false;
+        }
+
+        foreach ($menuArray as $key => &$item){
+            if($item['active'] === true){
+                return true;
+            }
+            if(key_exists('items', $item) && is_array($item['items'])){
+                if($this->setActiveParents($item['items'])){
+                    $menuArray[$key]['active'] = true;
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 }

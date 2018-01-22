@@ -7,6 +7,7 @@
 
 use app\widgets\catalogMenu\CatalogMenu;
 use yii\helpers\Html;
+use yii\widgets\ListView;
 
 $this->params['breadcrumbs'][] = ['label' => 'Catalog', 'url' => ['index']];
 foreach ($category->parents()->all() as $parent) {
@@ -16,7 +17,7 @@ foreach ($category->parents()->all() as $parent) {
 }
 $this->params['breadcrumbs'][] = $category->name;
 
-$this->params['active_category'] = $category;
+//$this->params['active_category'] = $category;
 
 //$this->title = 'Документы';
 //$this->params['breadcrumbs'][] = $this->title;
@@ -29,18 +30,27 @@ $this->params['active_category'] = $category;
         <div class="row">
             <?= CatalogMenu::widget([
                     'type' => CatalogMenu::TYPE_DEFAULT,
+                    'activeCategory' => $category,
+                'encodeLabels'=>false,
+                'activateParents' => true,
+                //'activateItems' => false,
+                'heading' => '<i class="glyphicon glyphicon-book"></i> Разделы',
             ]) ?>
         </div>
 
     </div>
     <div class="col-md-9" role="main">
+        <?= ListView::widget([
+            'dataProvider' => $dataProvider,
+            'emptyText' => 'Документы не найдены',
+            'itemView' => '_list',
+
+        ])?>
 
     </div>
 
 </div>
 
 
-<?= $this->render('_list', [
-    'dataProvider' => $dataProvider
-]) ?>
+
 

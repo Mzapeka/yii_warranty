@@ -18,6 +18,8 @@ return [
         'site/signup' => 'auth/signup/request',
         'site/signup/<_a:[\w-]+>' => 'auth/signup/<_a>',
         'site/<_a:login|logout>' => 'auth/auth/<_a>',
+        'manuals/category/<id:\d+>' => 'manuals/category',
+        'manuals/document/<id:\d+>' => 'manuals/document',
 
         ['pattern' => 'yandex-market', 'route' => 'market/index', 'suffix' => '.xml'],
 

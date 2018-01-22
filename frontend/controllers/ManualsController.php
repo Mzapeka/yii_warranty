@@ -37,7 +37,7 @@ class ManualsController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
-
+//todo: реализовать блокировку вывода контента, если категория не активна
     /**
      * @param $id
      * @return mixed
@@ -45,6 +45,7 @@ class ManualsController extends Controller
      */
     public function actionCategory($id)
     {
+        //todo: переписать ексепшен на флеш сообщение
         if (!$category = $this->categories->find($id)) {
             throw new NotFoundException('Запрошеная страница не существует.');
         }
