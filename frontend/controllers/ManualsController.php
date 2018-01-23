@@ -6,6 +6,7 @@ use site\entities\Catalog\Category;
 use site\repositories\CategoryRepository;
 use site\repositories\ItemRepository;
 use site\repositories\NotFoundException;
+use Yii;
 use yii\web\Controller;
 
 class ManualsController extends Controller
@@ -37,20 +38,19 @@ class ManualsController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
-//todo: реализовать блокировку вывода контента, если категория не активна
+
     /**
      * @param $id
      * @return mixed
-     * @throws NotFoundHttpException
      */
     public function actionCategory($id)
     {
-        //todo: переписать ексепшен на флеш сообщение
+        $dataProvider = null;
         if (!$category = $this->categories->find($id)) {
-            throw new NotFoundException('Запрошеная страница не существует.');
+            Yii::$app->session->setFlash('error', 'Запрошеная страница не существует.');
+        }else{
+            $dataProvider = $this->documents->getAllByCategory($category);
         }
-
-        $dataProvider = $this->documents->getAllByCategory($category);
 
         return $this->render('index', [
             'category' => $category,

@@ -10,12 +10,16 @@ use yii\helpers\Html;
 use yii\widgets\ListView;
 
 $this->params['breadcrumbs'][] = ['label' => 'Catalog', 'url' => ['index']];
-foreach ($category->parents()->all() as $parent) {
-    if (!$parent->isRoot()) {
-        $this->params['breadcrumbs'][] = ['label' => $parent->name, 'url' => ['category', 'id' => $parent->id]];
+
+if($category){
+    foreach ($category->parents()->all() as $parent) {
+        if (!$parent->isRoot()) {
+            $this->params['breadcrumbs'][] = ['label' => $parent->name, 'url' => ['category', 'id' => $parent->id]];
+        }
     }
+    $this->params['breadcrumbs'][] = $category->name;
 }
-$this->params['breadcrumbs'][] = $category->name;
+
 
 //$this->params['active_category'] = $category;
 
@@ -40,12 +44,27 @@ $this->params['breadcrumbs'][] = $category->name;
 
     </div>
     <div class="col-md-9" role="main">
-        <?= ListView::widget([
+        <?= $dataProvider? ListView::widget([
             'dataProvider' => $dataProvider,
-            'emptyText' => 'Документы не найдены',
             'itemView' => '_list',
+            'itemOptions' => [
+                'tag' => 'div',
+                'class' => 'docs-item',
+            ],
+            'layout' => "{pager}\n{summary}\n{items}\n{pager}",
+            'pager' => [
+                'firstPageLabel' => 'Первая',
+                'lastPageLabel' => 'Последняя',
+                'nextPageLabel' => 'Следующая',
+                'prevPageLabel' => 'Предыдущая',
+                'maxButtonCount' => 5,
+            ],
+            'emptyText' => 'Документы не найдены',
+            'emptyTextOptions' => [
+                'tag' => 'p'
+            ],
 
-        ])?>
+        ]): ''?>
 
     </div>
 

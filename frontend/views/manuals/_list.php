@@ -13,7 +13,7 @@ use yii\helpers\Url;
 
 ?>
 
-<div class="docs-item">
+
     <div class="doc-icon"><img src="<?= file_exists(Yii::getAlias('@webroot/img/'.$model->file_type.'.png'))? Url::to('/img/'.$model->file_type.'.png') : Url::to('/img/file.png')?>"></div>
     <div class="doc-info">
         <div class="load-link"><a role="button" class="btn btn-default btn-sm" href="<?=Url::to(['/manuals/document', 'id'=>$model->id])?>">Скачать</a></div>
@@ -21,4 +21,4 @@ use yii\helpers\Url;
     </div>
     <div class="doc-name"><a target="_blank" href="<?=Url::to(['/manuals/document', 'id'=>$model->id])?>"><?=$model->name?></a></div>
     <div class="clear">&nbsp;</div>
-</div>
+

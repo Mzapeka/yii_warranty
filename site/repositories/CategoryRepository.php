@@ -24,12 +24,12 @@ class CategoryRepository
      */
     public function getAll(): array
     {
-        return Category::find()->andWhere(['>', 'lvl', 0])->orderBy('lft')->all();
+        return Category::find()->andWhere(['>', 'lvl', 0])->andWhere(['active'=>true])->orderBy('lft')->all();
     }
 
     public function find($id): ?Category
     {
-        return Category::find()->andWhere(['id' => $id])->andWhere(['>', 'lvl', 0])->one();
+        return Category::find()->andWhere(['id' => $id])->andWhere(['>', 'lvl', 0])->andWhere(['active'=>true])->one();
     }
 
 

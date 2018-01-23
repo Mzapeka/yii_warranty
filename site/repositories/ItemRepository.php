@@ -68,8 +68,11 @@ class ItemRepository
 
     public function getAll(): DataProviderInterface
     {
-        $query = Item::find()->alias('i')->active('i');
-        return $this->getProvider($query);
+        /**
+         * @var CategoryRepository $catRepository
+         */
+        $catRepository = \Yii::$container->get(CategoryRepository::class);
+        return $this->getAllByCategory($catRepository->getRoot());
     }
 
     private function getProvider(ActiveQuery $query): ActiveDataProvider
@@ -103,10 +106,14 @@ class ItemRepository
         ]);
     }
 
-    public function getAllByCategory(Category $category): DataProviderInterface
+    public function getAllByCategory(Category $category): ?DataProviderInterface
     {
+        $ids = null;
+        if($category->isActive()){
+            $ids = ArrayHelper::merge([$category->id], $category->children()->andWhere(['active'=>1])->select('id')->column());
+        }
         $query = Item::find()->alias('i')->active('i');
-        $ids = ArrayHelper::merge([$category->id], $category->children()->select('id')->column());
+
         $query->andWhere(['i.category_id' => $ids]);
         $query->groupBy('i.id');
         return $this->getProvider($query);

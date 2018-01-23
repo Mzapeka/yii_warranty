@@ -23,6 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'topRootAsHeading' => true, // this will override the headingOptions
                 'fontAwesome' => true,
                 'isAdmin' => true,
+                'showInactive' => true,
                 'iconEditSettings'=> [
                     'show' => 'list',
                     'listData' => [

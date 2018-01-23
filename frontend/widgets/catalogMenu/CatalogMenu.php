@@ -40,7 +40,7 @@ class CatalogMenu extends SideNav
     private function getMenuData(int $id = null):array
     {
         $rootCategory = $id ? $this->categoryRepository->find($id) : $this->categoryRepository->getRoot();
-        $categories = $rootCategory->children(1)->all();
+        $categories = $rootCategory ? $rootCategory->children(1)->andWhere(['active'=>true])->all() : null;
 
         if(!$categories){
             return [];
