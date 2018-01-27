@@ -58,4 +58,9 @@ class ManualsController extends Controller
         ]);
     }
 
+    public function actionDocument($id)
+    {
+
+    }
+
 }

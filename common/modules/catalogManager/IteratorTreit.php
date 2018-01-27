@@ -6,7 +6,7 @@
  * Time: 22:22
  */
 
-namespace backend\modules\importData\models\catalogManager;
+namespace common\modules\catalogManager;
 
 
 trait IteratorTreit

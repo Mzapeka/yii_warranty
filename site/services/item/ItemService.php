@@ -9,7 +9,7 @@
 namespace site\services\item;
 
 
-use backend\modules\importData\models\catalogManager\B2bPortalDocument;
+use common\modules\catalogManager\B2bPortalDocument;
 use site\entities\Catalog\Item;
 use site\forms\item\ItemCreateForm;
 use site\forms\item\ItemEditForm;

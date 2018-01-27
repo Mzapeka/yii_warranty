@@ -5,8 +5,7 @@
  * Date: 28.12.17
  * Time: 21:33
  */
-
-namespace backend\modules\importData\models\catalogManager;
+namespace common\modules\catalogManager;;
 use Countable;
 use Iterator;
 

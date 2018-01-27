@@ -3,7 +3,8 @@
 namespace app\modules\importData\controllers;
 
 
-use backend\modules\importData\models\catalogManager\B2bPortal;
+
+use common\modules\catalogManager\B2bPortal;
 use site\services\category\CategoryService;
 use site\services\item\ItemService;
 use Yii;
@@ -59,7 +60,13 @@ class ImportCatalogController extends Controller
     {
         $documents = $this->b2bPortal->getDocuments();
         $result = $this->itemService->importDocuments($documents);
-        var_dump($result);
+
+        Yii::$app->session->setFlash('success', $this->renderPartial('importDocuments', [
+            'result' => $result
+        ]));
+
+        $this->redirect(Url::toRoute('/importdata/import-catalog'));
+        //todo: доделать вывод флеш сообщения
     }
 
 }

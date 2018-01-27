@@ -6,7 +6,7 @@
  * Time: 19:09
  */
 
-namespace backend\modules\importData\models\catalogManager;
+namespace common\modules\catalogManager;
 
 use phpQuery;
 use RuntimeException;

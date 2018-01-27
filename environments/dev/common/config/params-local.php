@@ -1,12 +1,15 @@
 <?php
 return [
-    'cookieValidationKey' => 'wDfd2OXxB4xe6ZIMLnFpsw1qPzCt97Yx',
+    'cookieValidationKey' => '',
     'cookieDomain' => '.testdomain.com',
     'frontendHostInfo' => 'http://testdomain.com',
     'backendHostInfo' => 'http://admin.testdomain.com',
 
-    //количество месяцев продленной гарнатии
-    'extendedWarrantyTime' => 0,
-    //количество месяцев стандартной гарантии
-    'standardWarrantyTime' => 12,
+    //настройки reCaptcha
+    'reCaptchaSecretKey' => '',
+    'reCaptchaSiteKey' => '',
+
+    'b2bHost' => 'https://bosch-b2b.ru/',
+    'b2bUser' => '',
+    'b2bPass' => ''
 ];
