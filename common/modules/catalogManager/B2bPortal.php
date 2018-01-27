@@ -101,12 +101,14 @@ class B2bPortal
         return $this->cookies;
     }
 
-    private function getPageContent(string $url = '', array $params = array()){
+    private function getPageContent(string $url = '', array $params = array())
+    {
         $request = $this->client->createRequest()
             ->setMethod('post')
             ->setUrl($url)
             ->addHeaders(['user-agent' => 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.84 Safari/537.36 OPR/38.0.2220.31'])
             ->setCookies($this->getCookies())
+            ->setOptions(['followLocation' => true])
             ->prepare();
 
         if($params){
@@ -114,6 +116,8 @@ class B2bPortal
         }
 
         $page = $request->send();
+/*        var_dump($page);
+        exit;*/
         return $page->content;
     }
 
@@ -177,4 +181,15 @@ class B2bPortal
         }
         return $this->documents;
     }
+
+    public function getDocumentContent($id)
+    {
+        $requestParams = [
+            'EID' => $id,
+        ];
+
+        $document = $this->getPageContent(self::URL_CATALOG, $requestParams);
+        return $document;
+    }
+
 }

@@ -40,6 +40,7 @@ use yii\di\Container;
 use yii\di\Instance;
 use yiidreamteam\upload\ImageUploadBehavior;
 use zhuravljov\yii\queue\Queue;*/
+use common\modules\catalogManager\B2bPortal;
 use site\services\user\UserManageService;
 use yii\base\BootstrapInterface;
 use yii\base\ErrorHandler;
@@ -65,6 +66,14 @@ class SetUp implements BootstrapInterface
 
         $container->setSingleton(ManagerInterface::class, function () use ($app) {
             return $app->authManager;
+        });
+
+        $container->setSingleton(B2bPortal::class, function () use ($app) {
+            return new B2bPortal(
+                $app->params['b2bHost'],
+                $app->params['b2bUser'],
+                $app->params['b2bPass']
+            );
         });
 
 

@@ -6,7 +6,7 @@ return [
     'components' => [
         'cache' => [
             'class' => 'yii\caching\FileCache',
-            'cachePath' => '@common/runtime/cache',
+            //'cachePath' => '@common/runtime/cache',
         ],
         'authManager' => [
             'class' => 'yii\rbac\PhpManager',

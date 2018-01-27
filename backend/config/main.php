@@ -32,9 +32,9 @@ return [
         ]
     ],
     'components' => [
-        'cache' => [
+/*        'cache' => [
             'class' => 'yii\caching\FileCache',
-        ],
+        ],*/
         'request' => [
             'csrfParam' => '_csrf-backend',
             'cookieValidationKey' => $params['cookieValidationKey'],
