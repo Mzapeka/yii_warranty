@@ -11,7 +11,7 @@ body {
 }
 
 .wrap > .container {
-    padding: 70px 15px 20px;
+    padding: 80px 15px 20px;
 }
 
 .footer {
@@ -277,25 +277,13 @@ a.desc:after {
     text-align: center;
 }
 
-/*
-.bs-docs-sidebar {
-    display: block;
-    font-size: 13px;
-    color: #999;
-    padding: 4px 20px;
+.breadcrumbs-container {
+    margin-top: 74px;
+    position: fixed;
+    width: 100%;
+    z-index: 2;
 }
 
-.bs-docs-sidebar .bs-docs-sidenav>li>a:hover,.bs-docs-sidebar .bs-docs-sidenav>.active>a {
-    color:#463265;
-    background-color:#f9f9f9
+#sidebar{
+    padding-top: 20px;
 }
-
-.bs-docs-sidebar .bs-docs-sidenav>li>a {
-    padding-top: 0px;
-    padding-bottom: 0px;
-}
-
-.bs-docs-sidebar .bs-docs-sidenav>li {
-    padding-top: 0px;
-    padding-bottom: 0px;
-}*/

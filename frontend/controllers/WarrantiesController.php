@@ -11,6 +11,7 @@ use site\helpers\CustomerHelper;
 use site\services\warranty\WarrantyService;
 use Yii;
 use yii\bootstrap\ActiveForm;
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -40,6 +41,16 @@ class WarrantiesController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index', 'create', 'view', 'print-warranty'],
+                        'roles' => ['admin', 'dealer'],
+                    ],
                 ],
             ],
         ];

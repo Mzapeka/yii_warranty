@@ -9,7 +9,7 @@ use app\widgets\catalogMenu\CatalogMenu;
 use yii\helpers\Html;
 use yii\widgets\ListView;
 
-$this->params['breadcrumbs'][] = ['label' => 'Catalog', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Документы', 'url' => ['index']];
 
 if($category){
     foreach ($category->parents()->all() as $parent) {
@@ -20,12 +20,6 @@ if($category){
     $this->params['breadcrumbs'][] = $category->name;
 }
 
-
-//$this->params['active_category'] = $category;
-
-//$this->title = 'Документы';
-//$this->params['breadcrumbs'][] = $this->title;
-//$this->params['breadcrumbs'][] = $category->getBreadcrumbs();
 ?>
 
 <h1><?= Html::encode($this->title) ?></h1>

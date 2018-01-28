@@ -1,5 +1,6 @@
 <?php
 use common\widgets\Alert;
+use himiklab\yii2\recaptcha\ReCaptcha;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
@@ -41,6 +42,11 @@ $fieldOptions2 = [
             ->field($model, 'password', $fieldOptions2)
             ->label(false)
             ->passwordInput(['placeholder' => $model->getAttributeLabel('password')]) ?>
+
+        <?= $form->field($model, 'reCaptcha')->widget(
+            ReCaptcha::className(),
+            ['siteKey' => Yii::$app->params['reCaptchaSiteKey']]
+        )->label('')?>
 
         <div class="row">
             <div class="col-xs-8">

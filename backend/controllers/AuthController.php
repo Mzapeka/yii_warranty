@@ -4,6 +4,7 @@ namespace backend\controllers;
 use site\entities\User;
 use site\services\auth\AuthService;
 use Yii;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use site\forms\auth\LoginForm;
@@ -30,6 +31,21 @@ class AuthController extends Controller
                     'logout' => ['post'],
                 ],
             ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['login'],
+                        'roles' => ['guest', 'dealer'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['logout'],
+                        'roles' => ['admin'],
+                    ],
+                ],
+            ],
         ];
     }
 
@@ -38,9 +54,9 @@ class AuthController extends Controller
      */
     public function actionLogin()
     {
-        if (!Yii::$app->user->isGuest) {
+/*        if (!Yii::$app->user->isGuest) {
             return $this->goHome();
-        }
+        }*/
 
         $this->layout = 'main-login';
 

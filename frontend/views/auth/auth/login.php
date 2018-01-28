@@ -9,8 +9,8 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Url;
 
-$this->title = 'Страница входа';
-$this->params['breadcrumbs'][] = $this->title;
+//$this->title = 'Страница входа';
+//$this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <div class="row">

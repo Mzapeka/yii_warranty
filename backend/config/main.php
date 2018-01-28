@@ -79,6 +79,10 @@ return [
     'as access' => [
         'class' => 'yii\filters\AccessControl',
         'except' => ['auth/login', 'auth/login'],
+        'denyCallback' => function ($rule, $action) {
+            Yii::$app->getResponse()->redirect(\yii\helpers\Url::to('\login'),302);
+            //echo 'У вас нет доступа к этой странице';
+        },
         'rules' => [
             [
                 'allow' => true,

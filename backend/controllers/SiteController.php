@@ -16,31 +16,21 @@ class SiteController extends Controller
     /**
      * @inheritdoc
      */
-    public function behaviors()
+/*    public function behaviors()
     {
         return [
-/*            'access' => [
+            'access' => [
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'error'],
                         'allow' => true,
-                    ],
-                    [
-                        'actions' => ['logout', 'index'],
-                        'allow' => true,
-                        'roles' => ['@'],
+                        'actions' => ['index'],
+                        'roles' => ['admin'],
                     ],
                 ],
             ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'logout' => ['post'],
-                ],
-            ],*/
         ];
-    }
+    }*/
 
     /**
      * @inheritdoc
@@ -62,13 +52,13 @@ class SiteController extends Controller
     public function actionIndex()
     {
         if (!\Yii::$app->user->can('indexAdmin')) {
-            $this->redirect('login');
+            $this->redirect('/login');
             //throw new ForbiddenHttpException('Access denied');
         }
         return $this->render('index');
     }
 
-    public function beforeAction($action)
+/*    public function beforeAction($action)
     {
         //var_dump($action->id);
         //die;
@@ -80,6 +70,6 @@ class SiteController extends Controller
         } else {
             return false;
         }
-    }
+    }*/
 
 }

@@ -8,6 +8,7 @@ use site\repositories\CategoryRepository;
 use site\repositories\ItemRepository;
 use site\repositories\NotFoundException;
 use Yii;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 
 class ManualsController extends Controller
@@ -15,6 +16,25 @@ class ManualsController extends Controller
     public $layout = '@app/views/layouts/manager/main.php';
     private $documents;
     private $categories;
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index', 'category', 'document'],
+                        'roles' => ['admin', 'dealer'],
+                    ],
+                ],
+            ],
+        ];
+    }
 
     public function __construct(
         $id,

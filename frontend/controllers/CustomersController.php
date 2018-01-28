@@ -8,6 +8,7 @@ use site\entities\User\User;
 use site\forms\customer\CustomerCreateForm;
 use site\services\customer\CustomerService;
 use Yii;
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -34,6 +35,17 @@ class CustomersController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                ],
+            ],
+
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index', 'view', 'create'],
+                        'roles' => ['admin', 'dealer'],
+                    ],
                 ],
             ],
         ];
