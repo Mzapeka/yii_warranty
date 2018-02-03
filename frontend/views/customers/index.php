@@ -25,7 +25,7 @@ $columnsSettings = [
         'vAlign' => 'middle',
         'width' => '120px',
         'value' => function (Customer $model) {
-            return Html::a($model->customer_name, Url::to('/warranties?WarrantySearch[customer_id]='.$model->id));
+            return Html::a($model->customer_name, Url::to(['/warranties', 'WarrantySearch[customer_id]' => $model->id]));
         },
         'format' => 'html'
     ],

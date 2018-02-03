@@ -19,7 +19,6 @@ class CustomerRepository
         return $this->getBy(['id' => $id]);
     }
 
-
     public function countById($id): int
     {
         return Customer::find()->andWhere(['id' => $id])->count();
@@ -29,9 +28,6 @@ class CustomerRepository
     {
         return Customer::find()->alias('c')->orderBy(['id' => SORT_ASC])->limit($limit)->offset($offset)->all();
     }
-
-
-    //todo: Дописать остальные методы
 
     public function save(Customer $customer): void
     {

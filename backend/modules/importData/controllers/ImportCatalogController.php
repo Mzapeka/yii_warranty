@@ -66,7 +66,7 @@ class ImportCatalogController extends Controller
         ]));
 
         $this->redirect(Url::toRoute('/importdata/import-catalog'));
-        //todo: доделать вывод флеш сообщения
+
     }
 
 }
