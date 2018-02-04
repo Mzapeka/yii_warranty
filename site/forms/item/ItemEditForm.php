@@ -15,13 +15,11 @@ use yii\base\Model;
 class ItemEditForm extends Model
 {
 
-    public $file_type;
     public $name;
-    public $file_size;
     public $description;
     public $disabled;
-    public $old_id;
     public $category_id;
+    public $document;
 
     public $_item;
 
@@ -29,11 +27,9 @@ class ItemEditForm extends Model
     {
         $this->name = $item->name;
         $this->category_id = $item->category_id;
-        $this->file_type = $item->file_type;
-        $this->file_size = $item->file_size;
         $this->description = $item->description;
         $this->disabled = $item->disabled;
-        $this->old_id = $item->old_id;
+        $this->document = $item->file_name;
         parent::__construct($config);
     }
 
@@ -41,10 +37,9 @@ class ItemEditForm extends Model
     {
         return [
             [['name', 'category_id'], 'required'],
-            [['name', 'file_type', 'file_size', 'description'], 'string', 'max' => 255],
-            [['old_id'], 'default', 'value' => null],
+            [['name', 'description'], 'string', 'max' => 255],
+            [['document'], 'file', 'skipOnEmpty' => true, 'extensions' => 'pdf, docx, xlsx, pptx, jpg'],
             [['disabled'], 'default', 'value' => 0],
-            ['old_id', 'integer'],
         ];
     }
 }

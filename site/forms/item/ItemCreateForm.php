@@ -40,7 +40,7 @@ class ItemCreateForm extends Model
         return [
             [['name', 'category_id'], 'required'],
             [['name', 'file_type', 'file_size', 'description'], 'string', 'max' => 255],
-            [['document'], 'file', 'skipOnEmpty' => true, 'extensions' => 'pdf, docx, xlsx, pptx, jpg'],
+            [['document'], 'file', 'skipOnEmpty' => false, 'extensions' => 'pdf, docx, xlsx, pptx, jpg'],
 //            [['old_id'], 'default', 'value' => null],
             [['disabled'], 'default', 'value' => 0],
             ['old_id', 'integer'],

@@ -37,7 +37,7 @@ class ItemService
     public function create(ItemCreateForm $form): Item
     {
         $document = UploadedFile::getInstance($form, 'document');
-        $fileName = $document->baseName.'.'.$document->extension;
+        $fileName = time().'.'.$document->extension;
 
         $customer = Item::create(
             $form->name,
@@ -59,14 +59,35 @@ class ItemService
     public function edit($id, ItemEditForm $form): void
     {
         $item = $this->repository->findById($id);
+        $document = UploadedFile::getInstance($form, 'document');
+
+        if($document){
+            if($item->file_name && file_exists(Yii::getAlias(Yii::$app->params['fileStorage']).'/'.$item->file_name)){
+                unlink(Yii::getAlias(Yii::$app->params['fileStorage']).'/'.$item->file_name);
+            }
+
+            $fileType = $document->extension;
+            $fileSize = Yii::$app->formatter->asShortSize($document->size);
+            $oldId = null;
+            $fileName = time().'.'.$document->extension;
+
+            $document->saveAs(Yii::getAlias(Yii::$app->params['fileStorage']).'/'.$fileName);
+        }else{
+            $fileType = $item->file_type;
+            $fileSize = $item->file_size;
+            $oldId = $item->old_id;
+            $fileName = $item->file_name;
+        }
+
         $item->edit(
             $form->name,
             $form->category_id,
-            $form->file_type,
-            $form->file_size,
+            $fileType,
+            $fileSize,
             $form->description,
             $form->disabled,
-            $form->old_id
+            $oldId,
+            $fileName
         );
         $this->repository->save($item);
     }
