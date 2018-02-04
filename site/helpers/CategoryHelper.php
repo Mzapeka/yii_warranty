@@ -17,4 +17,8 @@ class CategoryHelper
         return Category::find()->where(['old_id'=>$oldId])->one()?Category::find()->where(['old_id'=>$oldId])->one()->id:null;
     }
 
+    public static function getCategoryNameById($id){
+        return Category::find()->where(['id' => $id])->one() ? Category::find()->where(['id' => $id])->one()->name:null;
+    }
+
 }

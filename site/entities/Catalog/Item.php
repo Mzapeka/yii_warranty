@@ -110,12 +110,6 @@ class Item extends ActiveRecord
     }
 
 
-/*    public function getCategory(): ActiveQuery
-    {
-        return $this->hasOne(TreeBuilder::class, ['id' => 'category_id']);
-    }*/
-
-
     /**
      * @inheritdoc
      */

@@ -1,44 +1,141 @@
 <?php
 
+use kartik\grid\GridView;
+use site\entities\Catalog\Category;
+use site\entities\Catalog\Item;
+use site\helpers\CategoryHelper;
 use yii\helpers\Html;
-use yii\grid\GridView;
-use yii\widgets\Pjax;
+
 /* @var $this yii\web\View */
 /* @var $searchModel backend\forms\ItemSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Items';
 $this->params['breadcrumbs'][] = $this->title;
+
+$columnSettings = array(
+    [
+        'class' => '\kartik\grid\SerialColumn',
+        'contentOptions' => ['class' => 'kartik-sheet-style'],
+        'width' => '25px',
+        'headerOptions' => ['class' => 'kartik-sheet-style']
+    ],
+
+    [
+        'attribute' => 'category_id',
+        'label' => 'Категория',
+        //'class' => '\kartik\tree\TreeViewInput',
+        'vAlign' => 'middle',
+        'width' => '140px',
+        'filterType' => '\kartik\tree\TreeViewInput',
+        'filterWidgetOptions' => [
+            //'name' => 'kvTreeInput',
+            //'value' => 'false', // preselected values
+            'query' => Category::find()->addOrderBy('root, lft'),
+            //'headingOptions' => ['label' => 'Store'],
+            'rootOptions' => ['label'=>'<i class="fa fa-tree text-success"></i>'],
+            'fontAwesome' => true,
+            'asDropdown' => true,
+            'multiple' => false,
+            'options' => ['disabled' => false]
+        ],
+        //'filter' => CustomerHelper::getCustomerListBelongToUser(),
+        'value' => function (Item $model) {
+            return CategoryHelper::getCategoryNameById($model->category_id);
+        },
+    ],
+    [
+        'attribute' => 'name',
+        'vAlign' => 'middle',
+        'width' => '150px',
+    ],
+    [
+        'attribute' => 'file_type',
+        'vAlign' => 'middle',
+        'width' => '90px',
+    ],
+    [
+        'attribute' => 'file_size',
+        'vAlign' => 'middle',
+        'width' => '90px',
+    ],
+    [
+        'attribute' => 'description',
+        'vAlign' => 'middle',
+        'width' => '90px',
+    ],
+    [
+        'attribute' => 'file_name',
+        'vAlign' => 'middle',
+        'width' => '90px',
+    ],
+    [
+        'attribute' => 'disabled',
+        'label' => 'Блок',
+        'value' => function (Item $model) {
+            return Yii::$app->formatter->asBoolean($model->disabled);
+        },
+        'vAlign' => 'middle',
+        'width' => '30px',
+    ],
+
+    /*    [
+            'attribute' => 'created_at',
+            'vAlign' => 'middle',
+            'width' => '70px',
+            'format' => ['date', 'php:Y-m-d'],
+            'headerOptions' => ['class' => 'kv-sticky-column'],
+            'contentOptions' => ['class' => 'kv-sticky-column'],
+        ],*/
+
+    [
+        'class' => 'kartik\grid\ActionColumn',
+        'dropdown' => false,
+        'dropdownOptions' => ['class' => 'pull-right'],
+        'viewOptions' => ['title' => 'Детали', 'data-toggle' => 'tooltip'],
+        'headerOptions' => ['class' => 'kartik-sheet-style'],
+    ],
+
+);
 ?>
 <div class="item-index">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php Pjax::begin(); ?>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-    <p>
-        <?= Html::a('Create Item', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+        'columns' => $columnSettings,
+        'tableOptions' => ['class' => 'maintab'],
+        'bordered' => true,
+        'striped' => true,
+        'condensed' => true,
+        'responsive' => true,
+        'responsiveWrap' => false,
+        'hover' => true,
+        'perfectScrollbar' => true,
+        'headerRowOptions' => ['class' => 'kartik-sheet-style'],
+        'filterRowOptions' => ['class' => 'kartik-sheet-style'],
+        'pjax' => true,
 
-            'category_id',
-            'name',
-            'file_type',
-            'file_size',
-            'old_id',
-            //'category_id',
-            //'disabled',
-            //'description',
-            //'created_at',
-            //'updated_at',
+        'toolbar' =>  [
+            ['content' =>
+                Html::a('<i class="glyphicon glyphicon-plus"></i>', ['create'], ['data-pjax' => 0, 'class' => 'btn btn-success', 'title' => 'Добавить документ']) . ' '.
+                Html::a('<i class="glyphicon glyphicon-repeat"></i>', [''], ['data-pjax' => 0, 'class' => 'btn btn-default', 'title' => 'Сбросить'])
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ],
+            '{export}',
+            '{toggleData}',
         ],
+        'panel' => [
+            'type' => GridView::TYPE_PRIMARY,
+            'heading' => '<i class="glyphicon glyphicon-dashboard"></i>  Документы',
+        ],
+        'persistResize' => false,
+        'toggleDataOptions' => ['minCount' => 10],
+        // set export properties
+        'export' => [
+            'fontAwesome' => true
+        ],
+
     ]); ?>
-    <?php Pjax::end(); ?>
+
 </div>

@@ -19,7 +19,8 @@ class ItemSearch extends Item
     {
         return [
             [['id', 'old_id', 'category_id', 'disabled', 'created_at', 'updated_at'], 'integer'],
-            [['name', 'file_type', 'file_size', 'description'], 'safe'],
+            [['name', 'file_type', 'file_size', 'description'], 'string'],
+            ['file_name', 'safe']
         ];
     }
 
@@ -70,6 +71,7 @@ class ItemSearch extends Item
         $query->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'file_type', $this->file_type])
             ->andFilterWhere(['like', 'file_size', $this->file_size])
+            ->andFilterWhere(['like', 'file_name', $this->file_name])
             ->andFilterWhere(['like', 'description', $this->description]);
 
         return $dataProvider;

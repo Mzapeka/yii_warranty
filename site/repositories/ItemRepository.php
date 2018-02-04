@@ -56,6 +56,8 @@ class ItemRepository
         if (!$item->delete()) {
             throw new \RuntimeException('Removing error.');
         }
+
+        //todo: проверка на наличие локального файла документа
     }
 
     private function getBy(array $condition): ?Item
