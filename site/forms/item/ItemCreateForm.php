@@ -33,12 +33,14 @@ class ItemCreateForm extends Model
     public $disabled;
     public $old_id;
     public $category_id;
+    public $document;
 
     public function rules(): array
     {
         return [
             [['name', 'category_id'], 'required'],
             [['name', 'file_type', 'file_size', 'description'], 'string', 'max' => 255],
+            [['document'], 'file', 'skipOnEmpty' => true, 'extensions' => 'pdf, docx, xlsx, pptx, jpg'],
 //            [['old_id'], 'default', 'value' => null],
             [['disabled'], 'default', 'value' => 0],
             ['old_id', 'integer'],

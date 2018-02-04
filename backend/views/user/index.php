@@ -1,14 +1,11 @@
 <?php
 
-use kartik\date\DatePicker;
 use kartik\grid\GridView;
-use site\access\Rbac;
 use site\entities\User\User;
 use site\helpers\UserHelper;
-use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 
-use yii\widgets\Pjax;
+
 /* @var $this yii\web\View */
 /* @var $searchModel backend\forms\UserSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */

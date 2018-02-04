@@ -28,6 +28,12 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
 
+    <?= $form->field($model, 'document')->widget(\kartik\widgets\FileInput::className(),[
+        'name' => 'attachments',
+        'options' => ['multiple' => false],
+        'pluginOptions' => ['previewFileType' => 'any']
+    ]);?>
+
     <?//= $form->field($model, 'created_at')->textInput() ?>
 
     <?//= $form->field($model, 'updated_at')->textInput() ?>

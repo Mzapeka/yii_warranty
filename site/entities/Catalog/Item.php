@@ -7,7 +7,7 @@
  */
 
 namespace site\entities\Catalog;
-use app\modules\catalogManager\models\TreeBuilder;
+//use app\modules\catalogManager\models\TreeBuilder;
 use site\entities\Catalog\queries\ItemQuery;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
@@ -27,6 +27,7 @@ use yii\helpers\ArrayHelper;
  * @property integer $category_id
  * @property integer $created_at
  * @property integer $updated_at
+ * @property string $file_name
  *
 
  */
@@ -51,6 +52,7 @@ class Item extends ActiveRecord
             'category_id' => 'ID категории',
             'created_at' => 'Дата создания',
             'updated_at' => 'Дата изменения',
+            'file_name' => 'Локальный файл'
         );
         if(!is_null($name)){
             if(ArrayHelper::keyExists($name, $labelsArray)){
@@ -69,7 +71,8 @@ class Item extends ActiveRecord
         string $file_size = null,
         string $description = '',
         int $disabled = null,
-        int $old_id = null
+        int $old_id = null,
+        string $file_name = null
     ):self
     {
         $item = new Item();
@@ -80,18 +83,20 @@ class Item extends ActiveRecord
         $item->description = $description;
         $item->disabled = $disabled;
         $item->old_id = $old_id;
+        $item->file_name = $file_name;
         return $item;
     }
 
 
     public function edit(
         string $name,
-        integer $category_id,
+        int $category_id,
         string $file_type = null,
         string $file_size = null,
         string $description = '',
-        integer $disabled = null,
-        integer $old_id = null
+        int $disabled = null,
+        int $old_id = null,
+        string $file_name = null
     ):void
     {
         $this->name = $name;
@@ -101,13 +106,14 @@ class Item extends ActiveRecord
         $this->description = $description;
         $this->disabled = $disabled;
         $this->old_id = $old_id;
+        $this->file_name = $file_name;
     }
 
 
-    public function getCategory(): ActiveQuery
+/*    public function getCategory(): ActiveQuery
     {
         return $this->hasOne(TreeBuilder::class, ['id' => 'category_id']);
-    }
+    }*/
 
 
     /**

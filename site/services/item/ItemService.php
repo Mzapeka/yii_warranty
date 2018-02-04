@@ -16,6 +16,7 @@ use site\forms\item\ItemEditForm;
 use site\helpers\CategoryHelper;
 use site\repositories\ItemRepository;
 use Yii;
+use yii\web\UploadedFile;
 
 class ItemService
 {
@@ -29,18 +30,29 @@ class ItemService
         $this->repository = $repository;
     }
 
+    /**
+     * @var UploadedFile $document
+     * @return Item
+     */
     public function create(ItemCreateForm $form): Item
     {
+        $document = UploadedFile::getInstance($form, 'document');
+        $fileName = $document->baseName.'.'.$document->extension;
+
         $customer = Item::create(
             $form->name,
             $form->category_id,
-            $form->file_type,
-            $form->file_size,
+            $document->extension,
+            Yii::$app->formatter->asShortSize($document->size),
             $form->description,
             $form->disabled,
-            $form->old_id
+            null,
+            $fileName
         );
         $this->repository->save($customer);
+
+        $document->saveAs(Yii::getAlias(Yii::$app->params['fileStorage']).'/'.$fileName);
+
         return $customer;
     }
 

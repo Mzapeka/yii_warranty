@@ -84,10 +84,18 @@ class ManualsController extends Controller
         /**
          * @var B2bPortal $b2bPortal
         */
-        //todo:сделать логику вывода файла с локального хранилища
+
         $document = $this->documents->findById($id);
         $b2bPortal = Yii::$container->get(B2bPortal::class);
-        $this->outputDocument($b2bPortal->getDocumentContent($document->old_id), $document->file_type);
+
+        $documentFilePath = Yii::getAlias(Yii::$app->params['fileStorage']).'/'.$document->file_name;
+        if(!$document->old_id && file_exists($documentFilePath)){
+            $documentContent = file_get_contents($documentFilePath);
+        } else {
+            $documentContent = $b2bPortal->getDocumentContent($document->old_id);
+        }
+
+        $this->outputDocument($documentContent, $document->file_type);
         //echo iconv('windows-1251', 'utf8', $b2bPortal->getDocumentContent($id));
     }
 
