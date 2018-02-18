@@ -70,5 +70,18 @@ class SignupService
         $user = $this->users->getByEmailConfirmToken($token);
         $user->confirmSignup();
         $this->users->save($user);
+
+        //email администратору
+        $sent = $this->mailer
+            ->compose(
+                ['html'=>'auth/signup/confirm-admin-html'],
+                ['user'=>$user]
+            )
+            ->setTo(\Yii::$app->params['adminEmail'])
+            ->setSubject('Активация аккаунта компании '. $user->company)
+            ->send();
+        if (!$sent){
+            throw new \RuntimeException('Email sending error');
+        }
     }
 }

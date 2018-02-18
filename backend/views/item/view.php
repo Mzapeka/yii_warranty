@@ -1,5 +1,6 @@
 <?php
 
+use site\helpers\CategoryHelper;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -33,11 +34,15 @@ $this->params['breadcrumbs'][] = $this->title;
             'file_type',
             'file_size',
             'old_id',
+            [
+                'label' => 'Категория',
+                'value' => CategoryHelper::getCategoryNameById($model->category_id),
+            ],
             'category_id',
-            'disabled',
+            'disabled:boolean',
             'description',
-            'created_at',
-            'updated_at',
+            'created_at:datetime',
+            'updated_at:datetime',
         ],
     ]) ?>
 

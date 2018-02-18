@@ -2,22 +2,26 @@
 
 namespace site\services\user;
 
+use site\access\Rbac;
 use site\entities\User\User;
 use site\forms\User\UserCreateForm;
 use site\forms\User\UserEditForm;
 use site\repositories\UserRepository;
+use yii\mail\MailerInterface;
 
 
 class UserManageService
 {
     private $repository;
-
+    private $mailer;
 
     public function __construct(
-        UserRepository $repository
+        UserRepository $repository,
+        MailerInterface $mailer
     )
     {
         $this->repository = $repository;
+        $this->mailer = $mailer;
     }
 
     public function create(UserCreateForm $form): User
@@ -58,5 +62,24 @@ class UserManageService
 
     public function isEmailExist(string $email){
         return $this->repository::isEmailExist($email);
+    }
+
+    public function activate($id)
+    {
+        $user = $this->repository->get($id);
+        $user->group = Rbac::ROLE_DEALER;
+        $this->repository->save($user);
+
+        $sent = $this->mailer
+            ->compose(
+                ['html'=>'auth/signup/activate-notification-html'],
+                ['user'=>$user]
+            )
+            ->setTo($user->email)
+            ->setSubject('Активация аккаунта компании '. $user->company)
+            ->send();
+        if (!$sent){
+            throw new \RuntimeException('Email sending error');
+        }
     }
 }

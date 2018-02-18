@@ -58,6 +58,8 @@ class SiteController extends Controller
         return $this->render('index');
     }
 
+
+
 /*    public function beforeAction($action)
     {
         //var_dump($action->id);

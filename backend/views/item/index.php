@@ -24,22 +24,17 @@ $columnSettings = array(
     [
         'attribute' => 'category_id',
         'label' => 'Категория',
-        //'class' => '\kartik\tree\TreeViewInput',
         'vAlign' => 'middle',
         'width' => '140px',
         'filterType' => '\kartik\tree\TreeViewInput',
         'filterWidgetOptions' => [
-            //'name' => 'kvTreeInput',
-            //'value' => 'false', // preselected values
             'query' => Category::find()->addOrderBy('root, lft'),
-            //'headingOptions' => ['label' => 'Store'],
             'rootOptions' => ['label'=>'<i class="fa fa-tree text-success"></i>'],
             'fontAwesome' => true,
             'asDropdown' => true,
             'multiple' => false,
             'options' => ['disabled' => false]
         ],
-        //'filter' => CustomerHelper::getCustomerListBelongToUser(),
         'value' => function (Item $model) {
             return CategoryHelper::getCategoryNameById($model->category_id);
         },
@@ -78,16 +73,6 @@ $columnSettings = array(
         'vAlign' => 'middle',
         'width' => '30px',
     ],
-
-    /*    [
-            'attribute' => 'created_at',
-            'vAlign' => 'middle',
-            'width' => '70px',
-            'format' => ['date', 'php:Y-m-d'],
-            'headerOptions' => ['class' => 'kv-sticky-column'],
-            'contentOptions' => ['class' => 'kv-sticky-column'],
-        ],*/
-
     [
         'class' => 'kartik\grid\ActionColumn',
         'dropdown' => false,
@@ -131,7 +116,6 @@ $columnSettings = array(
         ],
         'persistResize' => false,
         'toggleDataOptions' => ['minCount' => 10],
-        // set export properties
         'export' => [
             'fontAwesome' => true
         ],

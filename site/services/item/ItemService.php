@@ -95,6 +95,9 @@ class ItemService
     public function remove($id): void
     {
         $item = $this->repository->findById($id);
+        if($item->file_name && file_exists(Yii::getAlias(Yii::$app->params['fileStorage']).'/'.$item->file_name)){
+            unlink(Yii::getAlias(Yii::$app->params['fileStorage']).'/'.$item->file_name);
+        }
         $this->repository->remove($item);
     }
 
