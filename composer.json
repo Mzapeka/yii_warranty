@@ -27,7 +27,8 @@
         "glitchit/ds-yii2-tcpdf": "dev-master",
         "kartik-v/yii2-tree-manager": "@dev",
         "yiisoft/yii2-httpclient": "*",
-        "electrolinux/phpquery": "dev-master"
+        "electrolinux/phpquery": "dev-master",
+        "sjaakp/yii2-symbol-picker": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

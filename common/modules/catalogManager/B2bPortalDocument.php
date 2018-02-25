@@ -10,6 +10,7 @@ namespace common\modules\catalogManager;
 
 use Countable;
 use Iterator;
+use site\helpers\common\IteratorTreit;
 
 /**
  *Класс для хранения описания документов из b2b порталла

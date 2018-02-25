@@ -6,8 +6,10 @@
  * Time: 21:33
  */
 namespace common\modules\catalogManager;;
+
 use Countable;
 use Iterator;
+use site\helpers\common\IteratorTreit;
 
 
 /**

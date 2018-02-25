@@ -31,19 +31,22 @@
                 'options' => ['class' => 'sidebar-menu', 'data-widget' => 'tree'],
                 'items' => [
                     ['label' => 'Management', 'options' => ['class' => 'header']],
-                    ['label' => 'Управление гарантиями', 'icon' => 'folder', 'items' => [
-                        ['label' => 'Пользователи', 'icon' => 'file-o', 'url' => ['/user'], 'active' => $this->context->id == 'user'],
-                        ['label' => 'Клиенты', 'icon' => 'file-o', 'url' => ['/customer'], 'active' => $this->context->id == 'customer'],
-                        ['label' => 'Гарантии', 'icon' => 'file-o', 'url' => ['/warranty'], 'active' => $this->context->id == 'warranty'],
+                    ['label' => 'Управление гарантиями', 'icon' => 'legal', 'items' => [
+                        ['label' => 'Пользователи', 'icon' => 'users', 'url' => ['/user'], 'active' => $this->context->id == 'user'],
+                        ['label' => 'Клиенты', 'icon' => 'handshake-o', 'url' => ['/customer'], 'active' => $this->context->id == 'customer'],
+                        ['label' => 'Гарантии', 'icon' => 'id-card', 'url' => ['/warranty'], 'active' => $this->context->id == 'warranty'],
 
                     ]],
-                    ['label' => 'Каталог', 'icon' => 'folder', 'items' => [
-                        ['label' => 'Категории', 'icon' => 'file-o', 'url' => ['/category'], 'active' => $this->context->id == 'category'],
-                        ['label' => 'Документы', 'icon' => 'file-o', 'url' => ['/item'], 'active' => $this->context->id == 'item'],
+                    ['label' => 'Управление контентом', 'icon' => 'cogs', 'items' => [
+                        ['label' => 'Первая страница пользователя', 'icon' => 'file-o', 'url' => ['/start-page-setting'], 'active' => $this->context->id == 'start-page-setting'],
+                    ]],
+                    ['label' => 'Каталог', 'icon' => 'vcard', 'items' => [
+                        ['label' => 'Категории', 'icon' => 'address-book-o', 'url' => ['/category'], 'active' => $this->context->id == 'category'],
+                        ['label' => 'Документы', 'icon' => 'file-pdf-o', 'url' => ['/item'], 'active' => $this->context->id == 'item'],
 
                     ]],
-                    ['label' => 'Импорт данных', 'icon' => 'folder', 'items' => [
-                        ['label' => 'Импорт базы данных', 'icon' => 'file-o', 'url' => ['/importdata/import-db'], 'active' => $this->context->id == 'import-db'],
+                    ['label' => 'Импорт данных', 'icon' => 'cloud-download', 'items' => [
+                        ['label' => 'Импорт базы данных', 'icon' => 'database', 'url' => ['/importdata/import-db'], 'active' => $this->context->id == 'import-db'],
                         ['label' => 'Импорт каталога', 'icon' => 'xing', 'url' => ['/importdata/import-catalog'], 'active' => $this->context->id == 'import-catalog'],
 
                     ]],

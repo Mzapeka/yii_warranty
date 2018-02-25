@@ -6,7 +6,7 @@
  * Time: 22:22
  */
 
-namespace common\modules\catalogManager;
+namespace site\helpers\common;
 
 
 trait IteratorTreit

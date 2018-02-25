@@ -23,7 +23,7 @@ $fieldOptions2 = [
 
 <div class="login-box">
     <div class="login-logo">
-        <a href="#"><b>Admin</b>LTE</a>
+        <a href="<?=Yii::$app->get('frontendUrlManager')->createAbsoluteUrl(['/'])?>"><b><?=Yii::$app->name?></b></a>
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
@@ -62,5 +62,5 @@ $fieldOptions2 = [
         <?php ActiveForm::end(); ?>
 
     </div>
-    <!-- /.login-box-body -->
-</div><!-- /.login-box -->
+
+</div>

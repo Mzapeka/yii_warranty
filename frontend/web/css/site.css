@@ -287,3 +287,35 @@ a.desc:after {
 #sidebar{
     padding-top: 20px;
 }
+
+.body-content .icon-div{
+    width: 250px;
+    height: 250px;
+    border: 1px solid #f5f5f5;
+    background:      rgb(245, 245, 245) /* Цвет фона */
+
+    center /* Положение в правом верхнем углу */
+    no-repeat /* Не повторять рисунок */
+    ;
+    background-size: cover;
+    text-align: center;
+    border-radius: 15px;
+    margin-top: 15px;
+
+}
+
+.body-content .icon-div:hover{
+    box-shadow: 1px 1px white, 5px 5px #999888;
+    top: -4px;
+    left: -4px;
+}
+
+.body-content .icon-div p{
+    font-size: x-large;
+    margin-top: 10px;
+}
+
+.body-content .icon-div span{
+    font-size: xx-large;
+}
+
