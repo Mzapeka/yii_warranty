@@ -40,7 +40,8 @@ class WarrantyService
             $form->invoice_date,
             $form->act_number,
             $form->act_date,
-            $form->status
+            $form->status,
+            $form->production_date
         );
         $this->repository->save($warranty);
         return $warranty;
@@ -58,7 +59,8 @@ class WarrantyService
             $form->invoice_date,
             $form->act_number,
             $form->act_date,
-            $form->status
+            $form->status,
+            $form->production_date
         );
         $this->repository->save($warranty);
     }

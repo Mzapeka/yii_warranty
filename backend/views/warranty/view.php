@@ -44,6 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'act_number',
             'invoice_date:date',
             'act_date:date',
+            'production_date:date',
             'created_at:datetime',
             'updated_at:datetime',
             [

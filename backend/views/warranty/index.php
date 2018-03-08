@@ -37,7 +37,7 @@ $columnSettings = array(
         'attribute' => 'customer_id',
         'vAlign' => 'middle',
         'width' => '140px',
-        'filter' => CustomerHelper::getCustomerListBelongToUser(),
+        'filter' => CustomerHelper::getMappedCustomerList(),
         'value' => function (Warranty $model) {
             return CustomerHelper::getCustomerNameByID($model->customer_id);
         },
@@ -138,6 +138,27 @@ $columnSettings = array(
         'filterWidgetOptions' => [
             'name'=>'act_date',
             'value' => '2018-10-04 - 2018-11-14',
+            'hideInput' => false,
+            'useWithAddon'=>false,
+            'convertFormat'=>true,
+            'presetDropdown' => false,
+            'autoUpdateOnInit' => false,
+            'pluginOptions'=>[
+                'locale'=>['format' => 'Y-m-d'],
+            ]
+        ],
+    ],
+    [
+        'attribute' => 'production_date',
+        'vAlign' => 'middle',
+        'width' => '90px',
+        'format' => ['date', 'php:Y-m-d'],
+        'xlFormat' => "mmm\\-dd\\, \\-yyyy",
+        'filterType' => 'kartik\daterange\DateRangePicker',
+
+        'filterWidgetOptions' => [
+            'name'=>'production_date',
+            'value' => '2017-10-04 - 2018-11-14',
             'hideInput' => false,
             'useWithAddon'=>false,
             'convertFormat'=>true,

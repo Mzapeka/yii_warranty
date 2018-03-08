@@ -45,6 +45,16 @@ class CustomerHelper
         return null;
     }
 
+    public static function getMappedCustomerList(): ?array
+    {
+        /**@var $customers array*/
+        $customers = Customer::find()->select(['id', 'customer_name'])->asArray()->all();
+        if($customers){
+            return ArrayHelper::map($customers, 'id', 'customer_name');
+        }
+        return null;
+    }
+
     public static function getCustomerNameByID($id): ? string
     {
         return Customer::findOne($id)->customer_name;

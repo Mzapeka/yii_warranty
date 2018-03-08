@@ -30,6 +30,7 @@ class WarrantySearch extends Warranty
                     'act_number',
                     'act_date',
                     'invoice_date',
+                    'production_date',
                 ], 'string'
             ],
             [
@@ -40,7 +41,7 @@ class WarrantySearch extends Warranty
             [
                 [
                     'created_at',
-                    'updated_at'
+                    'updated_at',
                 ], 'date', 'format' => 'php:Y-m-d'
             ]
         ];
@@ -82,6 +83,7 @@ class WarrantySearch extends Warranty
 
         $actDateRange = self::getDateRange($this->act_date);
         $invoiceDateRange = self::getDateRange($this->invoice_date);
+        $productionDateRange = self::getDateRange($this->production_date);
 
         // grid filtering conditions
         $query->andFilterWhere([
@@ -100,7 +102,9 @@ class WarrantySearch extends Warranty
             ->andFilterWhere(['>=', 'act_date', $actDateRange[0] ? strtotime($actDateRange[0] . ' 00:00:00') : null])
             ->andFilterWhere(['<=', 'act_date', $actDateRange[1] ? strtotime($actDateRange[1] . ' 23:59:59') : null])
             ->andFilterWhere(['>=', 'invoice_date', $invoiceDateRange[0] ? strtotime($invoiceDateRange[0] . ' 00:00:00') : null])
-            ->andFilterWhere(['<=', 'invoice_date', $invoiceDateRange[1] ? strtotime($invoiceDateRange[1] . ' 23:59:59') : null]);
+            ->andFilterWhere(['<=', 'invoice_date', $invoiceDateRange[1] ? strtotime($invoiceDateRange[1] . ' 23:59:59') : null])
+            ->andFilterWhere(['>=', 'production_date', $productionDateRange[0] ? strtotime($productionDateRange[0] . ' 00:00:00') : null])
+            ->andFilterWhere(['<=', 'production_date', $productionDateRange[1] ? strtotime($productionDateRange[1] . ' 23:59:59') : null]);
 
         return $dataProvider;
     }

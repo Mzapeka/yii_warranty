@@ -32,6 +32,7 @@ use yii\helpers\ArrayHelper;
  * @property integer $act_date
  * @property integer $created_at
  * @property integer $updated_at
+ * @property integer $production_date
  * @property integer $status
  *
 
@@ -61,6 +62,7 @@ class Warranty extends ActiveRecord
             'act_date' => 'Дата ввода в экспл.',
             'created_at' => 'Дата создания',
             'updated_at' => 'Дата изменения',
+            'production_date' => 'Дата производства',
             'status' => 'Статус',
 
             'warrantyValidUntil' => 'Дата окончания гарантии',
@@ -83,7 +85,8 @@ class Warranty extends ActiveRecord
         int $invoiceDate,
         string $actNumber = null,
         int $actDate = null,
-        int $status = self::STATUS_ACTIVE
+        int $status = self::STATUS_ACTIVE,
+        int $productionDate = null
     ):self
     {
         $warranty = new Warranty();
@@ -96,6 +99,7 @@ class Warranty extends ActiveRecord
         $warranty->act_number = $actNumber;
         $warranty->act_date = $actDate;
         $warranty->status = $status;
+        $warranty->production_date = $productionDate;
         return $warranty;
     }
 
@@ -109,7 +113,8 @@ class Warranty extends ActiveRecord
         int $invoiceDate,
         string $actNumber = null,
         int $actDate = null,
-        int $status = null
+        int $status = null,
+        int $productionDate = null
     ):void
     {
         $this->customer_id = $customerId;
@@ -121,6 +126,7 @@ class Warranty extends ActiveRecord
         $this->act_number = $actNumber;
         $this->act_date = $actDate;
         $this->status = $status;
+        $this->production_date = $productionDate;
     }
 
     public function isWait(): bool

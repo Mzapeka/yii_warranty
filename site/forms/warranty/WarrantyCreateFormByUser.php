@@ -31,10 +31,10 @@ class WarrantyCreateFormByUser extends Model
 
             [['device_name', 'customer_id', 'part_number', 'serial_number', 'invoice_number', 'invoice_date', 'status'], 'required'],
             [['device_name', 'part_number', 'serial_number', 'invoice_number'], 'string', 'max' => 255],
-            [['act_number', 'act_date'], 'default', 'value' => null],
+            [['act_number', 'act_date', 'production_date'], 'default', 'value' => null],
             //[['invoice_date','act_date'], 'date'],
             [['customer_id', 'status'], 'integer'],
-            [['invoice_date', 'act_date'], 'filter', 'filter' => function ($value) {
+            [['invoice_date', 'act_date', 'production_date'], 'filter', 'filter' => function ($value) {
                 if(!preg_match("/^[\d\+]+$/",$value) && $value > 0){
                     return strtotime($value);
                 }

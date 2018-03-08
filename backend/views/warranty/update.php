@@ -53,6 +53,15 @@ $this->params['breadcrumbs'][] = 'Редактирование';
             'format' => 'yyyy-mm-dd',
         ],
     ])->label(Warranty::labels('act_date')) ?>
+    <?= $form->field($model, 'production_date')->widget(DatePicker::className(),[
+        'type' => DatePicker::TYPE_COMPONENT_APPEND,
+        'language' => 'ru',
+        'pluginOptions' => [
+            'todayHighlight' => true,
+            'autoclose'=>true,
+            'format' => 'yyyy-mm-dd',
+        ],
+    ])->label(Warranty::labels('production_date')) ?>
     <?= $form->field($model, 'status')->dropDownList(WarrantyHelper::statusList())->label(Warranty::labels('status')) ?>
 
     <div class="form-group">

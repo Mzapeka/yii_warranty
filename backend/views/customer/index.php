@@ -3,6 +3,7 @@
 use kartik\date\DatePicker;
 use kartik\grid\GridView;
 use site\entities\Customer\Customer;
+use site\helpers\UserHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
@@ -23,12 +24,24 @@ $columnsSettings = [
         'vAlign' => 'middle',
         'width' => '120px',
         'value' => function (Customer $model) {
-            return Html::a($model->customer_name, Url::to(['/warranties', 'WarrantySearch[customer_id]' => $model->id]));
+            return Html::a($model->customer_name, Url::to(['/warranty', 'WarrantySearch[customer_id]' => $model->id]));
         },
         'format' => 'html'
     ],
     //'id',
-    //'dealer_id',
+    [
+        'attribute' => 'dealer_id',
+        'label' => 'Диллер',
+        'filter' => UserHelper::getUserNameList(),
+        'value' => function (Customer $model){
+            return UserHelper::getUserNameByID($model->dealer_id);
+        },
+        'vAlign' => 'middle',
+        'width' => '70px',
+        'format' => 'text',
+        'headerOptions' => ['class' => 'kv-sticky-column'],
+        'contentOptions' => ['class' => 'kv-sticky-column'],
+    ],
     [
         'attribute' => 'email',
         'vAlign' => 'middle',

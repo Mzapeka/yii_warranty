@@ -19,6 +19,11 @@ class UserHelper
         return ArrayHelper::map($userList, 'id', 'username');
     }
 
+    public static function getUserNameByID($id): ? string
+    {
+        return User::findOne($id)->username;
+    }
+
     public static function statusList(): array
     {
         return [
@@ -74,6 +79,11 @@ class UserHelper
         }
 
         return \yii\bootstrap\Html::tag('span', self::groupDescription($userGroup), ['class'=>$class,]);
+    }
+
+    public static function getUserNameByCustomerId(int $customerId) :?string
+    {
+        return Customer::findOne(['id' => $customerId])->getUser()->one()->username;
     }
 
 }

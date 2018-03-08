@@ -25,6 +25,7 @@ class WarrantyEditForm extends Model
     public $act_date;
     public $status;
     public $id;
+    public $production_date;
 
     public $_warranty;
 
@@ -40,6 +41,7 @@ class WarrantyEditForm extends Model
         $this->act_date = $warranty->act_date;
         $this->status = $warranty->status;
         $this->id = $warranty->id;
+        $this->production_date = $warranty->production_date;
         parent::__construct($config);
     }
 
@@ -48,10 +50,10 @@ class WarrantyEditForm extends Model
         return [
             [['device_name', 'customer_id', 'part_number', 'serial_number', 'invoice_number', 'invoice_date', 'status'], 'required'],
             [['device_name', 'part_number', 'serial_number', 'invoice_number'], 'string', 'max' => 255],
-            [['act_number', 'act_date'], 'default', 'value' => null],
+            [['act_number', 'act_date', 'production_date'], 'default', 'value' => null],
             //[['invoice_date','act_date'], 'date'],
             [['customer_id', 'status'], 'integer'],
-            [['invoice_date', 'act_date'], 'filter', 'filter' => function ($value) {
+            [['invoice_date', 'act_date', 'production_date'], 'filter', 'filter' => function ($value) {
                 if(!preg_match("/^[\d\+]+$/",$value) && $value > 0){
                     return strtotime($value);
                 }
