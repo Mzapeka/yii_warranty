@@ -28,7 +28,8 @@
         "kartik-v/yii2-tree-manager": "@dev",
         "yiisoft/yii2-httpclient": "*",
         "electrolinux/phpquery": "dev-master",
-        "sjaakp/yii2-symbol-picker": "*"
+        "sjaakp/yii2-symbol-picker": "*",
+        "kartik-v/yii2-editable": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
