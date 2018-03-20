@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use site\forms\warranty\WarrantySettingsEditForm;
+use site\helpers\WarrantySettingsHelper;
 use site\services\warranty\WarrantySettingsService;
 use Yii;
 use site\entities\Warranty\WarrantySettings;
@@ -50,6 +51,8 @@ class WarrantySettingsController extends Controller
      */
     public function actionIndex()
     {
+        //var_dump(Yii::$app->params);
+        //exit;
         $dataProvider = new ActiveDataProvider([
             'query' => WarrantySettings::find(),
         ]);
@@ -83,14 +86,25 @@ class WarrantySettingsController extends Controller
         $model = $this->findModel($id);
         $form = new WarrantySettingsEditForm($model);
         //var_dump(Yii::$app->request->post());
+
+        if (isset($_POST['hasEditable'])) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+
+            $return = function($controller)use($form) {
+                return ['output' => $form->value, 'message' => ''];
+            };
+        }else{
+            $return = function($controller)use($id) {
+                return $controller->redirect(['view', 'id' => $id]);
+            };
+        }
+
+
             if ($form->load(Yii::$app->request->post(), 'WarrantySettings') && $form->validate()) {
                     try{
                        $this->service->edit($id, $form);
-                        if (isset($_POST['hasEditable'])) {
-                            Yii::$app->response->format = Response::FORMAT_JSON;
-                            return ['output' => $form->value, 'message' => ''];
-                        }
-                        return $this->redirect(['view', 'id' => $id]);
+                        return $return($this);
+
                     }catch (\DomainException $e){
                        Yii::$app->errorHandler->logException($e);
                         Yii::$app->session->setFlash('error', $e->getMessage());

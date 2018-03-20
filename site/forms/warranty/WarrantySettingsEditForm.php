@@ -30,8 +30,7 @@ class WarrantySettingsEditForm extends Model
         return [
             [['value'], 'required'],
             [['description'], 'default', 'value' => null],
-            [['description'], 'string', 'max' => 450],
-            [['value'], 'integer'],
+            [['description', 'value'], 'string', 'max' => 450],
         ];
     }
 }

@@ -41,6 +41,7 @@ use yii\di\Instance;
 use yiidreamteam\upload\ImageUploadBehavior;
 use zhuravljov\yii\queue\Queue;*/
 use common\modules\catalogManager\B2bPortal;
+use site\helpers\WarrantySettingsHelper;
 use site\services\user\UserManageService;
 use yii\base\BootstrapInterface;
 use yii\base\ErrorHandler;
@@ -54,7 +55,8 @@ class SetUp implements BootstrapInterface
     {
         $container = \Yii::$container;
 
-
+        //загружаем параметры из базы
+        WarrantySettingsHelper::loadParamsFromDb();
 
         $container->setSingleton(MailerInterface::class, function () use ($app) {
             return $app->mailer;

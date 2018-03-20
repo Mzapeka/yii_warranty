@@ -34,7 +34,7 @@
                     ['label' => 'Управление гарантиями', 'icon' => 'legal', 'items' => [
                         ['label' => 'Пользователи', 'icon' => 'users', 'url' => ['/user'], 'active' => $this->context->id == 'user'],
                         ['label' => 'Клиенты', 'icon' => 'handshake-o', 'url' => ['/customer'], 'active' => $this->context->id == 'customer'],
-                        ['label' => 'Гарантии', 'icon' => 'id-card', 'url' => ['/warranty'], 'active' => $this->context->id == 'warranty'],
+                        ['label' => 'Оборудование', 'icon' => 'id-card', 'url' => ['/warranty'], 'active' => $this->context->id == 'warranty'],
                         ['label' => 'Настройки', 'icon' => 'cog', 'url' => ['/warranty-settings'], 'active' => $this->context->id == 'warranty-settings'],
 
                     ]],

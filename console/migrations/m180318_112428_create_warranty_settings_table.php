@@ -56,6 +56,14 @@ class m180318_112428_create_warranty_settings_table extends Migration
             'description' => 'В течении этого времени от момента продажи можно ввести в эксплуатацию'
         ]);
 
+        $this->insert($tableName, [
+            'key' => 'adminEmail',
+            'title' => 'E-mail администратора',
+            'value' => 'mzapeka@gmail.com',
+            'unit' => '',
+            'description' => 'На этот E-mail будут приходить уведомления о действиях пользователей'
+        ]);
+
 
     }
 

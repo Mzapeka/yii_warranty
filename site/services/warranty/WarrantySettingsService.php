@@ -38,5 +38,8 @@ class WarrantySettingsService
             $form->description
         );
         $this->repository->save($warrantySetting);
+
+        //очищаем кеш от устаревших данных
+        Yii::$app->cache->delete('warranty-settings');
     }
 }
