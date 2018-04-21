@@ -25,6 +25,9 @@ return [
             'csrfParam' => '_csrf-frontend',
             'cookieValidationKey' => $params['cookieValidationKey'],
         ],
+		'assetManager' => [
+            'basePath' => '/home/mzapeka/mybosch.in.ua/warranty/assets',
+        ],
         'user' => [
             'identityClass' => 'site\entities\User\User',
             'enableAutoLogin' => true,

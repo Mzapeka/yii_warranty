@@ -90,11 +90,11 @@ class WarrantySettingsController extends Controller
         if (isset($_POST['hasEditable'])) {
             Yii::$app->response->format = Response::FORMAT_JSON;
 
-            $return = function($controller)use($form) {
+            $return = function(Controller $controller)use($form) {
                 return ['output' => $form->value, 'message' => ''];
             };
         }else{
-            $return = function($controller)use($id) {
+            $return = function(Controller $controller)use($id) {
                 return $controller->redirect(['view', 'id' => $id]);
             };
         }
@@ -103,6 +103,7 @@ class WarrantySettingsController extends Controller
             if ($form->load(Yii::$app->request->post(), 'WarrantySettings') && $form->validate()) {
                     try{
                        $this->service->edit($id, $form);
+
                         return $return($this);
 
                     }catch (\DomainException $e){

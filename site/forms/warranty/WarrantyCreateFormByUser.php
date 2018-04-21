@@ -24,12 +24,13 @@ class WarrantyCreateFormByUser extends Model
     public $invoice_date;
     public $act_date;
     public $status;
+    public $production_date;
 
     public function rules(): array
     {
         return [
 
-            [['device_name', 'customer_id', 'part_number', 'serial_number', 'invoice_number', 'invoice_date', 'status'], 'required'],
+            [['device_name', 'customer_id', 'part_number', 'serial_number', 'invoice_number', 'invoice_date', 'status', 'production_date'], 'required'],
             [['device_name', 'part_number', 'serial_number', 'invoice_number'], 'string', 'max' => 255],
             [['act_number', 'act_date', 'production_date'], 'default', 'value' => null],
             //[['invoice_date','act_date'], 'date'],

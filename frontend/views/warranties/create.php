@@ -59,6 +59,17 @@ if(!empty($model->act_date)){
         ],
     ])->label(Warranty::labels('act_date')) ?>
 
+    <?= $form->field($model, 'production_date')->widget(DatePicker::className(),[
+        'type' => DatePicker::TYPE_COMPONENT_APPEND,
+        'language' => 'ru',
+        'separator' => '-',
+        'pluginOptions' => [
+            'todayHighlight' => true,
+            'autoclose'=>true,
+            'format' => 'yyyy-mm-dd',
+        ],
+    ])->label(Warranty::labels('production_date')) ?>
+
     <div class="form-group">
         <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
     </div>

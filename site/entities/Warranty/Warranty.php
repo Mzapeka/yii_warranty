@@ -56,7 +56,7 @@ class Warranty extends ActiveRecord
             'device_name' => 'Название изделия',
             'part_number' => 'Артикул',
             'serial_number' => 'Серийный №',
-            'invoice_number' => '№ инвойсв',
+            'invoice_number' => '№ инвойса',
             'act_number' => '№ акта ввода в экспл.',
             'invoice_date' => 'Дата инвойса',
             'act_date' => 'Дата ввода в экспл.',
