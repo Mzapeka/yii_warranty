@@ -45,7 +45,7 @@ class PdfWarranty extends TCPDF_BASE
         // Set font
         $this->SetFont($this->content->main_font, 'B', 20);
         // Title
-        $this->MultiCell(0, 0, $this->content->title, 0, 'L', 0, 0, '15', '10', true);
+        $this->MultiCell(0, 0, $this->content->title . ' ' . $this->warranty->id, 0, 'L', 0, 0, '15', '10', true);
         $this->Image($image_file, 3, 4, 40, '', 'PNG', '', 'T', false, 300, 'R', false, false, 0, false, false, false);
         $style1 = array('width' => 0.8, 'cap' => 'butt', 'join' => 'miter', 'dash' => '0', 'phase' => 10, 'color' => array(0, 0, 0));
         $this->Line(15, 25, 195, 25, $style1);
@@ -140,6 +140,11 @@ class PdfWarranty extends TCPDF_BASE
         self::instance()->MultiCell(100, 5, $this->warranty->serial_number, 1, 'L', 0, 1, '', '', true);
 
         self::instance()->SetFont($this->content->main_font_2, '', 10);
+        self::instance()->MultiCell(70, 5, $this->content->production_date_title, 0, 'L', 0, 0, '', '', true);
+        self::instance()->SetFont($this->content->main_font, '', 10);
+        self::instance()->MultiCell(50, 5, $this->warranty->production_date ? Yii::$app->formatter->asDate($this->warranty->production_date, 'php:Y-m-d') : "-", 1, 'L', 0, 1, '', '', true);
+
+        self::instance()->SetFont($this->content->main_font_2, '', 10);
         self::instance()->MultiCell(70, 5, $this->content->invoice_date_title, 0, 'L', 0, 0, '', '', true);
         self::instance()->SetFont($this->content->main_font, '', 10);
         self::instance()->MultiCell(50, 5, Yii::$app->formatter->asDate($this->warranty->invoice_date, 'php:Y-m-d'), 1, 'L', 0, 1, '', '', true);
@@ -175,38 +180,48 @@ class PdfWarranty extends TCPDF_BASE
         self::instance()->MultiCell(100, 5, $warrantyText, 1, 'L', 0, 1, '', '', true);
 
         self::instance()->SetFont($this->content->main_font_2, '', 10);
-        self::instance()->MultiCell(70, 20, $this->content->sale_company_sign_title, 0, 'L', 0, 0, '', '', true, 0, false, true, 20, 'M');
+        self::instance()->MultiCell(70, 5, $this->content->warranty_end_date_title, 0, 'L', 0, 0, '', '', true);
         self::instance()->SetFont($this->content->main_font, '', 10);
-        self::instance()->MultiCell(100, 20, '', 1, 'L', 0, 1, '', '', true);
-
-        self::instance()->Text(165, 70, $this->content->sale_company_stamp_title);
-        self::instance()->Circle(170, 75, 20, 0, 360, '', $style1);
-
-        self::instance()->Line(15, 130, 195, 130, $style1);
-        self::instance()->SetLineStyle($style);
-//вставляем номер гарантийного талона
-        self::instance()->SetFont($this->content->main_font, '', 16);
-        self::instance()->Text(100, 9, $this->warranty->id);
-
-        self::instance()->Ln(125);
+        self::instance()->MultiCell(100, 5, $this->warranty->warrantyValidUntil ? Yii::$app->formatter->asDate($this->warranty->warrantyValidUntil, 'php:Y-m-d') : "-", 1, 'L', 0, 1, '', '', true);
 
         self::instance()->SetFont($this->content->main_font_2, '', 10);
-        self::instance()->MultiCell(70, 20,
-            $this->content->buyer_agree_text,
-            0, 'L', 0, 0, '', '', true, 0, false, true, 40, 'T');
+        self::instance()->MultiCell(70, 15, $this->content->sale_company_sign_title, 0, 'L', 0, 0, '', '', true, 0, false, true, 20, 'M');
         self::instance()->SetFont($this->content->main_font, '', 10);
-        self::instance()->MultiCell(100, 20,
-            $this->content->client_sign_text,
-            1, 'L', 0, 1, '', '', true, 0, false, true, 40, 'T');
+        self::instance()->MultiCell(100, 15, '', 1, 'L', 0, 1, '', '', true);
+
+//        self::instance()->Line(15, 139, 195, 139, $style1);
+//        self::instance()->SetLineStyle($style);
+
+        //self::instance()->Ln(125);
         self::instance()->Ln(5);
         self::instance()->setCellPaddings(0, 0, 0, 0);
 
 // set cell margins
+        self::instance()->SetFont($this->content->main_font, '', 8);
         self::instance()->setCellMargins(0, 0, 0, 0);
-        self::instance()->Write(5, $this->content->getWarranty_main_condition_text(), '', 0, '', false, 0, false, false, 0);
+        self::instance()->Write(4, $this->content->getWarranty_main_condition_text(), '', 0, '', false, 0, false, false, 0);
 // set color for background
         self::instance()->SetFillColor(220, 255, 220);
-        self::instance()->lastPage();
+//        self::instance()->lastPage();
+
+        self::instance()->Ln(10);
+        // set cell padding
+        self::instance()->setCellPaddings(1, 1, 1, 1);
+
+// set cell margins
+        self::instance()->setCellMargins(1, 1, 5, 1);
+
+        self::instance()->SetFont($this->content->main_font_2, '', 9);
+        self::instance()->MultiCell(70, 20,
+            $this->content->buyer_agree_text,
+            0, 'L', 0, 0, '', '', true, 0, false, true, 40, 'T');
+        self::instance()->SetFont($this->content->main_font, '', 9);
+        self::instance()->MultiCell(100, 20,
+            $this->content->client_sign_text,
+            1, 'L', 0, 1, '', '', true, 0, false, true, 40, 'T');
+
+        self::instance()->Text(165, 75, $this->content->sale_company_stamp_title);
+        self::instance()->Circle(170, 80, 20, 0, 360, '', $style1);
 
 // ---------------------------------------------------------
 //Close and output PDF document

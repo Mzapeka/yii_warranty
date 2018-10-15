@@ -726,16 +726,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/himiklab/yii2-recaptcha-widget.git",
-                "reference": "64daf4d4628c6fa9275f774b927fa2d750e64ae3"
+                "reference": "35c9a4ae38ad20e0b4db8e9030c3744f2572dda7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/himiklab/yii2-recaptcha-widget/zipball/64daf4d4628c6fa9275f774b927fa2d750e64ae3",
-                "reference": "64daf4d4628c6fa9275f774b927fa2d750e64ae3",
+                "url": "https://api.github.com/repos/himiklab/yii2-recaptcha-widget/zipball/35c9a4ae38ad20e0b4db8e9030c3744f2572dda7",
+                "reference": "35c9a4ae38ad20e0b4db8e9030c3744f2572dda7",
                 "shasum": ""
             },
             "require": {
-                "yiisoft/yii2": "*"
+                "yiisoft/yii2": "*",
+                "yiisoft/yii2-httpclient": "*"
             },
             "type": "yii2-extension",
             "autoload": {
@@ -761,7 +762,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2017-11-08T16:56:06+00:00"
+            "time": "2018-04-03T08:17:47+00:00"
         },
         {
             "name": "kartik-v/bootstrap-fileinput",

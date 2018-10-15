@@ -2,12 +2,13 @@
 namespace backend\controllers;
 
 use site\entities\User;
+use site\forms\auth\LoginForm;
 use site\services\auth\AuthService;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
-use site\forms\auth\LoginForm;
+
 
 class AuthController extends Controller
 {

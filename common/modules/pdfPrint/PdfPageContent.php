@@ -41,11 +41,13 @@ class PdfPageContent
     public $part_number_title = 'Артикул';
     public $serial_number_title = 'Серійний номер';
     public $invoice_date_title = 'Дата продажу';
+    public $production_date_title = 'Дата виробництва';
     public $invoice_num_title = 'Номер накладної';
     public $act_date_title = 'Дата введення в эксплуатацію';
     public $act_num_title = 'Номер акту введення в експлуатацію';
     public $dealer_name_title = 'Компанія-продавець';
     public $warranty_term_title = 'Термін гарантії';
+    public $warranty_end_date_title = 'Дата закінчення гарантії';
     public $sale_company_sign_title = 'Підпис та П.І.Б. продавця';
     public $sale_company_stamp_title = 'М.П.';
     //public $warranty_main_condition_text = '';
@@ -68,7 +70,7 @@ class PdfPageContent
     }
 
     public function getLogoPath(){
-        return Yii::getAlias('@web/img/').'logo_ua.png';
+        return __DIR__.'/logo_ua.png';
     }
 
 
