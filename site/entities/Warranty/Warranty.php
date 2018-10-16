@@ -169,7 +169,8 @@ class Warranty extends ActiveRecord
     public function getWarrantyValidUntil(): int
     {
 
-        $unixDate = max($this->invoice_date, $this->act_date);
+//        $unixDate = max($this->invoice_date, $this->act_date);
+        $unixDate = $this->invoice_date;
         $interval = DateInterval::createFromDateString($this->getWarrantyLengthInMonth().' month');
         $date = new DateTime();
         $date->setTimestamp($unixDate);

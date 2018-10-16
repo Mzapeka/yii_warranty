@@ -171,8 +171,8 @@ class PdfWarranty extends TCPDF_BASE
 
         //Определение текста поля гарантии
         $warrantyText = $this->content->getWarrantyTimeAfterSales();
-        If ($this->warranty->act_date)
-            $warrantyText = $this->content->getWarrantyTimeAfterInstall();
+//        If ($this->warranty->act_date)
+//            $warrantyText = $this->content->getWarrantyTimeAfterInstall();
 
         self::instance()->SetFont($this->content->main_font_2, '', 10);
         self::instance()->MultiCell(70, 5, $this->content->warranty_term_title, 0, 'L', 0, 0, '', '', true);
